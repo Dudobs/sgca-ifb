@@ -12,7 +12,7 @@ export function Login() {
   }
 
   return (
-    <div className=" h-screen px-32 py-20 bg-gradient-to-br from-teal-950 to-emerald-700 flex flex-col gap-28">
+    <div className=" h-screen px-32 py-20 bg-gradient-to-br from-teal-950 to-emerald-700 flex flex-col gap-8">
       <div className="flex justify-between items-center">
         <img src={LogoIFB} alt="Logo do IFB" />
         <p className="text-zinc-50 text-4xl font-semibold uppercase">
@@ -20,7 +20,7 @@ export function Login() {
         </p>
       </div>
       <div className="flex justify-center items-center">
-        <div className="w-[600px] h-[450px] bg-teal-800 rounded-3xl flex flex-col justify-center items-center gap-8">
+        <div className="w-[37rem] h-[28rem] bg-teal-800 rounded-3xl flex flex-col justify-center items-center gap-8">
           <img src={LogoIFBAccess} alt="Logo do IFB Access" />
           <form
             action=""
