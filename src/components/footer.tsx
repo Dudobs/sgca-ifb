@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer>
       <div className="w-full border border-zinc-200" />
-      <p className="text-sm font-bold text-zinc-400">
+      <p className="text-sm font-medium text-zinc-400">
         © {currentYear} Instituto Federal de Brasília - Footer text
       </p>
     </footer>
