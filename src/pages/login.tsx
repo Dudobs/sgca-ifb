@@ -1,14 +1,14 @@
-import LogoIFB from '../assets/images/logo-ifb.png'
-import LogoIFBAccess from '../assets/images/Logo-ifb-access.svg'
-import { Label } from '../components/login/label'
-import { Input } from '../components/login/input'
-import { useNavigate } from 'react-router-dom'
+import LogoIFB from "../assets/images/logo-ifb.png";
+import LogoIFBAccess from "../assets/images/Logo-ifb-access.svg";
+import { Label } from "../components/form/label";
+import { Input } from "../components/form/input";
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleSignIn() {
-    navigate('/home')
+    navigate("/home");
   }
 
   return (
@@ -28,11 +28,21 @@ export function Login() {
             className="flex flex-col gap-4"
           >
             <div className="flex flex-col">
-              <Label htmlFor="username">Usuário:</Label>
+              <Label
+                htmlFor="username"
+                className="px-4 w-80 h-14 bg-zinc-50 border-2 rounded-lg outline-none text-md focus-visible:border-emerald-500 focus-visible:ring-2 ring-zinc-500/10"
+              >
+                Usuário:
+              </Label>
               <Input id="username" />
             </div>
             <div className="flex flex-col">
-              <Label htmlFor="password">Senha:</Label>
+              <Label
+                htmlFor="password"
+                className="px-4 w-80 h-14 bg-zinc-50 border-2 rounded-lg outline-none text-md focus-visible:border-emerald-500 focus-visible:ring-2 ring-zinc-500/10"
+              >
+                Senha:
+              </Label>
               <Input id="password" type="password" />
             </div>
             <button
@@ -45,5 +55,5 @@ export function Login() {
         </div>
       </div>
     </div>
-  )
+  );
 }

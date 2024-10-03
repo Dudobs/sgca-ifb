@@ -1,6 +1,6 @@
-import { RotateCw } from 'lucide-react'
-import { Navbar } from '../components/navbar/navbar'
-import { Footer } from '../components/footer'
+import { RotateCw } from "lucide-react";
+import { Navbar } from "../components/navbar/navbar";
+import { Footer } from "../components/footer";
 
 export function Home() {
   return (
@@ -11,7 +11,7 @@ export function Home() {
         <main className="flex flex-col gap-3">
           <div className="border border-zinc-700 rounded-lg">
             <h1 className="p-3 font-bold text-3xl border-b border-zinc-700">
-              Registros dos acessos
+              Acessos
             </h1>
             <table className="text-center min-w-[79rem]">
               <thead>
@@ -33,8 +33,8 @@ export function Home() {
                       key={i}
                       className={
                         i % 2 === 0
-                          ? 'h-10 border-zinc-700'
-                          : 'h-10 border-zinc-700 bg-zinc-200'
+                          ? "h-10 border-zinc-700"
+                          : "h-10 border-zinc-700 bg-zinc-200"
                       }
                     >
                       <td className="px-2 text-start">0001</td>
@@ -45,7 +45,7 @@ export function Home() {
                       <td>Entrada</td>
                       <td>Graduação</td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
@@ -69,5 +69,5 @@ export function Home() {
         <Footer />
       </div>
     </div>
-  )
+  );
 }

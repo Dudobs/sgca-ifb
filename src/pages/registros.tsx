@@ -1,5 +1,7 @@
-import { Navbar } from '../components/navbar/navbar'
-import { Footer } from '../components/footer'
+import { Navbar } from "../components/navbar/navbar";
+import { Footer } from "../components/footer";
+import { Label } from "../components/form/label";
+import { Input } from "../components/form/input";
 
 export function Registros() {
   return (
@@ -9,6 +11,16 @@ export function Registros() {
       <div className="pt-8 pr-10 flex flex-col justify-between gap-8">
         <main className="flex flex-col gap-4">
           <h1 className="p-3 font-bold text-3xl">Registros</h1>
+
+          <form action="" className="p-4 bg-zinc-100">
+            <fieldset>
+              <legend>FILTROS:</legend>
+
+              <Label htmlFor="name" />
+              <Input id="name" placeholder="Nome" />
+            </fieldset>
+          </form>
+
           <div className="border border-zinc-700 rounded-lg">
             <table className="text-center min-w-[79rem]">
               <thead>
@@ -30,8 +42,8 @@ export function Registros() {
                       key={i}
                       className={
                         i % 2 === 0
-                          ? 'h-10 border-zinc-700'
-                          : 'h-10 border-zinc-700 bg-zinc-200'
+                          ? "h-10 border-zinc-700"
+                          : "h-10 border-zinc-700 bg-zinc-200"
                       }
                     >
                       <td className="px-2 text-start">0001</td>
@@ -42,7 +54,7 @@ export function Registros() {
                       <td>Entrada</td>
                       <td>Graduação</td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
@@ -52,5 +64,5 @@ export function Registros() {
         <Footer />
       </div>
     </div>
-  )
+  );
 }
