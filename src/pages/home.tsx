@@ -1,12 +1,12 @@
-import { RotateCw } from "lucide-react";
-import { Navbar } from "../components/navbar/navbar";
+import { RotateCw } from 'lucide-react'
+import { Navbar } from '../components/navbar/navbar'
 
 export function Home() {
   return (
     <div className="flex gap-10">
       <Navbar />
 
-      <main className=" pt-8 pr-10 flex flex-col gap-3">
+      <main className=" py-8 pr-10 flex flex-col gap-3">
         <div className="border border-zinc-700 rounded-lg">
           <h1 className="p-3 font-bold text-3xl border-b border-zinc-700">
             Registros dos acessos
@@ -14,7 +14,7 @@ export function Home() {
           <table className="text-center min-w-[79rem]">
             <thead>
               <tr className="border-b border-zinc-700">
-                <th>N°</th>
+                <th className="p-2 text-start">N°</th>
                 <th>Nome</th>
                 <th>CPF</th>
                 <th>Matrícula</th>
@@ -27,14 +27,15 @@ export function Home() {
               {Array.from({ length: 15 }).map((_, i) => {
                 return (
                   <tr
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                     key={i}
                     className={
                       i % 2 === 0
-                        ? "h-10 border-zinc-700"
-                        : "h-10 border-zinc-700 bg-zinc-200"
+                        ? 'h-10 border-zinc-700'
+                        : 'h-10 border-zinc-700 bg-zinc-200'
                     }
                   >
-                    <td>0001</td>
+                    <td className="px-2 text-start">0001</td>
                     <td>Eduardo Vieira Campos</td>
                     <td>000.000.181-14</td>
                     <td>2220000000</td>
@@ -42,7 +43,7 @@ export function Home() {
                     <td>Entrada</td>
                     <td>Graduação</td>
                   </tr>
-                );
+                )
               })}
             </tbody>
           </table>
@@ -63,5 +64,5 @@ export function Home() {
         </div>
       </main>
     </div>
-  );
+  )
 }

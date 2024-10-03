@@ -1,18 +1,18 @@
-import LogoIFB from "../assets/images/logo-ifb.png";
-import LogoIFBAccess from "../assets/images/Logo-ifb-access.svg";
-import { Label } from "../components/label";
-import { Input } from "../components/input";
-import { useNavigate } from "react-router-dom";
+import LogoIFB from '../assets/images/logo-ifb.png'
+import LogoIFBAccess from '../assets/images/Logo-ifb-access.svg'
+import { Label } from '../components/label'
+import { Input } from '../components/input'
+import { useNavigate } from 'react-router-dom'
 
 export function Login() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   function handleSignIn() {
-    navigate("/home");
+    navigate('/home')
   }
 
   return (
-    <div className=" h-screen px-32 py-20 bg-gradient-to-br from-teal-950 to-emerald-700 flex flex-col gap-8">
+    <div className="min-h-screen px-32 py-20 bg-gradient-to-br from-teal-950 to-emerald-700 flex flex-col justify-between">
       <div className="flex justify-between items-center">
         <img src={LogoIFB} alt="Logo do IFB" />
         <p className="text-zinc-50 text-4xl font-semibold uppercase">
@@ -20,7 +20,7 @@ export function Login() {
         </p>
       </div>
       <div className="flex justify-center items-center">
-        <div className="w-[37rem] h-[28rem] bg-teal-800 rounded-3xl flex flex-col justify-center items-center gap-8">
+        <div className="px-32 py-8 bg-teal-800 rounded-3xl flex flex-col justify-center items-center gap-8">
           <img src={LogoIFBAccess} alt="Logo do IFB Access" />
           <form
             action=""
@@ -45,5 +45,5 @@ export function Login() {
         </div>
       </div>
     </div>
-  );
+  )
 }
