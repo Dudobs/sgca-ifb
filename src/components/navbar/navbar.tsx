@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { ChevronLeft, CircleUserRound, LogOut } from 'lucide-react'
 
-import LogoIFBAccess from '../../assets/images/Logo-ifb-access.svg'
 import { NavbarLinks } from './navbar-links'
 import { useLocation } from 'react-router-dom'
+import { Header } from '../header'
 
 export function Navbar() {
   const [toggleNavbar, setToggleNavbar] = useState(() => {
@@ -31,12 +31,7 @@ export function Navbar() {
         <ChevronLeft className="size-5" />
       </button>
 
-      <div className="mb-10 flex items-end gap-2">
-        <img className="size-16" src={LogoIFBAccess} alt="Logo do IFB Access" />
-        <span className="font-bold text-lg uppercase">
-          Sistema de Gerenciamento
-        </span>
-      </div>
+      <Header navbarIsOpen />
 
       <div className="mb-4 flex items-center gap-2">
         <a
@@ -77,7 +72,7 @@ export function Navbar() {
         <ChevronLeft className="size-5" />
       </button>
 
-      <img className="size-10" src={LogoIFBAccess} alt="Logo do IFB Access" />
+      <Header navbarIsOpen={false} />
 
       <div className="flex flex-col items-center gap-2">
         <a

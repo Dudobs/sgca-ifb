@@ -1,7 +1,7 @@
 import LogoIFB from '../assets/images/logo-ifb.png'
 import LogoIFBAccess from '../assets/images/Logo-ifb-access.svg'
-import { Label } from '../components/label'
-import { Input } from '../components/input'
+import { Label } from '../components/login/label'
+import { Input } from '../components/login/input'
 import { useNavigate } from 'react-router-dom'
 
 export function Login() {
