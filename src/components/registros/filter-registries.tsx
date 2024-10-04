@@ -1,13 +1,13 @@
 import { Search } from 'lucide-react'
 
-import { Form } from './form/form'
-import { Field } from './form/field'
-import { Label } from './form/label'
-import { Input } from './form/input'
-import { Select } from './form/select'
-import { Button } from './button'
+import { Form } from '../form/form'
+import { Field } from '../form/field'
+import { Label } from '../form/label'
+import { Input } from '../form/input'
+import { Select } from '../form/select'
+import { Button } from '../button'
 
-export function Filter() {
+export function RegistriesFilter() {
   return (
     <Form action="">
       <span className="absolute top-[-0.75rem]">FILTROS:</span>

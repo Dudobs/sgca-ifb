@@ -1,7 +1,7 @@
 import { Navbar } from '../components/navbar/navbar'
 import { Footer } from '../components/footer'
-import { Table } from '../components/table/table'
-import { Filter } from '../components/filter'
+import { RegistriesFilter } from '../components/registros/filter-registries'
+import { RegistriesTable } from '../components/registros/registries-table'
 
 export function Registros() {
   return (
@@ -12,9 +12,9 @@ export function Registros() {
         <main className="flex flex-col gap-4">
           <h1 className="p-3 font-bold text-3xl">Registros</h1>
 
-          <Filter />
+          <RegistriesFilter />
 
-          <Table hasPagination />
+          <RegistriesTable />
         </main>
 
         <Footer />

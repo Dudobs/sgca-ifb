@@ -14,7 +14,7 @@ export function Home() {
           <div>
             <h1 className="p-3 font-bold text-3xl">Últimos Acessos</h1>
 
-            <Table hasPagination={false} />
+            <Table />
           </div>
 
           <div className="flex gap-3">
