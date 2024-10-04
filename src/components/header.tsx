@@ -1,4 +1,4 @@
-import LogoIFBAccess from '../assets/images/Logo-ifb-access.svg'
+import LogoIFBAccess from '../assets/Logo-ifb-access.svg'
 
 interface HeaderProps {
   navbarIsOpen: boolean

@@ -1,8 +1,9 @@
-import LogoIFB from '../assets/images/logo-ifb.png'
-import LogoIFBAccess from '../assets/images/Logo-ifb-access.svg'
+import { useNavigate } from 'react-router-dom'
+
+import LogoIFBAccess from '../assets/Logo-ifb-access.svg'
 import { Label } from '../components/form/label'
 import { Input } from '../components/form/input'
-import { useNavigate } from 'react-router-dom'
+import { LogoIFB } from '../components/logo-ifb'
 
 export function Login() {
   const navigate = useNavigate()
@@ -14,7 +15,7 @@ export function Login() {
   return (
     <div className="min-h-screen px-32 py-20 bg-gradient-to-br from-teal-950 to-emerald-700 flex flex-col justify-between">
       <div className="flex justify-between items-center">
-        <img src={LogoIFB} alt="Logo do IFB" />
+        <LogoIFB />
         <p className="text-zinc-50 text-4xl font-semibold uppercase">
           Sistema de Gerenciamento
         </p>
