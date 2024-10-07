@@ -15,17 +15,17 @@ export function RegistriesFilter() {
       <div className="w-4/5 flex flex-wrap gap-4">
         <Field>
           <Label htmlFor="name">Nome:</Label>
-          <Input id="name" />
+          <Input type="text" id="name" name="name" />
         </Field>
 
         <Field>
           <Label htmlFor="cpf">CPF:</Label>
-          <Input id="cpf" />
+          <Input id="cpf" name="cpf" />
         </Field>
 
         <Field>
           <Label htmlFor="matricula">Matrícula:</Label>
-          <Input id="matricula" />
+          <Input id="matricula" name="matricula" />
         </Field>
 
         <Field>
@@ -51,21 +51,21 @@ export function RegistriesFilter() {
           <Label htmlFor="date">Data:</Label>
           <div id="date" className="flex items-end gap-1">
             <Label htmlFor="startDate">De:</Label>
-            <Input id="startDate" type="date" />
+            <Input type="date" id="startDate" name="startDate" />
 
             <Label htmlFor="endDate">Até:</Label>
-            <Input id="endDate" type="date" placeholder="até" />
+            <Input type="date" id="endDate" name="endDate" placeholder="até" />
           </div>
         </Field>
 
         <Field>
           <Label htmlFor="time">Hora:</Label>
           <div id="time" className="flex items-end gap-1">
-            <Label htmlFor="starttime">De:</Label>
-            <Input id="starttime" type="time" />
+            <Label htmlFor="startTime">De:</Label>
+            <Input type="time" id="startTime" name="startTime" />
 
-            <Label htmlFor="endtime">Até:</Label>
-            <Input id="endtime" type="time" placeholder="até" />
+            <Label htmlFor="endTime">Até:</Label>
+            <Input type="time" id="endTime" name="endTime" placeholder="até" />
           </div>
         </Field>
       </div>

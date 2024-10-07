@@ -22,7 +22,7 @@ export function generateRegistries() {
       userType: faker.helpers.arrayElement([
         'Médio integrado',
         'Médio subsequente',
-        'Superior',
+        'Ensino Superior',
         'Servidor',
       ]),
     }

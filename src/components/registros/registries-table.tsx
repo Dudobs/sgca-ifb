@@ -31,12 +31,11 @@ export function RegistriesTable() {
   useEffect(() => {
     const data = generateRegistries()
     setRegistries(data)
-    console.log(data)
   }, [])
 
   const [page, setPage] = useState(1)
 
-  const totalPages = Math.ceil(registries.length / 15)
+  const totalPages = registries.length
 
   function goToFirstPage() {
     setPage(1)
@@ -94,7 +93,7 @@ export function RegistriesTable() {
       <tfoot>
         <TableRow className="border-t border-zinc-700">
           <TableCell colSpan={4} className="text-left">
-            Mostrando 15 de 76 resultados
+            Mostrando 15 de {registries.length} resultados
           </TableCell>
           <TableCell className="text-right" colSpan={3}>
             <div className="inline-flex items-center gap-8">
