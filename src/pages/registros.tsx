@@ -1,6 +1,6 @@
 import { Navbar } from '../components/navbar/navbar'
 import { Footer } from '../components/footer'
-import { RegistriesFilter } from '../components/registros/filter-registries'
+import { RegistriesFilter } from '../components/registros/registries-filter'
 import { RegistriesTable } from '../components/registros/registries-table'
 
 export function Registros() {

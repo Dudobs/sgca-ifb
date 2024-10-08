@@ -35,7 +35,9 @@ export function RegistriesTable() {
 
   const [page, setPage] = useState(1)
 
-  const totalPages = registries.length
+  const registriesPerPage = 15
+
+  const totalPages = Math.ceil(registries.length / registriesPerPage)
 
   function goToFirstPage() {
     setPage(1)
@@ -67,33 +69,35 @@ export function RegistriesTable() {
         </TableRow>
       </thead>
       <tbody>
-        {registries.slice((page - 1) * 15, page * 15).map(registrie => {
-          return (
-            <TableRow
-              key={registrie.index}
-              className={
-                registrie.index % 2 === 0
-                  ? 'h-10 border-zinc-700'
-                  : 'h-10 border-zinc-700 bg-zinc-200'
-              }
-            >
-              <TableCell className="text-start">{registrie.index}</TableCell>
-              <TableCell>{registrie.name}</TableCell>
-              <TableCell>{registrie.cpf}</TableCell>
-              <TableCell>{registrie.matricula}</TableCell>
-              <TableCell>
-                {registrie.date} ás {registrie.time}
-              </TableCell>
-              <TableCell>{registrie.accessType}</TableCell>
-              <TableCell>{registrie.userType}</TableCell>
-            </TableRow>
-          )
-        })}
+        {registries
+          .slice((page - 1) * registriesPerPage, page * registriesPerPage)
+          .map(registrie => {
+            return (
+              <TableRow
+                key={registrie.index}
+                className={
+                  registrie.index % 2 === 0
+                    ? 'h-10 border-zinc-700'
+                    : 'h-10 border-zinc-700 bg-zinc-200'
+                }
+              >
+                <TableCell className="text-start">{registrie.index}</TableCell>
+                <TableCell>{registrie.name}</TableCell>
+                <TableCell>{registrie.cpf}</TableCell>
+                <TableCell>{registrie.matricula}</TableCell>
+                <TableCell>
+                  {registrie.date} ás {registrie.time}
+                </TableCell>
+                <TableCell>{registrie.accessType}</TableCell>
+                <TableCell>{registrie.userType}</TableCell>
+              </TableRow>
+            )
+          })}
       </tbody>
       <tfoot>
         <TableRow className="border-t border-zinc-700">
           <TableCell colSpan={4} className="text-left">
-            Mostrando 15 de {registries.length} resultados
+            Mostrando {registriesPerPage} de {registries.length} resultados
           </TableCell>
           <TableCell className="text-right" colSpan={3}>
             <div className="inline-flex items-center gap-8">

@@ -11,7 +11,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         ref={ref}
         type="checkbox"
         className={twMerge(
-          'rounded border-zinc-700 text-green-600 shadow-sm focus:border-green-300 focus:ring focus:ring-offset-0 focus:ring-green-200 focus:ring-opacity-50',
+          'rounded border-zinc-700 text-green-600/90 shadow-sm focus:border-green-300 focus:ring focus:ring-offset-0 focus:ring-green-200 focus:ring-opacity-50',
           props.className
         )}
       />

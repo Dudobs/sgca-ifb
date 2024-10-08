@@ -63,7 +63,7 @@ export function Navbar() {
       <NavbarLinks navbarIsOpen />
     </div>
   ) : (
-    <div className="h-screen w-[5.125rem] sticky top-0 bottom-0 left-0 py-8 px-5 rounded-r-3xl bg-green-600 text-zinc-50 uppercase flex flex-col items-center gap-6">
+    <div className="h-screen w-[5.125rem] sticky top-0 left-0 z-10 py-8 px-5 rounded-r-3xl bg-green-600 text-zinc-50 uppercase flex flex-col items-center gap-6">
       <button
         className="absolute top-8 right-0 z-10 rotate-180 hover:bg-green-700"
         type="button"

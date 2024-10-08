@@ -1,4 +1,5 @@
 import type { ComponentProps } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 interface TableProps extends ComponentProps<'table'> {
   hasPagination?: boolean
@@ -6,7 +7,12 @@ interface TableProps extends ComponentProps<'table'> {
 
 export function Table({ hasPagination, ...props }: TableProps) {
   return (
-    <div className="min-w-[79rem] border border-zinc-700 rounded-lg text-center">
+    <div
+      className={twMerge(
+        'min-w-[79rem] border border-zinc-700 rounded-lg text-center',
+        props.className
+      )}
+    >
       <table className="w-full" {...props} />
     </div>
   )
