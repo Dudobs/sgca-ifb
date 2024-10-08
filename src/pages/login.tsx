@@ -34,7 +34,7 @@ export function Login() {
               </Label>
               <Input
                 id="username"
-                className="px-4 w-80 h-14 bg-zinc-50 border-2 rounded-lg outline-none text-md focus-visible:border-emerald-500 focus-visible:ring-2 ring-zinc-500/10"
+                className="px-4 w-80 h-14 bg-zinc-50 border rounded-lg outline-none text-md focus-visible:border-emerald-500 focus-visible:ring-1 ring-zinc-500/10"
               />
             </div>
             <div className="flex flex-col">
@@ -44,7 +44,7 @@ export function Login() {
               <Input
                 id="password"
                 type="password"
-                className="px-4 w-80 h-14 bg-zinc-50 border-2 rounded-lg outline-none text-md focus-visible:border-emerald-500 focus-visible:ring-2 ring-zinc-500/10"
+                className="px-4 w-80 h-14 bg-zinc-50 border rounded-lg outline-none text-md focus-visible:border-emerald-500 focus-visible:ring-1"
               />
             </div>
             <button

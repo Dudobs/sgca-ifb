@@ -16,9 +16,9 @@ import { TableRow } from '../components/table/table-row'
 import { TableHeader } from '../components/table/table-header'
 import { generateUsers } from '../data/users'
 import { Checkbox } from '../components/form/checkbox'
-import Example from '../components/usuarios/menu'
 import { UsersFilter } from '../components/usuarios/users-filter'
 import { Button } from '../components/button'
+import { DropdownMenu } from '../components/usuarios/menu'
 
 interface users {
   index: number
@@ -69,15 +69,17 @@ export function Usuarios() {
           <div className="flex  justify-between items-center">
             <h1 className="px-3 font-bold text-3xl">Usuários</h1>
 
-            <Button>
-              <UserRoundPlus className="size-5" />
-              <span className="text-sm font-bold">Adicionar usuário</span>
-            </Button>
+            <a href="/usuarios/adicionar">
+              <Button>
+                <UserRoundPlus className="size-5" />
+                <span className="text-sm medium">Adicionar usuário</span>
+              </Button>
+            </a>
           </div>
 
           <div className="min-w-[79rem] border border-zinc-700 rounded-lg text-center">
             <div className="px-4 py-2 border-b border-zinc-700 flex gap-3">
-              <Example />
+              <DropdownMenu />
 
               <UsersFilter />
             </div>

@@ -5,6 +5,9 @@ import { Home } from './pages/home'
 import { Registros } from './pages/registros'
 import { Usuarios } from './pages/usuarios'
 import { Admin } from './pages/admin'
+import { AdicionarUsuario } from './pages/adicionar-usuario'
+import { EditarUsuario } from './pages/editar-usuario'
+import { Observacoes } from './pages/observacoes'
 
 export function App() {
   return (
@@ -14,6 +17,9 @@ export function App() {
         <Route path="/home" Component={Home} />
         <Route path="/registros" Component={Registros} />
         <Route path="/usuarios" Component={Usuarios} />
+        <Route path="/usuarios/adicionar" Component={AdicionarUsuario} />
+        <Route path="/usuarios/editar" Component={EditarUsuario} />
+        <Route path="/usuarios/observacoes" Component={Observacoes} />
         <Route path="/admin" Component={Admin} />
       </Routes>
     </BrowserRouter>

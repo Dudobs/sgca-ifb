@@ -78,7 +78,7 @@ export function Home() {
           </div>
 
           <div className="flex gap-3">
-            <Button className="w-9">
+            <Button className="px-2">
               <RotateCw className="size-5 text-zinc-50" />
             </Button>
 

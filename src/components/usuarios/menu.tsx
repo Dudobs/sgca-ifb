@@ -2,14 +2,14 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisVertical } from 'lucide-react'
 
 const links = [
-  { href: '/usuarios', label: 'Editar' },
-  { href: '/usuarios', label: 'Adicionar registro' },
-  { href: '/usuarios', label: 'Alterar status de acesso' },
-  { href: '/usuarios', label: 'Observações' },
-  { href: '/usuarios', label: 'Tornar administrador' },
+  { href: '/usuarios/editar', label: 'Editar' },
+  { href: '', label: 'Adicionar registro' },
+  { href: '', label: 'Alterar status de acesso' },
+  { href: '/usuarios/observacoes', label: 'Observações' },
+  { href: '', label: 'Tornar administrador' },
 ]
 
-export default function Example() {
+export function DropdownMenu() {
   return (
     <Menu
       as="div"

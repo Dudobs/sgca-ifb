@@ -1,6 +1,4 @@
 import { House, TableProperties, Users } from 'lucide-react'
-import { useLocation } from 'react-router-dom'
-
 interface LinkProps {
   navbarIsOpen: boolean
 }
@@ -12,7 +10,11 @@ const links = [
 ]
 
 export function NavbarLinks({ navbarIsOpen }: LinkProps) {
-  const location = useLocation()
+  const url = new URL(window.location.toString())
+
+  function focusedNavbarLink(url: URL, linkURL: string) {
+    return url.pathname.includes(linkURL)
+  }
 
   return (
     <div className="flex flex-col gap-2 font-medium">
@@ -21,7 +23,7 @@ export function NavbarLinks({ navbarIsOpen }: LinkProps) {
           key={link.href}
           href={link.href}
           className={
-            location.pathname === link.href
+            focusedNavbarLink(url, link.href)
               ? 'flex items-center gap-1 text-emerald-800'
               : 'flex items-center gap-1 hover:text-emerald-200'
           }
