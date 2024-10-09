@@ -2,11 +2,11 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisVertical } from 'lucide-react'
 
 const links = [
-  { href: '/usuarios/editar', label: 'Editar' },
-  { href: '', label: 'Adicionar registro' },
-  { href: '', label: 'Alterar status de acesso' },
-  { href: '/usuarios/observacoes', label: 'Observações' },
-  { href: '', label: 'Tornar administrador' },
+  { key: 1, href: '/usuarios/editar', label: 'Editar' },
+  { key: 2, href: '', label: 'Adicionar registro' },
+  { key: 3, href: '', label: 'Alterar status de acesso' },
+  { key: 4, href: '/usuarios/observacoes', label: 'Observações' },
+  { key: 5, href: '', label: 'Tornar administrador' },
 ]
 
 export function DropdownMenu() {
@@ -27,7 +27,7 @@ export function DropdownMenu() {
       >
         <div className="py-1">
           {links.map(link => (
-            <MenuItem key={link.href}>
+            <MenuItem key={link.key}>
               <a
                 href={link.href}
                 className="block px-4 py-2 text-sm text-zinc-950 data-[focus]:bg-green-50 data-[focus]:text-green-900"

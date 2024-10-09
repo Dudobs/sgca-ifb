@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.1.9",
+    "@radix-ui/react-dialog": "^1.1.2",
     "dayjs": "^1.11.13",
     "lucide-react": "^0.446.0",
     "react": "^18.3.1",
