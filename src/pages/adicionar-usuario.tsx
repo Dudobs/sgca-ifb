@@ -16,7 +16,7 @@ export function AdicionarUsuario() {
         <main className="flex flex-col gap-8">
           <h1 className="px-3 font-bold text-3xl">Adicionar Usuário</h1>
 
-          <Form action="" className="flex flex-col gap-4 rounded-lg">
+          <Form action="" className="flex flex-col gap-4 rounded-lg shadow-md">
             <span className="absolute top-[-0.75rem] left-3 text-lg">
               INFORMAÇÕES PESSOAIS
             </span>
@@ -64,7 +64,7 @@ export function AdicionarUsuario() {
             </Field>
 
             <div className="w-full flex items-center justify-between gap-4">
-              <Button type="submit" className="flex-1">
+              <Button type="submit" size="md" className="flex-1">
                 Salvar
               </Button>
               <Button

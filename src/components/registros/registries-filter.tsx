@@ -70,7 +70,7 @@ export function RegistriesFilter() {
         </Field>
       </div>
 
-      <Button>
+      <Button type="submit">
         <Search className="size-5 rotate-90" />
         <span>Pesquisar</span>
       </Button>
