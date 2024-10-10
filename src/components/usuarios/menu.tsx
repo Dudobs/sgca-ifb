@@ -1,12 +1,8 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { EllipsisVertical } from 'lucide-react'
-import {
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from '../dialog'
+import * as Dialog from "@radix-ui/react-dialog";
+import { EllipsisVertical, X } from 'lucide-react'
 import { Button } from '../button'
+import { Input } from '../form/input';
 
 export function DropdownMenu() {
   return (
@@ -35,28 +31,45 @@ export function DropdownMenu() {
           </MenuItem>
 
           <MenuItem>
-            <div>
-              <DialogTrigger asChild>
-                <button
+          <Dialog.Root>
+            <Dialog.Trigger asChild>
+            <button
                   type="button"
-                  className="block px-4 py-2 text-sm text-zinc-950 data-[focus]:bg-green-50 data-[focus]:text-green-900"
+                  className="px-4 py-2 text-sm text-zinc-950 data-[focus]:bg-green-50 data-[focus]:text-green-900"
                 >
                   Adicionar registro
                 </button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogTitle>Adicionar registro manualmente?</DialogTitle>
-                <form action="">
-                  <input type="button" value={'Entrada'} />
-                  <input type="button" value={'Saída'} />
+            </Dialog.Trigger>
 
-                  <Button type="submit">Salvar</Button>
-                  <DialogClose asChild>
-                    <Button>Cancelar</Button>
-                  </DialogClose>
+            <Dialog.Portal>
+              <Dialog.Overlay className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm data-[state=open]:animate-overlayShow" />
+              <Dialog.Content className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] px-5 py-8 shadow-md rounded-lg border border-zinc-700 bg-zinc-100 flex flex-col gap-4 data-[state=open]:animate-contentShow">
+                <div className='flex flex-col justify-start gap-1'>
+                  <Dialog.Title className='text-2xl'>Adicionar registro</Dialog.Title>
+                  <Dialog.Description className='text-xs'>Adiciona um registro manualmente, liberando o acesso da catraca logo após a operação.</Dialog.Description>
+                </div>
+
+                <form action="" className='flex flex-col justify-between gap-16'>
+                  <div className='flex items-center gap-4'>
+                    <Input type="button" value={'Entrada'} className='flex-1' />
+                    <Input type="button" value={'Saída'} className='flex-1' />
+                  </div>
+                  
+                  <div className='flex items-center gap-4'>
+                    <Dialog.Close asChild>
+                      <Button type="submit" className='flex-1'>Salvar</Button>
+                    </Dialog.Close>
+                    <Dialog.Close asChild>
+                      <button className='absolute right-2.5 top-2.5 inline-flex size-[25px] appearance-none items-center justify-center rounded-full'>
+                        <X />
+                      </button>
+                    </Dialog.Close>
+                  </div>
+
                 </form>
-              </DialogContent>
-            </div>
+              </Dialog.Content>
+            </Dialog.Portal>
+          </Dialog.Root>
           </MenuItem>
 
           <MenuItem>

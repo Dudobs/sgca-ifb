@@ -33,7 +33,7 @@ export function EditarUsuario() {
                     type="text"
                     id="name"
                     name="name"
-                    placeholder={'Eduardo Vieira Campos'}
+                    defaultValue={'Eduardo Vieira Campos'}
                     className="w-full h-9"
                   />
                 </Field>
@@ -43,7 +43,7 @@ export function EditarUsuario() {
                   <Input
                     id="cpf"
                     name="cpf"
-                    placeholder={'085.000.000-00'}
+                    defaultValue={'085.000.000-00'}
                     className="w-full h-9"
                   />
                 </Field>
@@ -53,17 +53,17 @@ export function EditarUsuario() {
                   <Input
                     id="email"
                     name="email"
-                    placeholder={'dudobslol@gmail.com'}
+                    defaultValue={'dudobslol@gmail.com'}
                     className="w-full h-9"
                   />
                 </Field>
 
                 <Field className="w-full">
                   <Label htmlFor="user-type" label={'Tipo de usuário:'} />
-                  <Select id="user-type" name="user-type" className="h-9">
-                    <option>Médio subsequente</option>
+                  <Select id="user-type" name="user-type" defaultValue={1} className="h-9">
                     <option>01</option>
                     <option>02</option>
+                    <option value={1}>Médio subsequente</option>
                     <option>03</option>
                     <option>05</option>
                   </Select>
@@ -83,7 +83,7 @@ export function EditarUsuario() {
                   <Input
                     id="matricula"
                     name="matricula"
-                    placeholder={'222000000057'}
+                    defaultValue={'222000000057'}
                     disabled
                     className="w-full h-9"
                   />
@@ -142,9 +142,10 @@ export function EditarUsuario() {
                   <Select
                     id="access-status"
                     name="access-status"
+                    defaultValue={1}
                     className="h-9"
                   >
-                    <option>Ativo</option>
+                    <option value={1}>Ativo</option>
                     <option>Inativo</option>
                   </Select>
                 </Field>
