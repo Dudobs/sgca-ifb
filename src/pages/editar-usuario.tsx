@@ -33,7 +33,7 @@ export function EditarUsuario() {
                     type="text"
                     id="name"
                     name="name"
-                    value={'Eduardo Vieira Campos'}
+                    placeholder={'Eduardo Vieira Campos'}
                     className="w-full h-9"
                   />
                 </Field>
@@ -43,7 +43,7 @@ export function EditarUsuario() {
                   <Input
                     id="cpf"
                     name="cpf"
-                    value={'085.000.000-00'}
+                    placeholder={'085.000.000-00'}
                     className="w-full h-9"
                   />
                 </Field>
@@ -53,23 +53,18 @@ export function EditarUsuario() {
                   <Input
                     id="email"
                     name="email"
-                    value={'dudobslol@gmail.com'}
+                    placeholder={'dudobslol@gmail.com'}
                     className="w-full h-9"
                   />
                 </Field>
 
                 <Field className="w-full">
                   <Label htmlFor="user-type" label={'Tipo de usuário:'} />
-                  <Select
-                    id="user-type"
-                    name="user-type"
-                    value={4}
-                    className="h-9"
-                  >
+                  <Select id="user-type" name="user-type" className="h-9">
+                    <option>Médio subsequente</option>
                     <option>01</option>
                     <option>02</option>
                     <option>03</option>
-                    <option value={4}>Médio subsequente</option>
                     <option>05</option>
                   </Select>
                 </Field>
@@ -88,7 +83,7 @@ export function EditarUsuario() {
                   <Input
                     id="matricula"
                     name="matricula"
-                    value={222000000057}
+                    placeholder={'222000000057'}
                     disabled
                     className="w-full h-9"
                   />
@@ -132,12 +127,10 @@ export function EditarUsuario() {
                   <Select
                     id="justificativa"
                     name="justificativa"
-                    className="h-9 pr-8 truncate"
+                    className="h-9 pr-8"
                   >
                     <option value={''} />
-                    <option value={1} className="truncate ">
-                      Trancamento de matrícula
-                    </option>
+                    <option>Trancamento de matrícula</option>
                     <option>Curso finalizado</option>
                     <option>Suspensão</option>
                     <option>Expulsão</option>

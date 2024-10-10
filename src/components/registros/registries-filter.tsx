@@ -48,7 +48,7 @@ export function RegistriesFilter() {
         </Field>
 
         <Field>
-          <Label htmlFor="date">Data:</Label>
+          <Label htmlFor="date" label={'Data'} />
           <div id="date" className="flex items-end gap-1">
             <Label htmlFor="startDate" label={'De:'} />
             <Input type="date" id="startDate" name="startDate" />
@@ -59,7 +59,7 @@ export function RegistriesFilter() {
         </Field>
 
         <Field>
-          <Label htmlFor="time">Hora:</Label>
+          <Label htmlFor="time" label={'Hora'} />
           <div id="time" className="flex items-end gap-1">
             <Label htmlFor="startTime" label={'De:'} />
             <Input type="time" id="startTime" name="startTime" />
