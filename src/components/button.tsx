@@ -8,6 +8,8 @@ const button = tv({
     variant: {
       primary: 'bg-green-600 hover:bg-green-700',
       secondary: 'bg-red-500 hover:bg-red-700',
+      access_type:
+        'w-full bg-transparent text-green-500/70 border border-green-800 font-medium text-center hover:bg-green-500/10 focus:bg-green-600/70 focus:text-zinc-50 flex-1',
     },
 
     size: {

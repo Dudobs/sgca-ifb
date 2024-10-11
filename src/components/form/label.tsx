@@ -16,7 +16,7 @@ export function Label({ isRequired, label, ...props }: LabelProps) {
         props.className
       )}
     >
-      <span>{label}</span>
+      {label && <span>{label}</span>}
       {isRequired && <span className="text-sm text-red-400">*</span>}
     </label>
   )

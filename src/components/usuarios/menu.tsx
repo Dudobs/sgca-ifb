@@ -1,10 +1,22 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import * as Dialog from "@radix-ui/react-dialog";
-import { EllipsisVertical, X } from 'lucide-react'
+import { useState } from 'react'
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Description,
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  DialogBackdrop,
+} from '@headlessui/react'
+import { EllipsisVertical } from 'lucide-react'
+
 import { Button } from '../button'
-import { Input } from '../form/input';
 
 export function DropdownMenu() {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
     <Menu
       as="div"
@@ -31,45 +43,108 @@ export function DropdownMenu() {
           </MenuItem>
 
           <MenuItem>
-          <Dialog.Root>
-            <Dialog.Trigger asChild>
-            <button
-                  type="button"
-                  className="px-4 py-2 text-sm text-zinc-950 data-[focus]:bg-green-50 data-[focus]:text-green-900"
-                >
-                  Adicionar registro
-                </button>
-            </Dialog.Trigger>
+            <>
+              <button
+                type="button"
+                onClick={() => setIsOpen(true)}
+                className="block px-4 py-2 text-sm text-zinc-950 data-[focus]:bg-green-50 data-[focus]:text-green-900"
+              >
+                Adicionar registro
+              </button>
 
-            <Dialog.Portal>
-              <Dialog.Overlay className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm data-[state=open]:animate-overlayShow" />
-              <Dialog.Content className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] px-5 py-8 shadow-md rounded-lg border border-zinc-700 bg-zinc-100 flex flex-col gap-4 data-[state=open]:animate-contentShow">
-                <div className='flex flex-col justify-start gap-1'>
-                  <Dialog.Title className='text-2xl'>Adicionar registro</Dialog.Title>
-                  <Dialog.Description className='text-xs'>Adiciona um registro manualmente, liberando o acesso da catraca logo após a operação.</Dialog.Description>
+              <Dialog
+                open={isOpen}
+                onClose={() => setIsOpen(false)}
+                className="relative z-50"
+              >
+                <DialogBackdrop className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm" />
+                <div className="fixed inset-0 z-50 flex w-screen items-center justify-center p-4">
+                  <DialogPanel className="w-[450px] px-5 py-8 shadow-md rounded-lg border border-zinc-700 bg-zinc-100 flex flex-col gap-4">
+                    <div className="flex flex-col">
+                      <DialogTitle className="font-medium text-2xl">
+                        Adicionar registro
+                      </DialogTitle>
+                      <Description className="text-sm">
+                        Adiciona um registro manualmente, liberando o acesso da
+                        catraca logo após a operação.
+                      </Description>
+                    </div>
+                    <form
+                      action=""
+                      onSubmit={e => {
+                        e.preventDefault()
+                        const form = e.target as HTMLFormElement
+                        const formData = new FormData(form)
+                        const tipo = formData.get('registro')
+                        console.log(tipo)
+                      }}
+                      className="flex flex-col justify-between gap-16"
+                    >
+                      <div className="flex items-center gap-4">
+                        <label htmlFor="entrada" className="flex-1">
+                          <input
+                            type="radio"
+                            name="registro"
+                            value="entrada"
+                            id="entrada"
+                            className="hidden"
+                          />
+                          <Button
+                            className=""
+                            variant="access_type"
+                            size="md"
+                            onClick={() =>
+                              document.getElementById('entrada')?.click()
+                            }
+                          >
+                            Entrada
+                          </Button>
+                        </label>
+
+                        <label htmlFor="saida" className="flex-1">
+                          <Button
+                            variant="access_type"
+                            size="md"
+                            onClick={() =>
+                              document.getElementById('saida')?.click()
+                            }
+                          >
+                            <input
+                              type="radio"
+                              name="registro"
+                              value="saida"
+                              id="saida"
+                              className="hidden"
+                            />
+                            Saída
+                          </Button>
+                        </label>
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        <Button
+                          onClick={() => setIsOpen(false)}
+                          type="submit"
+                          size="md"
+                          className="flex-1"
+                        >
+                          Continuar
+                        </Button>
+                        <Button
+                          onClick={() => setIsOpen(false)}
+                          type="reset"
+                          variant="secondary"
+                          size="md"
+                          className="flex-1"
+                        >
+                          Cancelar
+                        </Button>
+                      </div>
+                    </form>
+                  </DialogPanel>
                 </div>
-
-                <form action="" className='flex flex-col justify-between gap-16'>
-                  <div className='flex items-center gap-4'>
-                    <Input type="button" value={'Entrada'} className='flex-1' />
-                    <Input type="button" value={'Saída'} className='flex-1' />
-                  </div>
-                  
-                  <div className='flex items-center gap-4'>
-                    <Dialog.Close asChild>
-                      <Button type="submit" className='flex-1'>Salvar</Button>
-                    </Dialog.Close>
-                    <Dialog.Close asChild>
-                      <button className='absolute right-2.5 top-2.5 inline-flex size-[25px] appearance-none items-center justify-center rounded-full'>
-                        <X />
-                      </button>
-                    </Dialog.Close>
-                  </div>
-
-                </form>
-              </Dialog.Content>
-            </Dialog.Portal>
-          </Dialog.Root>
+              </Dialog>
+            </>
           </MenuItem>
 
           <MenuItem>
@@ -80,7 +155,6 @@ export function DropdownMenu() {
               Alterar status de acesso
             </a>
           </MenuItem>
-
           <MenuItem>
             <a
               href="/usuarios/observacoes"
@@ -89,7 +163,6 @@ export function DropdownMenu() {
               Observações
             </a>
           </MenuItem>
-
           <MenuItem>
             <a
               href="/usuarios/editar"

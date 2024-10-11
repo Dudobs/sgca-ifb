@@ -10,7 +10,6 @@ export function UsersFilter() {
           placeholder="Buscar usuário..."
         />
       </div>
-
       <select
         id="user-type"
         name="user-type"
@@ -24,7 +23,6 @@ export function UsersFilter() {
         <option className="text-zinc-950">04</option>
         <option className="text-zinc-950">05</option>
       </select>
-
       <select
         id="user-type"
         name="user-type"
