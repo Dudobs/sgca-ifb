@@ -60,7 +60,12 @@ export function EditarUsuario() {
 
                 <Field className="w-full">
                   <Label htmlFor="user-type" label={'Tipo de usuário:'} />
-                  <Select id="user-type" name="user-type" defaultValue={1} className="h-9">
+                  <Select
+                    id="user-type"
+                    name="user-type"
+                    defaultValue={1}
+                    className="h-9"
+                  >
                     <option>01</option>
                     <option>02</option>
                     <option value={1}>Médio subsequente</option>
@@ -127,6 +132,7 @@ export function EditarUsuario() {
                   <Select
                     id="justificativa"
                     name="justificativa"
+                    required
                     className="h-9 pr-8"
                   >
                     <option value={''} />
@@ -159,6 +165,7 @@ export function EditarUsuario() {
                     id="outra-justificativa"
                     name="outra-justificativa"
                     placeholder="Obrigatório"
+                    required
                   />
                 </Field>
               </div>

@@ -6,10 +6,10 @@ const button = tv({
 
   variants: {
     variant: {
-      primary: 'bg-green-600 hover:bg-green-700',
-      secondary: 'bg-red-500 hover:bg-red-700',
+      primary: 'bg-green-600 hover:bg-green-700 uppercase',
+      secondary: 'bg-red-500 hover:bg-red-700 uppercase',
       access_type:
-        'w-full bg-transparent text-green-500/70 border border-green-800 font-medium text-center hover:bg-green-500/10 focus:bg-green-600/70 focus:text-zinc-50 flex-1',
+        'w-full bg-transparent text-green-600/80 border border-green-800 font-medium text-center hover:bg-green-500/10 focus:bg-green-600/60 focus:text-zinc-50 flex-1',
     },
 
     size: {

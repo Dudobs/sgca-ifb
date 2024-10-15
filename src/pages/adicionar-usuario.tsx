@@ -23,12 +23,18 @@ export function AdicionarUsuario() {
 
             <Field className="w-full">
               <Label htmlFor="name" label={'Nome:'} isRequired />
-              <Input type="text" id="name" name="name" className="w-full h-9" />
+              <Input
+                type="text"
+                id="name"
+                name="name"
+                required
+                className="w-full h-9"
+              />
             </Field>
 
             <Field className="w-full">
               <Label htmlFor="cpf" label={'CPF:'} isRequired />
-              <Input id="cpf" name="cpf" className="w-full h-9" />
+              <Input id="cpf" name="cpf" required className="w-full h-9" />
             </Field>
 
             <Field className="w-full">
@@ -42,7 +48,7 @@ export function AdicionarUsuario() {
                 label={'Tipo de usuário:'}
                 isRequired
               />
-              <Select id="user-type" name="user-type" className="h-9">
+              <Select id="user-type" name="user-type" required className="h-9">
                 <option>01</option>
                 <option>02</option>
                 <option>03</option>
@@ -57,7 +63,12 @@ export function AdicionarUsuario() {
                 label={'Status de acesso:'}
                 isRequired
               />
-              <Select id="access-status" name="access-status" className="h-9">
+              <Select
+                id="access-status"
+                name="access-status"
+                required
+                className="h-9"
+              >
                 <option>Ativo</option>
                 <option>Inativo</option>
               </Select>
