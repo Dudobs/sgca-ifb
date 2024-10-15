@@ -19,7 +19,7 @@ export function App() {
         <Route path="/usuarios" Component={Usuarios} />
         <Route path="/usuarios/adicionar" Component={AdicionarUsuario} />
         <Route path="/usuarios/editar" Component={EditarUsuario} />
-        <Route path="/usuarios/observacoes" Component={Observacoes} />
+        <Route path="/usuarios/:userId/observacoes" Component={Observacoes} />
         <Route path="/admin" Component={Admin} />
       </Routes>
     </BrowserRouter>

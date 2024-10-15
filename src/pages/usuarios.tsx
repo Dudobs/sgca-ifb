@@ -17,7 +17,7 @@ import { TableHeader } from '../components/table/table-header'
 import { generateUsers } from '../data/users'
 import { UsersFilter } from '../components/usuarios/users-filter'
 import { Button } from '../components/button'
-import { DropdownMenu } from '../components/usuarios/menu'
+import { UserOptions } from '../components/usuarios/user-options'
 
 interface users {
   index: number
@@ -109,7 +109,7 @@ export function Usuarios() {
                         }
                       >
                         <TableCell>
-                          <DropdownMenu />
+                          <UserOptions userId={user.index} />
                         </TableCell>
                         <TableCell className="min-w-96">{user.name}</TableCell>
                         <TableCell className="min-w-96">{user.email}</TableCell>

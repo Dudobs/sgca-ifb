@@ -1,4 +1,4 @@
-import { Search } from 'lucide-react'
+import { FilterX, Search } from 'lucide-react'
 
 import { Form } from '../form/form'
 import { Field } from '../form/field'
@@ -15,7 +15,7 @@ export function RegistriesFilter() {
       <div className="w-2/3 flex flex-wrap gap-4">
         <Field>
           <Label htmlFor="name" label={'Nome:'} />
-          <Input type="text" id="name" name="name" />
+          <Input type="text" id="name" name="name" autoComplete="off" />
         </Field>
 
         <Field>
@@ -48,32 +48,57 @@ export function RegistriesFilter() {
         </Field>
 
         <Field>
-          <Label htmlFor="date" label={'Data'} />
-          <div id="date" className="flex items-end gap-1">
-            <Label htmlFor="startDate" label={'De:'} />
-            <Input type="date" id="startDate" name="startDate" />
+          <div>
+            <span className="text-sm text-zinc-950 tracking-tight leading-normal">
+              Hora:
+            </span>
+            <div id="date" className="flex items-end gap-1">
+              <Label htmlFor="startDate" label={'De:'} />
+              <Input type="date" id="startDate" name="startDate" />
 
-            <Label htmlFor="endDate" label={'Até:'} />
-            <Input type="date" id="endDate" name="endDate" placeholder="até" />
+              <Label htmlFor="endDate" label={'Até:'} />
+              <Input
+                type="date"
+                id="endDate"
+                name="endDate"
+                placeholder="até"
+              />
+            </div>
           </div>
         </Field>
 
         <Field>
-          <Label htmlFor="time" label={'Hora'} />
-          <div id="time" className="flex items-end gap-1">
-            <Label htmlFor="startTime" label={'De:'} />
-            <Input type="time" id="startTime" name="startTime" />
+          <div>
+            <span className="text-sm text-zinc-950 tracking-tight leading-normal">
+              Hora:
+            </span>
+            <div id="time" className="flex items-end gap-1">
+              <Label htmlFor="startTime" label={'De:'} />
+              <Input type="time" id="startTime" name="startTime" />
 
-            <Label htmlFor="endTime" label={'Até:'} />
-            <Input type="time" id="endTime" name="endTime" placeholder="até" />
+              <Label htmlFor="endTime" label={'Até:'} />
+              <Input
+                type="time"
+                id="endTime"
+                name="endTime"
+                placeholder="até"
+              />
+            </div>
           </div>
         </Field>
       </div>
 
-      <Button type="submit" className="normal-case">
-        <Search className="size-5 rotate-90" />
-        <span>Pesquisar</span>
-      </Button>
+      <div className="flex gap-2">
+        <Button type="reset" variant="reset" className="normal-case">
+          <FilterX className="size-5" />
+          <span>Limpar filtros</span>
+        </Button>
+
+        <Button type="submit" className="normal-case">
+          <Search className="size-5 rotate-90" />
+          <span>Pesquisar</span>
+        </Button>
+      </div>
     </Form>
   )
 }
