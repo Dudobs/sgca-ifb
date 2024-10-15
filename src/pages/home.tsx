@@ -82,7 +82,7 @@ export function Home() {
               <RotateCw className="size-5 text-zinc-50" />
             </Button>
 
-            <Button>
+            <Button className="normal-case">
               <a href="/registros">Ver mais</a>
             </Button>
           </div>

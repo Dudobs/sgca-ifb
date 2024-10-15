@@ -15,7 +15,6 @@ import { TableCell } from '../components/table/table-cell'
 import { TableRow } from '../components/table/table-row'
 import { TableHeader } from '../components/table/table-header'
 import { generateUsers } from '../data/users'
-import { Checkbox } from '../components/form/checkbox'
 import { UsersFilter } from '../components/usuarios/users-filter'
 import { Button } from '../components/button'
 import { DropdownMenu } from '../components/usuarios/menu'
@@ -31,18 +30,18 @@ interface users {
 }
 
 export function Usuarios() {
-  const [registries, setRegistries] = useState<users[]>([])
+  const [usersData, setUsersData] = useState<users[]>([])
 
   useEffect(() => {
     const data = generateUsers()
-    setRegistries(data)
+    setUsersData(data)
   }, [])
 
   const [page, setPage] = useState(1)
 
   const usersPerPage = 10
 
-  const totalPages = Math.ceil(registries.length / usersPerPage)
+  const totalPages = Math.ceil(usersData.length / usersPerPage)
 
   function goToFirstPage() {
     setPage(1)
@@ -72,24 +71,22 @@ export function Usuarios() {
             <a href="/usuarios/adicionar">
               <Button>
                 <UserRoundPlus className="size-5" />
-                <span className="text-sm medium">Adicionar usuário</span>
+                <span className="text-sm medium normal-case">
+                  Adicionar usuário
+                </span>
               </Button>
             </a>
           </div>
 
           <div className="min-w-[79rem] border border-zinc-700 rounded-lg text-center">
             <div className="px-4 py-2 border-b border-zinc-700 flex gap-3">
-              <DropdownMenu />
-
               <UsersFilter />
             </div>
 
             <Table className="min-w-[79rem] rounded-none border-none">
               <thead>
                 <TableRow className="border-b border-zinc-700">
-                  <TableHeader>
-                    <Checkbox />
-                  </TableHeader>
+                  <TableHeader> </TableHeader>
                   <TableHeader>Nome</TableHeader>
                   <TableHeader>Email</TableHeader>
                   <TableHeader>CPF</TableHeader>
@@ -99,27 +96,29 @@ export function Usuarios() {
                 </TableRow>
               </thead>
               <tbody>
-                {registries
+                {usersData
                   .slice((page - 1) * usersPerPage, page * usersPerPage)
-                  .map(registrie => {
+                  .map(user => {
                     return (
                       <TableRow
-                        key={registrie.index}
+                        key={user.index}
                         className={
-                          registrie.index % 2 === 0
+                          user.index % 2 === 0
                             ? 'h-10 border-zinc-700'
                             : 'h-10 border-zinc-700 bg-zinc-200'
                         }
                       >
                         <TableCell>
-                          <Checkbox />
+                          <DropdownMenu />
                         </TableCell>
-                        <TableCell>{registrie.name}</TableCell>
-                        <TableCell>{registrie.email}</TableCell>
-                        <TableCell>{registrie.cpf}</TableCell>
-                        <TableCell>{registrie.matricula}</TableCell>
-                        <TableCell>{registrie.accessStatus}</TableCell>
-                        <TableCell>{registrie.userType}</TableCell>
+                        <TableCell className="min-w-96">{user.name}</TableCell>
+                        <TableCell className="min-w-96">{user.email}</TableCell>
+                        <TableCell className="min-w-36">{user.cpf}</TableCell>
+                        <TableCell className="min-w-36">
+                          {user.matricula}
+                        </TableCell>
+                        <TableCell>{user.accessStatus}</TableCell>
+                        <TableCell>{user.userType}</TableCell>
                       </TableRow>
                     )
                   })}
@@ -127,7 +126,7 @@ export function Usuarios() {
               <tfoot>
                 <TableRow className="border-t border-zinc-700">
                   <TableCell colSpan={4} className="text-left">
-                    Mostrando {usersPerPage} de {registries.length} resultados
+                    Mostrando {usersPerPage} de {usersData.length} resultados
                   </TableCell>
                   <TableCell className="text-right" colSpan={3}>
                     <div className="inline-flex items-center gap-8">

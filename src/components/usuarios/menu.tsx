@@ -1,32 +1,46 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { EllipsisVertical } from "lucide-react";
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { EllipsisVertical } from 'lucide-react'
 
-import { AdicionarRegistro } from "../dialogs/adicionar-registro";
-import { AlterarStatusAcesso } from "../dialogs/alterar-status-acesso";
-import { TornarAdministrador } from "../dialogs/tornar-administrador";
-import { useState } from "react";
+import { AdicionarRegistro } from '../dialogs/adicionar-registro'
+import { AlterarStatusAcesso } from '../dialogs/alterar-status-acesso'
+import { TornarAdministrador } from '../dialogs/tornar-administrador'
+import { useState } from 'react'
 
 export function DropdownMenu() {
-  const [dialogTornarAdminIsOpen, setDialogTornarAdminIsOpen] = useState(false);
+  // STATE - Adicionar registro
   const [dialogAdicionarRegistroIsOpen, setDialogAdicionarRegistroIsOpen] =
-    useState(false);
-  // Adicionar registro
-  const showDialogAdicionarRegistro = () => {
-    setDialogAdicionarRegistroIsOpen(true);
-  };
+    useState(false)
+
+  function showDialogAdicionarRegistro() {
+    setDialogAdicionarRegistroIsOpen(true)
+  }
 
   const closeDialogAdicionarRegistro = () => {
-    setDialogTornarAdminIsOpen(false);
-  };
+    setDialogAdicionarRegistroIsOpen(false)
+  }
 
-  // Tornar administrador
+  // STATE - Alterar status de acesso
+  const [dialogAlterarStatusAcessoIsOpen, setDialogAlterarStatusAcessoIsOpen] =
+    useState(false)
+
+  function showDialogAlterarStatusAcesso() {
+    setDialogAlterarStatusAcessoIsOpen(true)
+  }
+
+  const closeDialogAlterarStatusAcesso = () => {
+    setDialogAlterarStatusAcessoIsOpen(false)
+  }
+
+  // STATE - Tornar administrador
+  const [dialogTornarAdminIsOpen, setDialogTornarAdminIsOpen] = useState(false)
+
   const showDialogTornarAdmin = () => {
-    setDialogTornarAdminIsOpen(true);
-  };
+    setDialogTornarAdminIsOpen(true)
+  }
 
   const closeDialogTornarAdmin = () => {
-    setDialogTornarAdminIsOpen(false);
-  };
+    setDialogTornarAdminIsOpen(false)
+  }
 
   return (
     <>
@@ -65,7 +79,13 @@ export function DropdownMenu() {
             </MenuItem>
 
             <MenuItem>
-              <AlterarStatusAcesso />
+              <button
+                type="button"
+                onClick={showDialogAlterarStatusAcesso}
+                className="w-full text-left block px-4 py-2 text-sm text-zinc-950 hover:bg-green-50 hover:text-green-900"
+              >
+                Adicionar status de acesso
+              </button>
             </MenuItem>
             <MenuItem>
               <a
@@ -93,10 +113,15 @@ export function DropdownMenu() {
         onClose={closeDialogAdicionarRegistro}
       />
 
+      <AlterarStatusAcesso
+        dialogIsOpen={dialogAlterarStatusAcessoIsOpen}
+        onClose={closeDialogAlterarStatusAcesso}
+      />
+
       <TornarAdministrador
         dialogIsOpen={dialogTornarAdminIsOpen}
         onClose={closeDialogTornarAdmin}
       />
     </>
-  );
+  )
 }
