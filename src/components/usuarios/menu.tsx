@@ -1,21 +1,32 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { EllipsisVertical } from 'lucide-react'
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { EllipsisVertical } from "lucide-react";
 
-import { AdicionarRegistro } from '../dialogs/adicionar-registro'
-import { AlterarStatusAcesso } from '../dialogs/alterar-status-acesso'
-import { TornarAdministrador } from '../dialogs/tornar-administrador'
-import { useState } from 'react'
+import { AdicionarRegistro } from "../dialogs/adicionar-registro";
+import { AlterarStatusAcesso } from "../dialogs/alterar-status-acesso";
+import { TornarAdministrador } from "../dialogs/tornar-administrador";
+import { useState } from "react";
 
 export function DropdownMenu() {
-  const [dialogTornarAdminIsOpen, setDialogTornarAdminIsOpen] = useState(false)
+  const [dialogTornarAdminIsOpen, setDialogTornarAdminIsOpen] = useState(false);
+  const [dialogAdicionarRegistroIsOpen, setDialogAdicionarRegistroIsOpen] =
+    useState(false);
+  // Adicionar registro
+  const showDialogAdicionarRegistro = () => {
+    setDialogAdicionarRegistroIsOpen(true);
+  };
 
+  const closeDialogAdicionarRegistro = () => {
+    setDialogTornarAdminIsOpen(false);
+  };
+
+  // Tornar administrador
   const showDialogTornarAdmin = () => {
-    setDialogTornarAdminIsOpen(true)
-  }
+    setDialogTornarAdminIsOpen(true);
+  };
 
   const closeDialogTornarAdmin = () => {
-    setDialogTornarAdminIsOpen(false)
-  }
+    setDialogTornarAdminIsOpen(false);
+  };
 
   return (
     <>
@@ -44,7 +55,13 @@ export function DropdownMenu() {
             </MenuItem>
 
             <MenuItem>
-              <AdicionarRegistro />
+              <button
+                type="button"
+                onClick={showDialogAdicionarRegistro}
+                className="w-full text-left block px-4 py-2 text-sm text-zinc-950 hover:bg-green-50 hover:text-green-900"
+              >
+                Adicionar registro
+              </button>
             </MenuItem>
 
             <MenuItem>
@@ -71,10 +88,15 @@ export function DropdownMenu() {
         </MenuItems>
       </Menu>
 
+      <AdicionarRegistro
+        dialogIsOpen={dialogAdicionarRegistroIsOpen}
+        onClose={closeDialogAdicionarRegistro}
+      />
+
       <TornarAdministrador
         dialogIsOpen={dialogTornarAdminIsOpen}
         onClose={closeDialogTornarAdmin}
       />
     </>
-  )
+  );
 }
