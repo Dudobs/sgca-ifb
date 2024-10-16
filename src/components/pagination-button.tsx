@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-export function IconButton(props: ComponentProps<'button'>) {
+export function PaginationButton(props: ComponentProps<'button'>) {
   return (
     <button
       {...props}

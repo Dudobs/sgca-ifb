@@ -8,6 +8,7 @@ import { TableCell } from '../components/table/table-cell'
 import { TableHeader } from '../components/table/table-header'
 import { useEffect, useState } from 'react'
 import { generateRegistries } from '../data/registries'
+import { Link } from 'react-router-dom'
 
 interface registries {
   index: number
@@ -81,7 +82,7 @@ export function Home() {
             </Button>
 
             <Button className="normal-case">
-              <a href="/registros">Ver mais</a>
+              <Link to={'/registros'}>Ver mais</Link>
             </Button>
           </div>
         </main>

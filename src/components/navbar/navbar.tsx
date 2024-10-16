@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { ChevronLeft, CircleUserRound, LogOut } from 'lucide-react'
 
 import { NavbarLinks } from './navbar-links'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Header } from '../header'
 
 export function Navbar() {
@@ -34,8 +34,8 @@ export function Navbar() {
       <Header navbarIsOpen />
 
       <div className="mb-4 flex items-center gap-2">
-        <a
-          href="/admin"
+        <Link
+          to={'/admin'}
           className={
             location.pathname === '/admin'
               ? 'flex items-center text-emerald-800 '
@@ -52,10 +52,10 @@ export function Navbar() {
           >
             <p className="ml-12 font-semibold">Admin</p>
           </div>
-        </a>
-        <a href="/">
+        </Link>
+        <Link to={'/'}>
           <LogOut className="text-red-700 size-8 hover:text-red-600" />
-        </a>
+        </Link>
       </div>
 
       <div className="mb-8 border-t border-zinc-50 w-full" />
@@ -75,19 +75,19 @@ export function Navbar() {
       <Header navbarIsOpen={false} className="mb-0" />
 
       <div className="flex flex-col items-center gap-2">
-        <a
-          href="/admin"
+        <Link
+          to={'/admin'}
           className={
             location.pathname === '/admin'
-              ? 'flex items-center text-emerald-800  hover:text-emerald-100'
+              ? 'flex items-center text-emerald-800'
               : 'flex items-center  hover:text-emerald-100'
           }
         >
           <CircleUserRound className="size-11" strokeWidth={1} />
-        </a>
-        <a href="/">
+        </Link>
+        <Link to={'/'}>
           <LogOut className="text-red-700 size-8 hover:text-red-600" />
-        </a>
+        </Link>
       </div>
 
       <div className="border-t border-zinc-50 w-full" />

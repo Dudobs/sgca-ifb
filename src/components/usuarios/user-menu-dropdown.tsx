@@ -1,16 +1,17 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisVertical } from 'lucide-react'
+import { useState } from 'react'
 
 import { AdicionarRegistro } from '../dialogs/adicionar-registro'
 import { AlterarStatusAcesso } from '../dialogs/alterar-status-acesso'
 import { TornarAdministrador } from '../dialogs/tornar-administrador'
-import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 type UserProps = {
   userId: number
 }
 
-export function UserOptions({ userId }: UserProps) {
+export function UserMenuDropdown({ userId }: UserProps) {
   // STATE - Adicionar registro
   const [dialogAdicionarRegistroIsOpen, setDialogAdicionarRegistroIsOpen] =
     useState(false)
@@ -64,12 +65,12 @@ export function UserOptions({ userId }: UserProps) {
         >
           <div className="py-1">
             <MenuItem>
-              <a
-                href={`/usuarios/${userId}/editar`}
+              <Link
+                to={`/usuarios/${userId}/editar`}
                 className="block px-4 py-2 text-sm text-zinc-950 data-[focus]:bg-green-50 data-[focus]:text-green-900"
               >
                 Editar
-              </a>
+              </Link>
             </MenuItem>
 
             <MenuItem>
@@ -92,12 +93,12 @@ export function UserOptions({ userId }: UserProps) {
               </button>
             </MenuItem>
             <MenuItem>
-              <a
-                href={`/usuarios/${userId}/observacoes`}
+              <Link
+                to={`/usuarios/${userId}/observacoes`}
                 className="block px-4 py-2 text-sm text-zinc-950 data-[focus]:bg-green-50 data-[focus]:text-green-900"
               >
                 Observações
-              </a>
+              </Link>
             </MenuItem>
             <MenuItem>
               <button

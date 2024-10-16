@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
   Description,
   Dialog,
@@ -6,25 +5,20 @@ import {
   DialogTitle,
   DialogBackdrop,
 } from '@headlessui/react'
+
 import { Button } from '../button'
 
-export function TornarAdministrador() {
-  const [isOpen, setIsOpen] = useState(false)
+interface DialogProps {
+  dialogIsOpen: boolean
+  onClose: () => void
+}
+
+export function RemoverAdministrador({ dialogIsOpen, onClose }: DialogProps) {
+  if (!dialogIsOpen) return null
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setIsOpen(true)}
-        className="w-full text-left block px-4 py-2 text-sm text-zinc-950 hover:bg-green-50 hover:text-green-900"
-      >
-        Tornar administrador
-      </button>
-      <Dialog
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        className="relative z-50"
-      >
+      <Dialog open={dialogIsOpen} onClose={onClose} className="relative z-50">
         <DialogBackdrop className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm" />
         <div className="fixed inset-0 z-50 flex w-screen items-center justify-center p-4">
           <DialogPanel className="w-[480px] px-5 py-8 shadow-md rounded-lg border border-zinc-700 bg-zinc-100 flex flex-col gap-16">
@@ -38,25 +32,29 @@ export function TornarAdministrador() {
               </Description>
             </div>
 
-            <div className="flex items-center gap-4">
-              <Button
-                onClick={() => setIsOpen(false)}
-                type="button"
-                size="md"
-                className="flex-1"
-              >
-                Continuar
-              </Button>
-              <Button
-                onClick={() => setIsOpen(false)}
-                type="button"
-                variant="secondary"
-                size="md"
-                className="flex-1"
-              >
-                Cancelar
-              </Button>
-            </div>
+            <form
+              action=""
+              onSubmit={() => {
+                onClose()
+
+                console.log('Você não é mais um admin :(')
+              }}
+            >
+              <div className="flex items-center gap-4">
+                <Button type="submit" size="md" className="flex-1">
+                  Continuar
+                </Button>
+                <Button
+                  onClick={onClose}
+                  type="reset"
+                  variant="secondary"
+                  size="md"
+                  className="flex-1"
+                >
+                  Cancelar
+                </Button>
+              </div>
+            </form>
           </DialogPanel>
         </div>
       </Dialog>

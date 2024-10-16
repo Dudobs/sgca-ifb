@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import LogoIFBAccess from '../assets/Logo-ifb-access.svg'
 import { Label } from '../components/form/label'
 import { Input } from '../components/form/input'
-import { LogoIFB } from '../components/logo-ifb'
+import { LogoIFB } from '../assets/logo-ifb'
 
 export function Login() {
   const navigate = useNavigate()
@@ -36,6 +36,8 @@ export function Login() {
               />
               <Input
                 id="username"
+                name="username"
+                autoComplete="on"
                 className="px-4 w-80 h-14 bg-zinc-50 border rounded-lg outline-none text-md focus-visible:border-emerald-500 focus-visible:ring-1 ring-zinc-500/10"
               />
             </div>
@@ -47,6 +49,7 @@ export function Login() {
               />
               <Input
                 id="password"
+                name="password"
                 type="password"
                 className="px-4 w-80 h-14 bg-zinc-50 border rounded-lg outline-none text-md focus-visible:border-emerald-500 focus-visible:ring-1"
               />

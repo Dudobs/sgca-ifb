@@ -4,16 +4,16 @@ import {
   DialogPanel,
   DialogTitle,
   DialogBackdrop,
-} from "@headlessui/react";
-import { Button } from "../button";
+} from '@headlessui/react'
+import { Button } from '../button'
 
 interface DialogProps {
-  dialogIsOpen: boolean;
-  onClose: () => void;
+  dialogIsOpen: boolean
+  onClose: () => void
 }
 
 export function TornarAdministrador({ dialogIsOpen, onClose }: DialogProps) {
-  if (!dialogIsOpen) return null;
+  if (!dialogIsOpen) return null
 
   return (
     <Dialog open={dialogIsOpen} onClose={onClose} className="relative z-50">
@@ -33,9 +33,9 @@ export function TornarAdministrador({ dialogIsOpen, onClose }: DialogProps) {
           <form
             action=""
             onSubmit={() => {
-              onClose();
+              onClose()
 
-              console.log("Você é admin agora!");
+              console.log('Você é admin agora!')
             }}
           >
             <div className="flex items-center gap-4">
@@ -56,5 +56,5 @@ export function TornarAdministrador({ dialogIsOpen, onClose }: DialogProps) {
         </DialogPanel>
       </div>
     </Dialog>
-  );
+  )
 }

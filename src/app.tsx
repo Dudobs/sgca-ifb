@@ -4,7 +4,7 @@ import { Login } from './pages/login'
 import { Home } from './pages/home'
 import { Registros } from './pages/registros'
 import { Usuarios } from './pages/usuarios'
-import { Admin } from './pages/admin'
+import { Admins } from './pages/admins'
 import { AdicionarUsuario } from './pages/adicionar-usuario'
 import { EditarUsuario } from './pages/editar-usuario'
 import { Observacoes } from './pages/observacoes'
@@ -20,7 +20,7 @@ export function App() {
         <Route path="/usuarios/adicionar" Component={AdicionarUsuario} />
         <Route path="/usuarios/:userId/editar" Component={EditarUsuario} />
         <Route path="/usuarios/:userId/observacoes" Component={Observacoes} />
-        <Route path="/admin" Component={Admin} />
+        <Route path="/admin" Component={Admins} />
       </Routes>
     </BrowserRouter>
   )

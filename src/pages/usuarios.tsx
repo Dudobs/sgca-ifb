@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 
 import { Footer } from '../components/footer'
-import { IconButton } from '../components/icon-button'
+import { PaginationButton } from '../components/pagination-button'
 import { Navbar } from '../components/navbar/navbar'
 import { Table } from '../components/table/table'
 import { TableCell } from '../components/table/table-cell'
@@ -17,7 +17,8 @@ import { TableHeader } from '../components/table/table-header'
 import { generateUsers } from '../data/users'
 import { UsersFilter } from '../components/usuarios/users-filter'
 import { Button } from '../components/button'
-import { UserOptions } from '../components/usuarios/user-options'
+import { UserMenuDropdown } from '../components/usuarios/user-menu-dropdown'
+import { Link } from 'react-router-dom'
 
 interface users {
   index: number
@@ -68,14 +69,14 @@ export function Usuarios() {
           <div className="flex  justify-between items-center">
             <h1 className="px-3 pt-3 font-bold text-3xl">Usuários</h1>
 
-            <a href="/usuarios/adicionar">
+            <Link to={'/usuarios/adicionar'}>
               <Button>
                 <UserRoundPlus className="size-5" />
                 <span className="text-sm medium normal-case">
                   Adicionar usuário
                 </span>
               </Button>
-            </a>
+            </Link>
           </div>
 
           <div className="min-w-[79rem] border border-zinc-700 rounded-lg text-center">
@@ -109,7 +110,7 @@ export function Usuarios() {
                         }
                       >
                         <TableCell>
-                          <UserOptions userId={user.index} />
+                          <UserMenuDropdown userId={user.index} />
                         </TableCell>
                         <TableCell className="min-w-96">{user.name}</TableCell>
                         <TableCell className="min-w-96">{user.email}</TableCell>
@@ -135,30 +136,30 @@ export function Usuarios() {
                       </span>
                       {/*Math.ceil arredonda o número para cima*/}
                       <div className="flex gap-1.5">
-                        <IconButton
+                        <PaginationButton
                           onClick={goToFirstPage}
                           disabled={page === 1}
                         >
                           <ChevronsLeft className="size-4 text-zinc-50" />
-                        </IconButton>
-                        <IconButton
+                        </PaginationButton>
+                        <PaginationButton
                           onClick={goToPreviousPage}
                           disabled={page === 1}
                         >
                           <ChevronLeft className="size-4 text-zinc-50" />
-                        </IconButton>
-                        <IconButton
+                        </PaginationButton>
+                        <PaginationButton
                           onClick={goToNextPage}
                           disabled={page === totalPages}
                         >
                           <ChevronRight className="size-4 text-zinc-50" />
-                        </IconButton>
-                        <IconButton
+                        </PaginationButton>
+                        <PaginationButton
                           onClick={goToLastPage}
                           disabled={page === totalPages}
                         >
                           <ChevronsRight className="size-4 text-zinc-50" />
-                        </IconButton>
+                        </PaginationButton>
                       </div>
                     </div>
                   </TableCell>

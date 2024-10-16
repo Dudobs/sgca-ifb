@@ -19,7 +19,7 @@ export function EditarUsuario() {
 
           <div className="flex gap-8">
             <Form
-              action=""
+              action="/usuarios"
               className="flex flex-col gap-4 rounded-lg shadow-md"
             >
               <span className="absolute top-[-0.75rem] left-3 text-lg">
@@ -33,6 +33,7 @@ export function EditarUsuario() {
                     type="text"
                     id="name"
                     name="name"
+                    autoComplete="on"
                     defaultValue={'Eduardo Vieira Campos'}
                     className="w-full h-9"
                   />
@@ -53,6 +54,7 @@ export function EditarUsuario() {
                   <Input
                     id="email"
                     name="email"
+                    autoComplete="on"
                     defaultValue={'dudobslol@gmail.com'}
                     className="w-full h-9"
                   />
@@ -115,7 +117,7 @@ export function EditarUsuario() {
             </Form>
 
             <Form
-              action=""
+              action="/usuarios"
               className="flex flex-col gap-4 rounded-lg shadow-md"
             >
               <span className="absolute top-[-0.75rem] left-3 text-lg">

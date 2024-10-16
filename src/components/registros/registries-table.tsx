@@ -6,7 +6,7 @@ import { TableHeader } from '../table/table-header'
 import { TableCell } from '../table/table-cell'
 
 import { generateRegistries } from '../../data/registries'
-import { IconButton } from '../icon-button'
+import { PaginationButton } from '../pagination-button'
 import {
   ChevronLeft,
   ChevronRight,
@@ -106,24 +106,27 @@ export function RegistriesTable() {
               </span>
               {/*Math.ceil arredonda o número para cima*/}
               <div className="flex gap-1.5">
-                <IconButton onClick={goToFirstPage} disabled={page === 1}>
+                <PaginationButton onClick={goToFirstPage} disabled={page === 1}>
                   <ChevronsLeft className="size-4 text-zinc-50" />
-                </IconButton>
-                <IconButton onClick={goToPreviousPage} disabled={page === 1}>
+                </PaginationButton>
+                <PaginationButton
+                  onClick={goToPreviousPage}
+                  disabled={page === 1}
+                >
                   <ChevronLeft className="size-4 text-zinc-50" />
-                </IconButton>
-                <IconButton
+                </PaginationButton>
+                <PaginationButton
                   onClick={goToNextPage}
                   disabled={page === totalPages}
                 >
                   <ChevronRight className="size-4 text-zinc-50" />
-                </IconButton>
-                <IconButton
+                </PaginationButton>
+                <PaginationButton
                   onClick={goToLastPage}
                   disabled={page === totalPages}
                 >
                   <ChevronsRight className="size-4 text-zinc-50" />
-                </IconButton>
+                </PaginationButton>
               </div>
             </div>
           </TableCell>

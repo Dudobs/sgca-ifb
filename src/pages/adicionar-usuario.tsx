@@ -16,7 +16,10 @@ export function AdicionarUsuario() {
         <main className="flex flex-col gap-4">
           <h1 className="p-3 font-bold text-3xl">Adicionar Usuário</h1>
 
-          <Form action="" className="flex flex-col gap-4 rounded-lg shadow-md">
+          <Form
+            action="/usuarios"
+            className="flex flex-col gap-4 rounded-lg shadow-md"
+          >
             <span className="absolute top-[-0.75rem] left-3 text-lg">
               INFORMAÇÕES PESSOAIS
             </span>
@@ -27,6 +30,7 @@ export function AdicionarUsuario() {
                 type="text"
                 id="name"
                 name="name"
+                autoComplete="off"
                 required
                 className="w-full h-9"
               />
@@ -34,12 +38,23 @@ export function AdicionarUsuario() {
 
             <Field className="w-full">
               <Label htmlFor="cpf" label={'CPF:'} isRequired />
-              <Input id="cpf" name="cpf" required className="w-full h-9" />
+              <Input
+                id="cpf"
+                name="cpf"
+                autoComplete="off"
+                required
+                className="w-full h-9"
+              />
             </Field>
 
             <Field className="w-full">
               <Label htmlFor="matricula" label={'Matrícula:'} />
-              <Input id="matricula" name="matricula" className="w-full h-9" />
+              <Input
+                id="matricula"
+                name="matricula"
+                autoComplete="off"
+                className="w-full h-9"
+              />
             </Field>
 
             <Field className="w-full">
