@@ -1,14 +1,25 @@
-import type { ComponentProps } from 'react'
-import { twMerge } from 'tailwind-merge'
+import { forwardRef, type ComponentProps } from 'react'
+import { tv, type VariantProps } from 'tailwind-variants'
 
-interface TableCellProps extends ComponentProps<'td'> {}
+const tcell = tv({
+  base: 'text-sm',
 
-export function TableCell(props: TableCellProps) {
-  return (
-    // O twMerge faz com que além das classes setadas no aqruivo do componente, eu possa especificar mais algumas para componentes específicos na minha página. Para isso, ele recebe como primeiro parâmetro as classes que terão em todos os componentes, depois as classes que os componentes específicos podem ter. Além disso as {...props} devem vir antes das classes, já que as novas classes serão também propiedades, caso contrario a hierarquia impedirá que as novas classes sejam carregadas
-    <td
-      {...props}
-      className={twMerge('py-3 px-4 text-sm text-zinc-950', props.className)}
-    />
-  )
-}
+  variants: {
+    variant: {
+      primary: 'py-3 px-4 text-zinc-950',
+      secondary: 'py-4 px-2.5 bg-gray-200 text-zinc-600 border border-gray-300',
+    },
+  },
+
+  defaultVariants: {
+    variant: 'primary',
+  },
+})
+
+type TableCellProps = ComponentProps<'td'> & VariantProps<typeof tcell>
+
+export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
+  ({ className, variant, ...props }, ref) => {
+    return <td {...props} ref={ref} className={tcell({ variant, className })} />
+  }
+)

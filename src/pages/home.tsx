@@ -54,9 +54,7 @@ export function Home() {
                     <TableRow
                       key={registrie.index}
                       className={
-                        registrie.index % 2 === 0
-                          ? 'h-10 border-zinc-700'
-                          : 'h-10 border-zinc-700 bg-zinc-200'
+                        registrie.index % 2 !== 0 ? '' : ' bg-zinc-200'
                       }
                     >
                       <TableCell className="text-start">

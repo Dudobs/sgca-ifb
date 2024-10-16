@@ -63,10 +63,10 @@ export function Usuarios() {
     <div className="flex gap-10">
       <Navbar />
 
-      <div className="pt-16 pr-10 flex flex-col justify-between gap-8">
+      <div className="pt-8 pr-10 flex flex-col justify-between gap-8">
         <main className="flex flex-col gap-4">
           <div className="flex  justify-between items-center">
-            <h1 className="px-3 font-bold text-3xl">Usuários</h1>
+            <h1 className="px-3 pt-3 font-bold text-3xl">Usuários</h1>
 
             <a href="/usuarios/adicionar">
               <Button>

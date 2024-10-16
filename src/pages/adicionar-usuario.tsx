@@ -12,9 +12,9 @@ export function AdicionarUsuario() {
     <div className="flex gap-10">
       <Navbar />
 
-      <div className="pt-16 pr-10 flex flex-col justify-between gap-8">
-        <main className="flex flex-col gap-8">
-          <h1 className="px-3 font-bold text-3xl">Adicionar Usuário</h1>
+      <div className="pt-8 pr-10 flex flex-col justify-between gap-8">
+        <main className="flex flex-col gap-4">
+          <h1 className="p-3 font-bold text-3xl">Adicionar Usuário</h1>
 
           <Form action="" className="flex flex-col gap-4 rounded-lg shadow-md">
             <span className="absolute top-[-0.75rem] left-3 text-lg">

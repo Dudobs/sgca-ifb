@@ -12,7 +12,7 @@ export function RegistriesFilter() {
     <Form action="">
       <span className="absolute top-[-0.75rem]">FILTROS:</span>
 
-      <div className="w-2/3 flex flex-wrap gap-4">
+      <div className="w-3/5 flex flex-wrap gap-4">
         <Field>
           <Label htmlFor="name" label={'Nome:'} />
           <Input type="text" id="name" name="name" autoComplete="off" />
@@ -48,9 +48,9 @@ export function RegistriesFilter() {
         </Field>
 
         <Field>
-          <div>
+          <div className="flex flex-col">
             <span className="text-sm text-zinc-950 tracking-tight leading-normal">
-              Hora:
+              Data:
             </span>
             <div id="date" className="flex items-end gap-1">
               <Label htmlFor="startDate" label={'De:'} />
@@ -68,7 +68,7 @@ export function RegistriesFilter() {
         </Field>
 
         <Field>
-          <div>
+          <div className="flex flex-col">
             <span className="text-sm text-zinc-950 tracking-tight leading-normal">
               Hora:
             </span>

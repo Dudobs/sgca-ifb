@@ -13,9 +13,9 @@ export function EditarUsuario() {
     <div className="flex gap-10">
       <Navbar />
 
-      <div className="pt-16 pr-10 flex flex-col justify-between gap-8">
-        <main className="flex flex-col gap-8">
-          <h1 className="px-3 font-bold text-3xl">Eduardo Vieira</h1>
+      <div className="pt-8 pr-10 flex flex-col justify-between gap-8">
+        <main className="flex flex-col gap-4">
+          <h1 className="p-3 font-bold text-3xl">Eduardo Vieira</h1>
 
           <div className="flex gap-8">
             <Form

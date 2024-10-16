@@ -22,7 +22,7 @@ export function Navbar() {
   const location = useLocation()
 
   return toggleNavbar ? (
-    <div className="h-screen w-80 sticky top-0 left-0 z-10 py-8 px-5 rounded-r-3xl bg-green-600 text-zinc-50 uppercase">
+    <div className="h-screen min-w-80 max-w-80 sticky top-0 left-0 z-10 py-8 px-5 rounded-r-3xl bg-green-600 text-zinc-50 uppercase">
       <button
         className="absolute top-8 right-2.5 z-10 hover:bg-green-700"
         type="button"
@@ -72,7 +72,7 @@ export function Navbar() {
         <ChevronLeft className="size-5" />
       </button>
 
-      <Header navbarIsOpen={false} />
+      <Header navbarIsOpen={false} className="mb-0" />
 
       <div className="flex flex-col items-center gap-2">
         <a

@@ -18,7 +18,7 @@ export function App() {
         <Route path="/registros" Component={Registros} />
         <Route path="/usuarios" Component={Usuarios} />
         <Route path="/usuarios/adicionar" Component={AdicionarUsuario} />
-        <Route path="/usuarios/editar" Component={EditarUsuario} />
+        <Route path="/usuarios/:userId/editar" Component={EditarUsuario} />
         <Route path="/usuarios/:userId/observacoes" Component={Observacoes} />
         <Route path="/admin" Component={Admin} />
       </Routes>

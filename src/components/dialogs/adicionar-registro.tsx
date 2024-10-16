@@ -19,7 +19,7 @@ export function AdicionarRegistro({ dialogIsOpen, onClose }: DialogProps) {
     <Dialog open={dialogIsOpen} onClose={onClose} className="relative z-50">
       <DialogBackdrop className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm" />
       <div className="fixed inset-0 z-50 flex w-screen items-center justify-center p-4">
-        <DialogPanel className="w-[480px] px-5 py-8 shadow-md rounded-lg border border-zinc-700 bg-zinc-100 flex flex-col gap-16">
+        <DialogPanel className="w-[480px] px-5 py-8 shadow-md rounded-lg border border-zinc-700 bg-zinc-100 flex flex-col gap-4">
           <div className="flex flex-col">
             <DialogTitle className="font-medium text-2xl">
               Adicionar registro

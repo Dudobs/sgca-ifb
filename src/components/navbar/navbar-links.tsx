@@ -4,9 +4,21 @@ interface LinkProps {
 }
 
 const links = [
-  { href: '/home', label: 'Início', icon: <House /> },
-  { href: '/registros', label: 'Registros', icon: <TableProperties /> },
-  { href: '/usuarios', label: 'Usuários', icon: <Users /> },
+  {
+    href: '/home',
+    label: 'Início',
+    icon: <House />,
+  },
+  {
+    href: '/registros',
+    label: 'Registros',
+    icon: <TableProperties />,
+  },
+  {
+    href: '/usuarios',
+    label: 'Usuários',
+    icon: <Users />,
+  },
 ]
 
 export function NavbarLinks({ navbarIsOpen }: LinkProps) {

@@ -1,48 +1,53 @@
 import { Footer } from '../components/footer'
 import { Navbar } from '../components/navbar/navbar'
+import { Table } from '../components/table/table'
+import { TableCell } from '../components/table/table-cell'
+import { TableHeader } from '../components/table/table-header'
+import { TableRow } from '../components/table/table-row'
 
 export function Observacoes() {
   return (
     <div className="flex gap-10">
       <Navbar />
 
-      <div className="pt-16 pr-10 flex flex-col justify-between gap-8">
-        <main className="flex flex-col gap-8">
-          <h1 className="px-3 font-bold text-3xl">Eduardo Vieira Campos</h1>
+      <div className="pt-8 pr-10 flex flex-col justify-between gap-8">
+        <main className="flex flex-col gap-4">
+          <h1 className="px-3 pt-3 font-bold text-3xl">
+            Eduardo Vieira Campos
+          </h1>
 
-          <table className="border border-gray-300">
-            <thead className="text-md font-normal">
-              <tr>
-                <th className="border border-gray-300 bg-slate-200">Data</th>
-                <th className="border border-gray-300 bg-slate-200">
-                  Alterações
-                </th>
-                <th className="border border-gray-300 bg-slate-200">
-                  Alterado por
-                </th>
-                <th className="border border-gray-300 bg-slate-200">
-                  Observação/Motivo
-                </th>
-              </tr>
+          <Table variant="secondary">
+            <thead>
+              <TableRow variant="secondary">
+                <TableHeader variant="secondary">Data</TableHeader>
+                <TableHeader variant="secondary">Alterações</TableHeader>
+                <TableHeader variant="secondary">Alterado por</TableHeader>
+                <TableHeader variant="secondary">Observação/Motivo</TableHeader>
+              </TableRow>
             </thead>
-            <tbody className="text-sm">
-              <tr>
-                <td className="h-16 border border-gray-300 bg-slate-200">
-                  21/06/2024
-                </td>
-                <td className="border border-gray-300 bg-slate-200">
-                  Informações pessoais
-                </td>
-                <td className="border border-gray-300 bg-slate-200">
+            <tbody>
+              <TableRow variant="secondary">
+                <TableCell variant="secondary">21/06/2024</TableCell>
+                <TableCell variant="secondary">Informações pessoais</TableCell>
+                <TableCell variant="secondary" className="w-48">
                   Administrador 01
-                </td>
-                <td className="max-w-80 p-3 border border-gray-300 bg-slate-200">
-                  Email de cadastro incorretoEmail de cadastro incorretoEmail de
-                  cadastro incorretoEmail de cadastro incorreto incorreto
-                </td>
-              </tr>
+                </TableCell>
+                <TableCell variant="secondary" className="max-w-80">
+                  Email de cadastro incorreto
+                </TableCell>
+              </TableRow>
+              <TableRow variant="secondary">
+                <TableCell variant="secondary">17/06/2025</TableCell>
+                <TableCell variant="secondary">Status de acesso</TableCell>
+                <TableCell variant="secondary" className="w-48">
+                  Administrador 03
+                </TableCell>
+                <TableCell variant="secondary" className="max-w-80">
+                  Conclusão de curso
+                </TableCell>
+              </TableRow>
             </tbody>
-          </table>
+          </Table>
         </main>
 
         <Footer />
