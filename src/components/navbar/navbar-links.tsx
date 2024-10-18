@@ -6,7 +6,7 @@ interface LinkProps {
 
 const links = [
   {
-    href: '/home',
+    href: '/',
     label: 'Início',
     icon: <House />,
   },

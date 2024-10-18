@@ -9,7 +9,7 @@ export function Login() {
   const navigate = useNavigate()
 
   function handleSignIn() {
-    navigate('/home')
+    navigate('/')
   }
 
   return (

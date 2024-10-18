@@ -10,7 +10,7 @@ interface HeaderProps extends ComponentProps<'div'> {
 export function Header({ navbarIsOpen, ...props }: HeaderProps) {
   return (
     <header {...props} className={twMerge('mb-10', props.className)}>
-      <Link to={'/home'} className="flex items-end gap-2">
+      <Link to={'/'} className="flex items-end gap-2">
         <img
           className={navbarIsOpen ? 'size-16' : 'size-10'}
           src={LogoIFBAccess}
