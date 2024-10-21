@@ -6,7 +6,7 @@ export function Form(props: ComponentProps<'form'>) {
     <form
       {...props}
       className={twMerge(
-        'p-4 relative bg-zinc-100 shadow-md flex justify-between items-end',
+        'p-4 relative bg-zinc-100 shadow-sm flex justify-between items-end',
         props.className
       )}
     />

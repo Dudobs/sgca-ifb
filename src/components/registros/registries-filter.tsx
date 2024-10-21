@@ -7,9 +7,13 @@ import { Input } from '../form/input'
 import { Select } from '../form/select'
 import { Button } from '../button'
 
-export function RegistriesFilter() {
+interface RegistriesFilterProps {
+  onSearch: (e: React.FormEvent<HTMLFormElement>) => void
+}
+
+export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
   return (
-    <Form action="">
+    <Form action="" onSubmit={onSearch}>
       <span className="absolute top-[-0.75rem]">FILTROS:</span>
 
       <div className="w-3/5 flex flex-wrap gap-4">

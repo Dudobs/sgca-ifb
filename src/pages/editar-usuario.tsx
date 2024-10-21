@@ -18,10 +18,7 @@ export function EditarUsuario() {
           <h1 className="p-3 font-bold text-3xl">Eduardo Vieira</h1>
 
           <div className="flex gap-8">
-            <Form
-              action="/usuarios"
-              className="flex flex-col gap-4 rounded-lg shadow-md"
-            >
+            <Form action="/usuarios" className="flex flex-col gap-4 rounded-lg">
               <span className="absolute top-[-0.75rem] left-3 text-lg">
                 INFORMAÇÕES PESSOAIS
               </span>
@@ -116,10 +113,7 @@ export function EditarUsuario() {
               </div>
             </Form>
 
-            <Form
-              action="/usuarios"
-              className="flex flex-col gap-4 rounded-lg shadow-md"
-            >
+            <Form action="/usuarios" className="flex flex-col gap-4 rounded-lg">
               <span className="absolute top-[-0.75rem] left-3 text-lg">
                 STATUS DE ACESSO
               </span>

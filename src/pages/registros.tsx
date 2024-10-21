@@ -2,8 +2,18 @@ import { Navbar } from '../components/navbar/navbar'
 import { Footer } from '../components/footer'
 import { RegistriesFilter } from '../components/registros/registries-filter'
 import { RegistriesTable } from '../components/registros/registries-table'
+import { useState } from 'react'
+import { Warning } from '../components/warning'
 
 export function Registros() {
+  const [searchHasData, setSearchHasData] = useState(true)
+
+  function handleSearchRegistries(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault() // Ímpede o comportamento padrão do formulário, não recarregando a página e simulando corretamente a busca por registros sem dados retornados.
+
+    setSearchHasData(prev => !prev)
+  }
+
   return (
     <div className="flex gap-10">
       <Navbar />
@@ -12,9 +22,13 @@ export function Registros() {
         <main className="flex flex-col gap-4">
           <h1 className="p-3 font-bold text-3xl">Registros</h1>
 
-          <RegistriesFilter />
+          <RegistriesFilter onSearch={handleSearchRegistries} />
 
-          <RegistriesTable />
+          {searchHasData ? (
+            <RegistriesTable />
+          ) : (
+            <Warning warningText="Nenhum registro de acesso encontrado." />
+          )}
         </main>
 
         <Footer />
