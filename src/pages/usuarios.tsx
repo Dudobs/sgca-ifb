@@ -19,6 +19,8 @@ import { UsersFilter } from '../components/usuarios/users-filter'
 import { Button } from '../components/button'
 import { UserMenuDropdown } from '../components/usuarios/user-menu-dropdown'
 import { Link } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import { getUSers } from '../http/get-users'
 
 interface users {
   index: number
@@ -31,18 +33,29 @@ interface users {
 }
 
 export function Usuarios() {
+  const { data = [] } = useQuery({
+    queryKey: ['users'],
+    queryFn: getUSers,
+    staleTime: 1000 * 60, // 60 segundos
+  })
+
+  // if (!data) {
+  //   return null
+  // }
+  console.log(data)
+
   const [usersData, setUsersData] = useState<users[]>([])
 
   useEffect(() => {
-    const data = generateUsers()
-    setUsersData(data)
+    const dados = generateUsers()
+    setUsersData(dados)
   }, [])
 
   const [page, setPage] = useState(1)
 
   const usersPerPage = 10
 
-  const totalPages = Math.ceil(usersData.length / usersPerPage)
+  const totalPages = Math.ceil(data.length / usersPerPage)
 
   function goToFirstPage() {
     setPage(1)
@@ -97,29 +110,29 @@ export function Usuarios() {
                 </TableRow>
               </thead>
               <tbody>
-                {usersData
-                  .slice((page - 1) * usersPerPage, page * usersPerPage)
+                {data
+                  // .slice((page - 1) * usersPerPage, page * usersPerPage)
                   .map(user => {
                     return (
                       <TableRow
-                        key={user.index}
+                        key={user.id_usuario}
                         className={
-                          user.index % 2 === 0
+                          user.id_usuario % 2 === 0
                             ? 'h-10 border-zinc-700'
                             : 'h-10 border-zinc-700 bg-zinc-200'
                         }
                       >
                         <TableCell>
-                          <UserMenuDropdown userId={user.index} />
+                          <UserMenuDropdown userId={user.id_usuario} />
                         </TableCell>
-                        <TableCell className="min-w-96">{user.name}</TableCell>
+                        <TableCell className="min-w-96">{user.nome}</TableCell>
                         <TableCell className="min-w-96">{user.email}</TableCell>
                         <TableCell className="min-w-36">{user.cpf}</TableCell>
                         <TableCell className="min-w-36">
                           {user.matricula}
                         </TableCell>
-                        <TableCell>{user.accessStatus}</TableCell>
-                        <TableCell>{user.userType}</TableCell>
+                        <TableCell>{user.status_acesso}</TableCell>
+                        <TableCell>{user.tipo_usuario}</TableCell>
                       </TableRow>
                     )
                   })}
@@ -127,7 +140,8 @@ export function Usuarios() {
               <tfoot>
                 <TableRow className="border-t border-zinc-700">
                   <TableCell colSpan={4} className="text-left">
-                    Mostrando {usersPerPage} de {usersData.length} resultados
+                    Mostrando {usersPerPage < 10 ? usersPerPage : data.length}{' '}
+                    de {data?.length} resultados
                   </TableCell>
                   <TableCell className="text-right" colSpan={3}>
                     <div className="inline-flex items-center gap-8">

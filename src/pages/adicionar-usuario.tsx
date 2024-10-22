@@ -6,8 +6,61 @@ import { Input } from '../components/form/input'
 import { Label } from '../components/form/label'
 import { Select } from '../components/form/select'
 import { Navbar } from '../components/navbar/navbar'
+import { z } from 'zod'
+import { createUser } from '../http/create-user'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+
+const createUserForm = z.object({
+  cpf: z.string().min(1, 'Informe a atividade que deseja realizar'),
+  email: z.string().min(1), // Utiliza o método `coerce.number()` para converter o valor recebido dos inputs do tipo rádio (que são strings) para um número.
+  matricula: z.string().min(1),
+  tipo_usuario: z.string().min(1),
+  nome: z.string().min(1),
+  credencial_nfc: z.string().min(1),
+})
+
+type createUserForm = z.infer<typeof createUserForm> // O tipo `createUserForm` é inferido a partir do esquema definido com o Zod. Utilizando `z.infer`, o TypeScript gera um tipo correspondente à estrutura dos dados descrita no esquema `createUserForm` do Zod, garantindo que o tipo esteja sempre sincronizado com a definição de validação.
 
 export function AdicionarUsuario() {
+  const { register, handleSubmit, reset } = useForm<createUserForm>({
+    resolver: zodResolver(createUserForm),
+  })
+
+  async function handleCreateUser({
+    cpf,
+    email,
+    matricula,
+    tipo_usuario,
+    nome,
+    credencial_nfc,
+  }: createUserForm) {
+    console.log('Formulário enviado', {
+      cpf,
+      email,
+      matricula,
+      tipo_usuario,
+      nome,
+      credencial_nfc,
+    })
+    try {
+      await createUser({
+        cpf,
+        email,
+        matricula,
+        tipo_usuario,
+        nome,
+        credencial_nfc,
+      })
+      console.log('Usuário criado com sucesso!') // Adicione um log de sucesso
+    } catch (error) {
+      console.error('Erro ao criar usuário:', error) // Registre qualquer erro
+    }
+    console.log('create')
+
+    reset()
+  }
+
   return (
     <div className="flex gap-10">
       <Navbar />
@@ -16,20 +69,36 @@ export function AdicionarUsuario() {
         <main className="flex flex-col gap-4">
           <h1 className="p-3 font-bold text-3xl">Adicionar Usuário</h1>
 
-          <Form action="/usuarios" className="flex flex-col gap-4 rounded-lg">
+          <Form
+            action="/usuarios"
+            onSubmit={handleSubmit(handleCreateUser)}
+            className="flex flex-col gap-4 rounded-lg"
+          >
             <span className="absolute top-[-0.75rem] left-3 text-lg">
               INFORMAÇÕES PESSOAIS
             </span>
 
             <Field className="w-full">
-              <Label htmlFor="name" label={'Nome:'} isRequired />
+              <Label htmlFor="nome" label={'Nome:'} isRequired />
               <Input
                 type="text"
-                id="name"
-                name="name"
+                id="nome"
                 autoComplete="off"
                 required
                 className="w-full h-9"
+                {...register('nome')}
+              />
+            </Field>
+
+            <Field className="w-full">
+              <Label htmlFor="email" label={'Email:'} isRequired />
+              <Input
+                type="text"
+                id="email"
+                autoComplete="off"
+                required
+                className="w-full h-9"
+                {...register('email')}
               />
             </Field>
 
@@ -37,7 +106,7 @@ export function AdicionarUsuario() {
               <Label htmlFor="cpf" label={'CPF:'} isRequired />
               <Input
                 id="cpf"
-                name="cpf"
+                {...register('cpf')}
                 autoComplete="off"
                 required
                 className="w-full h-9"
@@ -48,7 +117,7 @@ export function AdicionarUsuario() {
               <Label htmlFor="matricula" label={'Matrícula:'} />
               <Input
                 id="matricula"
-                name="matricula"
+                {...register('matricula')}
                 autoComplete="off"
                 className="w-full h-9"
               />
@@ -56,28 +125,33 @@ export function AdicionarUsuario() {
 
             <Field className="w-full">
               <Label
-                htmlFor="user-type"
+                htmlFor="tipo_usuario"
                 label={'Tipo de usuário:'}
                 isRequired
               />
-              <Select id="user-type" name="user-type" required className="h-9">
-                <option>01</option>
-                <option>02</option>
-                <option>03</option>
-                <option>Médio subsequente</option>
-                <option>05</option>
+              <Select
+                id="tipo_usuario"
+                {...register('tipo_usuario')}
+                required
+                className="h-9"
+              >
+                <option value={1}>01</option>
+                <option value={2}>02</option>
+                <option value={3}>03</option>
+                <option value={4}>Médio subsequente</option>
+                <option value={5}>05</option>
               </Select>
             </Field>
 
             <Field className="w-full">
               <Label
-                htmlFor="access-status"
+                htmlFor="credencial_nfc"
                 label={'Status de acesso:'}
                 isRequired
               />
               <Select
-                id="access-status"
-                name="access-status"
+                id="credencial_nfc"
+                {...register('credencial_nfc')}
                 required
                 className="h-9"
               >

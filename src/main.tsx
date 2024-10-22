@@ -11,6 +11,10 @@ import { EditarUsuario } from './pages/editar-usuario'
 import { Observacoes } from './pages/observacoes'
 import './index.css'
 import type { RouteObject } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+// Cria um cliente
+const queryClient = new QueryClient()
 
 // Definindo uma interface que estende RouteObject
 type BreadcrumbRouteObject = RouteObject & {
@@ -61,4 +65,8 @@ const router = createBrowserRouter(routes)
 
 const element = document.getElementById('root')
 
-createRoot(element!).render(<RouterProvider router={router} />)
+createRoot(element!).render(
+  <QueryClientProvider client={queryClient}>
+    <RouterProvider router={router} />
+  </QueryClientProvider>
+)
