@@ -4,7 +4,6 @@ interface createUserRequst {
   matricula: string
   tipo_usuario: string
   nome: string
-  credencial_nfc: string
 }
 
 export async function createUser({
@@ -13,9 +12,8 @@ export async function createUser({
   matricula,
   tipo_usuario,
   nome,
-  credencial_nfc,
 }: createUserRequst) {
-  await fetch('http://10.18.20.100/usuarios', {
+  await fetch('http://localhost:5000/usuarios', {
     method: 'POST',
     headers: {
       // Define o cabeçalho da requisição, indicando que o corpo será no formato JSON
@@ -29,7 +27,6 @@ export async function createUser({
       matricula,
       tipo_usuario,
       nome,
-      credencial_nfc,
     }),
   })
 }

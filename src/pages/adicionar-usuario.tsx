@@ -12,12 +12,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 const createUserForm = z.object({
-  cpf: z.string().min(1, 'Informe a atividade que deseja realizar'),
+  nome: z.string().min(1),
   email: z.string().min(1), // Utiliza o método `coerce.number()` para converter o valor recebido dos inputs do tipo rádio (que são strings) para um número.
+  cpf: z.string().min(1, 'Informe a atividade que deseja realizar'),
   matricula: z.string().min(1),
   tipo_usuario: z.string().min(1),
-  nome: z.string().min(1),
-  credencial_nfc: z.string().min(1),
 })
 
 type createUserForm = z.infer<typeof createUserForm> // O tipo `createUserForm` é inferido a partir do esquema definido com o Zod. Utilizando `z.infer`, o TypeScript gera um tipo correspondente à estrutura dos dados descrita no esquema `createUserForm` do Zod, garantindo que o tipo esteja sempre sincronizado com a definição de validação.
@@ -28,29 +27,26 @@ export function AdicionarUsuario() {
   })
 
   async function handleCreateUser({
-    cpf,
+    nome,
     email,
+    cpf,
     matricula,
     tipo_usuario,
-    nome,
-    credencial_nfc,
   }: createUserForm) {
     console.log('Formulário enviado', {
-      cpf,
+      nome,
       email,
+      cpf,
       matricula,
       tipo_usuario,
-      nome,
-      credencial_nfc,
     })
     try {
       await createUser({
-        cpf,
+        nome,
         email,
+        cpf,
         matricula,
         tipo_usuario,
-        nome,
-        credencial_nfc,
       })
       console.log('Usuário criado com sucesso!') // Adicione um log de sucesso
     } catch (error) {
@@ -140,23 +136,6 @@ export function AdicionarUsuario() {
                 <option value={3}>03</option>
                 <option value={4}>Médio subsequente</option>
                 <option value={5}>05</option>
-              </Select>
-            </Field>
-
-            <Field className="w-full">
-              <Label
-                htmlFor="credencial_nfc"
-                label={'Status de acesso:'}
-                isRequired
-              />
-              <Select
-                id="credencial_nfc"
-                {...register('credencial_nfc')}
-                required
-                className="h-9"
-              >
-                <option>Ativo</option>
-                <option>Inativo</option>
               </Select>
             </Field>
 

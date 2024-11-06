@@ -9,7 +9,7 @@ type usersResponse = {
 }[]
 
 export async function getUSers(): Promise<usersResponse> {
-  const response = await fetch('http://10.18.20.100/usuarios', {
+  const response = await fetch('http://localhost:5000/usuarios', {
     method: 'GET',
     headers: {
       'X-API-Key': '12345',
