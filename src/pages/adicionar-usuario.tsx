@@ -10,6 +10,7 @@ import { z } from 'zod'
 import { createUser } from '../http/create-user'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 const createUserForm = z.object({
   nome: z.string().min(1),
@@ -25,6 +26,8 @@ export function AdicionarUsuario() {
   const { register, handleSubmit, reset } = useForm<createUserForm>({
     resolver: zodResolver(createUserForm),
   })
+
+  const navigate = useNavigate()
 
   async function handleCreateUser({
     nome,
@@ -55,6 +58,7 @@ export function AdicionarUsuario() {
     console.log('create')
 
     reset()
+    navigate('/usuarios')
   }
 
   return (
