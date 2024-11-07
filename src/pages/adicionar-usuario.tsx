@@ -11,18 +11,33 @@ import { createUser } from '../http/create-user'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import { getUSersType } from '../http/get_tipos_usuarios'
+import { useState } from 'react'
+
+interface usersType {
+  id_tipo_usuario: number
+  tipo_usuario: string
+}
 
 const createUserForm = z.object({
   nome: z.string().min(1),
   email: z.string().min(1), // Utiliza o método `coerce.number()` para converter o valor recebido dos inputs do tipo rádio (que são strings) para um número.
   cpf: z.string().min(1, 'Informe a atividade que deseja realizar'),
   matricula: z.string().min(1),
-  tipo_usuario: z.string().min(1),
+  id_tipo_usuario: z.string().min(1),
 })
 
 type createUserForm = z.infer<typeof createUserForm> // O tipo `createUserForm` é inferido a partir do esquema definido com o Zod. Utilizando `z.infer`, o TypeScript gera um tipo correspondente à estrutura dos dados descrita no esquema `createUserForm` do Zod, garantindo que o tipo esteja sempre sincronizado com a definição de validação.
 
 export function AdicionarUsuario() {
+  const { data = [] } = useQuery({
+    queryKey: ['usersType'],
+    queryFn: getUSersType,
+  })
+
+  const [usersType, setUsersType] = useState<usersType[]>([])
+
   const { register, handleSubmit, reset } = useForm<createUserForm>({
     resolver: zodResolver(createUserForm),
   })
@@ -34,14 +49,14 @@ export function AdicionarUsuario() {
     email,
     cpf,
     matricula,
-    tipo_usuario,
+    id_tipo_usuario,
   }: createUserForm) {
     console.log('Formulário enviado', {
       nome,
       email,
       cpf,
       matricula,
-      tipo_usuario,
+      id_tipo_usuario,
     })
     try {
       await createUser({
@@ -49,7 +64,7 @@ export function AdicionarUsuario() {
         email,
         cpf,
         matricula,
-        tipo_usuario,
+        id_tipo_usuario,
       })
       console.log('Usuário criado com sucesso!') // Adicione um log de sucesso
     } catch (error) {
@@ -131,15 +146,17 @@ export function AdicionarUsuario() {
               />
               <Select
                 id="tipo_usuario"
-                {...register('tipo_usuario')}
+                {...register('id_tipo_usuario')}
                 required
                 className="h-9"
               >
-                <option value={1}>01</option>
-                <option value={2}>02</option>
-                <option value={3}>03</option>
-                <option value={4}>Médio subsequente</option>
-                <option value={5}>05</option>
+                { data.map(tipo_usuario => {
+                  return (
+                    <option key={tipo_usuario.id_tipo_usuario} value={tipo_usuario.id_tipo_usuario}>
+                      {tipo_usuario.tipo_usuario}
+                    </option>
+                  )
+                })}
               </Select>
             </Field>
 

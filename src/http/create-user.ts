@@ -2,7 +2,7 @@ interface createUserRequst {
   cpf: string
   email: string
   matricula: string
-  tipo_usuario: string
+  id_tipo_usuario: string
   nome: string
 }
 
@@ -10,7 +10,7 @@ export async function createUser({
   cpf,
   email,
   matricula,
-  tipo_usuario,
+  id_tipo_usuario,
   nome,
 }: createUserRequst) {
   await fetch('http://localhost:5000/usuarios', {
@@ -25,7 +25,7 @@ export async function createUser({
       cpf,
       email,
       matricula,
-      tipo_usuario,
+      id_tipo_usuario,
       nome,
     }),
   })
