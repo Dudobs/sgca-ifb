@@ -16,7 +16,6 @@ export async function getUSers(): Promise<usersResponse> {
     },
   })
   const data = await response.json()
-  console.log(data)
 
   return data
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   ChevronLeft,
   ChevronRight,
@@ -14,23 +14,12 @@ import { Table } from '../components/table/table'
 import { TableCell } from '../components/table/table-cell'
 import { TableRow } from '../components/table/table-row'
 import { TableHeader } from '../components/table/table-header'
-import { generateUsers } from '../data/users'
 import { UsersFilter } from '../components/usuarios/users-filter'
 import { Button } from '../components/button'
 import { UserMenuDropdown } from '../components/usuarios/user-menu-dropdown'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { getUSers } from '../http/get-users'
-
-interface users {
-  index: number
-  name: string
-  email: string
-  cpf: number
-  matricula: number
-  accessStatus: string
-  userType: string
-}
 
 export function Usuarios() {
   const { data = [] } = useQuery({
@@ -39,17 +28,11 @@ export function Usuarios() {
     staleTime: 1000 * 60, // 60 segundos
   })
 
-  // if (!data) {
-  //   return null
-  // }
+  if (!data) {
+    return null
+  }
+
   console.log(data)
-
-  const [usersData, setUsersData] = useState<users[]>([])
-
-  useEffect(() => {
-    const dados = generateUsers()
-    setUsersData(dados)
-  }, [])
 
   const [page, setPage] = useState(1)
 
@@ -117,7 +100,7 @@ export function Usuarios() {
                       <TableRow
                         key={user.id_usuario}
                         className={
-                          user.id_usuario % 2 === 0
+                           user.id_usuario % 2 === 0
                             ? 'h-10 border-zinc-700'
                             : 'h-10 border-zinc-700 bg-zinc-200'
                         }
