@@ -94,13 +94,13 @@ export function Usuarios() {
               </thead>
               <tbody>
                 {data
-                  // .slice((page - 1) * usersPerPage, page * usersPerPage)
+                  .slice((page - 1) * usersPerPage, page * usersPerPage)
                   .map(user => {
                     return (
                       <TableRow
                         key={user.id_usuario}
                         className={
-                           user.id_usuario % 2 === 0
+                          user.id_usuario % 2 === 0
                             ? 'h-10 border-zinc-700'
                             : 'h-10 border-zinc-700 bg-zinc-200'
                         }
@@ -123,8 +123,9 @@ export function Usuarios() {
               <tfoot>
                 <TableRow className="border-t border-zinc-700">
                   <TableCell colSpan={4} className="text-left">
-                    Mostrando {usersPerPage < 10 ? usersPerPage : data.length}{' '}
-                    de {data?.length} resultados
+                    Mostrando{' '}
+                    {data.length > usersPerPage ? usersPerPage : data.length} de{' '}
+                    {data?.length} resultados
                   </TableCell>
                   <TableCell className="text-right" colSpan={3}>
                     <div className="inline-flex items-center gap-8">

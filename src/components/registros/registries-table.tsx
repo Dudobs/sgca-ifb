@@ -5,7 +5,7 @@ import { TableRow } from '../table/table-row'
 import { TableHeader } from '../table/table-header'
 import { TableCell } from '../table/table-cell'
 
-import { generateRegistries } from '../../data/registries'
+// import { generateRegistries } from '../../data/registries'
 import { PaginationButton } from '../pagination-button'
 import {
   ChevronLeft,
@@ -13,31 +13,44 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { getRegistries } from '../../http/get_registries'
 
-interface registries {
-  index: number
-  name: string
-  cpf: number
-  matricula: number
-  date: string
-  time: string
-  accessType: string
-  userType: string
-}
+// interface registries {
+//   index: number
+//   name: string
+//   cpf: number
+//   matricula: number
+//   date: string
+//   time: string
+//   accessType: string
+//   userType: string
+// }
 
 export function RegistriesTable() {
-  const [registries, setRegistries] = useState<registries[]>([])
+  const { data = [] } = useQuery({
+    queryKey: ['registries'],
+    queryFn: getRegistries,
+    staleTime: 1000 * 10, // 10 segundos
+  })
 
-  useEffect(() => {
-    const data = generateRegistries()
-    setRegistries(data)
-  }, [])
+  if (!data) {
+    return null
+  }
+
+  console.log(data)
+  // const [registries, setRegistries] = useState<registries[]>([])
+
+  // useEffect(() => {
+  //   const data = generateRegistries()
+  //   setRegistries(data)
+  // }, [])
 
   const [page, setPage] = useState(1)
 
   const registriesPerPage = 15
 
-  const totalPages = Math.ceil(registries.length / registriesPerPage)
+  const totalPages = Math.ceil(data.length / registriesPerPage)
 
   function goToFirstPage() {
     setPage(1)
@@ -69,27 +82,30 @@ export function RegistriesTable() {
         </TableRow>
       </thead>
       <tbody>
-        {registries
+        {data
           .slice((page - 1) * registriesPerPage, page * registriesPerPage)
           .map(registrie => {
             return (
               <TableRow
-                key={registrie.index}
+                key={registrie.id_registro}
                 className={
-                  registrie.index % 2 === 0
+                  registrie.id_registro % 2 === 0
                     ? 'h-10 border-zinc-700'
                     : 'h-10 border-zinc-700 bg-zinc-200'
                 }
               >
-                <TableCell className="text-start">{registrie.index}</TableCell>
-                <TableCell>{registrie.name}</TableCell>
-                <TableCell>{registrie.cpf}</TableCell>
-                <TableCell>{registrie.matricula}</TableCell>
-                <TableCell>
-                  {registrie.date} ás {registrie.time}
+                <TableCell className="text-start">
+                  {registrie.id_registro}
                 </TableCell>
-                <TableCell>{registrie.accessType}</TableCell>
-                <TableCell>{registrie.userType}</TableCell>
+                <TableCell>{registrie.nome}</TableCell>
+                <TableCell>CPF</TableCell>
+                <TableCell>MATRÍCULA</TableCell>
+                <TableCell>
+                  {/* {registrie.date} ás {registrie.time} */}
+                  {registrie.hora_acesso}
+                </TableCell>
+                <TableCell>{registrie.tipo_acesso}</TableCell>
+                <TableCell>TIPO USUÁRIO</TableCell>
               </TableRow>
             )
           })}
@@ -97,7 +113,8 @@ export function RegistriesTable() {
       <tfoot>
         <TableRow className="border-t border-zinc-700">
           <TableCell colSpan={4} className="text-left">
-            Mostrando {registriesPerPage} de {registries.length} resultados
+            {data.length > registriesPerPage ? registriesPerPage : data.length}{' '}
+            de {data?.length} resultados
           </TableCell>
           <TableCell className="text-right" colSpan={3}>
             <div className="inline-flex items-center gap-8">
