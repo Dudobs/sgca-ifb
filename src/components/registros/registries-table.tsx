@@ -5,7 +5,6 @@ import { TableRow } from '../table/table-row'
 import { TableHeader } from '../table/table-header'
 import { TableCell } from '../table/table-cell'
 
-// import { generateRegistries } from '../../data/registries'
 import { PaginationButton } from '../pagination-button'
 import {
   ChevronLeft,
@@ -15,17 +14,7 @@ import {
 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { getRegistries } from '../../http/get_registries'
-
-// interface registries {
-//   index: number
-//   name: string
-//   cpf: number
-//   matricula: number
-//   date: string
-//   time: string
-//   accessType: string
-//   userType: string
-// }
+import dayjs from 'dayjs'
 
 export function RegistriesTable() {
   const { data = [] } = useQuery({
@@ -39,12 +28,6 @@ export function RegistriesTable() {
   }
 
   console.log(data)
-  // const [registries, setRegistries] = useState<registries[]>([])
-
-  // useEffect(() => {
-  //   const data = generateRegistries()
-  //   setRegistries(data)
-  // }, [])
 
   const [page, setPage] = useState(1)
 
@@ -84,12 +67,14 @@ export function RegistriesTable() {
       <tbody>
         {data
           .slice((page - 1) * registriesPerPage, page * registriesPerPage)
-          .map(registrie => {
+          .map((registrie, index) => {
+            const date = dayjs(registrie.hora_acesso).format('D MMM YYYY')
+            const time = dayjs(registrie.hora_acesso).format('HH:mm')
             return (
               <TableRow
                 key={registrie.id_registro}
                 className={
-                  registrie.id_registro % 2 === 0
+                  index % 2 === 0
                     ? 'h-10 border-zinc-700'
                     : 'h-10 border-zinc-700 bg-zinc-200'
                 }
@@ -98,14 +83,13 @@ export function RegistriesTable() {
                   {registrie.id_registro}
                 </TableCell>
                 <TableCell>{registrie.nome}</TableCell>
-                <TableCell>CPF</TableCell>
-                <TableCell>MATRÍCULA</TableCell>
+                <TableCell>{registrie.cpf}</TableCell>
+                <TableCell>{registrie.matricula}</TableCell>
                 <TableCell>
-                  {/* {registrie.date} ás {registrie.time} */}
-                  {registrie.hora_acesso}
+                  {date} às {time}
                 </TableCell>
-                <TableCell>{registrie.tipo_acesso}</TableCell>
-                <TableCell>TIPO USUÁRIO</TableCell>
+                <TableCell>{registrie.tipo_acesso ? 'Entrada' : 'Saída'}</TableCell>
+                <TableCell>{registrie.tipo_usuario}</TableCell>
               </TableRow>
             )
           })}

@@ -1,9 +1,11 @@
 type registriesResponse = {
   id_registro: number
-  id_usuario: number
   nome: string
+  cpf: string
+  matricula: string
   hora_acesso: string
   tipo_acesso: boolean
+  tipo_usuario: string
 }[]
 
 const apiURL = import.meta.env.VITE_API_URL

@@ -95,12 +95,12 @@ export function Usuarios() {
               <tbody>
                 {data
                   .slice((page - 1) * usersPerPage, page * usersPerPage)
-                  .map(user => {
+                  .map((user, index) => {
                     return (
                       <TableRow
                         key={user.id_usuario}
                         className={
-                          user.id_usuario % 2 === 0
+                          index % 2 === 0
                             ? 'h-10 border-zinc-700'
                             : 'h-10 border-zinc-700 bg-zinc-200'
                         }
