@@ -1,30 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+
 import { Footer } from '../components/footer'
 import { Navbar } from '../components/navbar/navbar'
 import { Table } from '../components/table/table'
 import { TableCell } from '../components/table/table-cell'
 import { TableHeader } from '../components/table/table-header'
 import { TableRow } from '../components/table/table-row'
-import { generateAdmins } from '../data/admins'
 import { AdminMenuDropdown } from '../components/admin-menu-dropdown'
-
-interface admins {
-  index: number
-  name: string
-  email: string
-  cpf: number
-  matricula: number
-  accessStatus: string
-  userType: string
-}
+import { getAdmins } from '../http/get_admins'
 
 export function Admins() {
-  const [adminsData, setAdminsData] = useState<admins[]>([])
-
-  useEffect(() => {
-    const data = generateAdmins()
-    setAdminsData(data)
-  }, [])
+  const { data, isPending, isError, error } = useQuery({
+    queryKey: ["admins"],
+    queryFn: getAdmins,
+    staleTime: 1000 * 60 // 1 minuto
+  })
+  console.log(data)
 
   return (
     <div className="flex gap-10">
@@ -47,30 +38,37 @@ export function Admins() {
               </TableRow>
             </thead>
             <tbody>
-              {adminsData.map(admin => {
-                return (
-                  <TableRow
-                    key={admin.index}
-                    className={
-                      admin.index % 2 === 0
-                        ? 'h-10 border-zinc-700'
-                        : 'h-10 border-zinc-700 bg-zinc-200'
-                    }
-                  >
-                    <TableCell>
-                      <AdminMenuDropdown />
-                    </TableCell>
-                    <TableCell className="min-w-96">{admin.name}</TableCell>
-                    <TableCell className="min-w-96">{admin.email}</TableCell>
-                    <TableCell className="min-w-36">{admin.cpf}</TableCell>
-                    <TableCell className="min-w-36">
-                      {admin.matricula}
-                    </TableCell>
-                    <TableCell>{admin.accessStatus}</TableCell>
-                    <TableCell>{admin.userType}</TableCell>
-                  </TableRow>
-                )
-              })}
+              {isPending ? (
+                <div>Loading...</div>
+              ) : isError ? (
+                <div>Error: {error.message}</div>
+              ) : (
+                data.map((admin, index) => {
+                  return (
+                    <TableRow
+                      key={admin.id_usuario}
+                      className={
+                        index % 2 === 0
+                          ? 'h-10 border-zinc-700'
+                          : 'h-10 border-zinc-700 bg-zinc-200'
+                      }
+                    >
+                      <TableCell>
+                        <AdminMenuDropdown adminId={admin.id_usuario}/>
+                      </TableCell>
+                      <TableCell className="min-w-96">{admin.nome}</TableCell>
+                      <TableCell className="min-w-96">{admin.email}</TableCell>
+                      <TableCell className="min-w-36">{admin.cpf}</TableCell>
+                      <TableCell className="min-w-36">
+                        {admin.matricula}
+                      </TableCell>
+                      <TableCell>{admin.status_acesso}</TableCell>
+                      <TableCell>{admin.tipo_usuario}</TableCell>
+                    </TableRow>
+                  )
+                })
+
+              )}
             </tbody>
           </Table>
         </main>

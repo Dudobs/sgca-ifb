@@ -6,14 +6,30 @@ import {
   DialogBackdrop,
 } from '@headlessui/react'
 import { Button } from '../button'
+import { updateUserToAdmin } from '../../http/update_user_to_admin'
+import { useForm } from 'react-hook-form'
 
 interface DialogProps {
   dialogIsOpen: boolean
   onClose: () => void
+  id_usuario: number
 }
 
-export function TornarAdministrador({ dialogIsOpen, onClose }: DialogProps) {
+export function TornarAdministrador({ dialogIsOpen, onClose, id_usuario }: DialogProps) {
   if (!dialogIsOpen) return null
+
+  const { handleSubmit } = useForm()
+
+  async function handleUpdateUserToAdmin() {
+    console.log('Usuário com o id: ', { id_usuario }, ' será um administrador')
+    try {
+      await updateUserToAdmin({id_usuario})
+      console.log('Alteração feita com sucesso!')  
+      onClose()
+    } catch (error) {
+      console.log('Falha ao realizar a alteração: ', error);
+    }
+  }
 
   return (
     <Dialog open={dialogIsOpen} onClose={onClose} className="relative z-50">
@@ -32,11 +48,7 @@ export function TornarAdministrador({ dialogIsOpen, onClose }: DialogProps) {
 
           <form
             action=""
-            onSubmit={() => {
-              onClose()
-
-              console.log('Você é admin agora!')
-            }}
+            onSubmit={handleSubmit(handleUpdateUserToAdmin)}
           >
             <div className="flex items-center gap-4">
               <Button type="submit" size="md" className="flex-1">

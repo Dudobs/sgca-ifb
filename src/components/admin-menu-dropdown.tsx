@@ -4,7 +4,11 @@ import { useState } from 'react'
 
 import { RemoverAdministrador } from './dialogs/remover-administrador'
 
-export function AdminMenuDropdown() {
+type adminProps = {
+  adminId: number
+}
+
+export function AdminMenuDropdown({adminId}: adminProps) {
   // STATE - Remover administrador
   const [dialogRemoverAdminIsOpen, setDialogRemoverAdminIsOpen] =
     useState(false)
@@ -50,6 +54,7 @@ export function AdminMenuDropdown() {
       <RemoverAdministrador
         dialogIsOpen={dialogRemoverAdminIsOpen}
         onClose={closeDialogRemoverAdmin}
+        id_usuario={adminId}
       />
     </>
   )

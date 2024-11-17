@@ -1,4 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
+import { Link } from 'react-router-dom'
+import dayjs from 'dayjs'
 import { RotateCw } from 'lucide-react'
+
 import { Navbar } from '../components/navbar/navbar'
 import { Footer } from '../components/footer'
 import { Table } from '../components/table/table'
@@ -6,28 +10,15 @@ import { Button } from '../components/button'
 import { TableRow } from '../components/table/table-row'
 import { TableCell } from '../components/table/table-cell'
 import { TableHeader } from '../components/table/table-header'
-import { useEffect, useState } from 'react'
-import { generateRegistries } from '../data/registries'
-import { Link } from 'react-router-dom'
-
-interface registries {
-  index: number
-  name: string
-  cpf: number
-  matricula: number
-  date: string
-  time: string
-  accessType: string
-  userType: string
-}
+import { getRegistries } from '../http/get_registries'
 
 export function Home() {
-  const [registries, setRegistries] = useState<registries[]>([])
-
-  useEffect(() => {
-    const data = generateRegistries()
-    setRegistries(data)
-  }, [])
+  const { data, isPending, isError, error, refetch } = useQuery({
+    queryKey: ['registries'],
+    queryFn: getRegistries,
+    refetchOnWindowFocus: true,
+    staleTime: 1000 * 10, // 10 segundos
+  })
 
   return (
     <div className="flex gap-10">
@@ -50,34 +41,42 @@ export function Home() {
                 </TableRow>
               </thead>
               <tbody>
-                {registries.slice(0, 15).map(registrie => {
-                  return (
-                    <TableRow
-                      key={registrie.index}
-                      className={
-                        registrie.index % 2 !== 0 ? '' : ' bg-zinc-200'
-                      }
-                    >
-                      <TableCell className="text-start">
-                        {registrie.index}
-                      </TableCell>
-                      <TableCell>{registrie.name}</TableCell>
-                      <TableCell>{registrie.cpf}</TableCell>
-                      <TableCell>{registrie.matricula}</TableCell>
-                      <TableCell>
-                        {registrie.date} ás {registrie.time}
-                      </TableCell>
-                      <TableCell>{registrie.accessType}</TableCell>
-                      <TableCell>{registrie.userType}</TableCell>
-                    </TableRow>
-                  )
-                })}
+                {isPending ? (
+                  <div>Loading...</div>
+                ) : isError ? (
+                  <div>{error.message}</div>
+                ) : (
+                  data.slice(0, 15).map((registrie, index) => {
+                    const registrieDate = dayjs(registrie.hora_acesso).format('DD MMM YYYY')
+                    const registrieTime = dayjs(registrie.hora_acesso).format('HH:mm')
+                    return (
+                      <TableRow
+                        key={registrie.id_registro}
+                        className={
+                          index % 2 !== 0 ? '' : ' bg-zinc-200'
+                        }
+                      >
+                        <TableCell className="text-start">
+                          {registrie.id_registro}
+                        </TableCell>
+                        <TableCell>{registrie.nome}</TableCell>
+                        <TableCell>{registrie.cpf}</TableCell>
+                        <TableCell>{registrie.matricula}</TableCell>
+                        <TableCell>
+                          {registrieDate} ás {registrieTime}
+                        </TableCell>
+                        <TableCell>{registrie.tipo_acesso ? 'Entrada' : 'Saída'}</TableCell>
+                        <TableCell>{registrie.tipo_usuario}</TableCell>
+                      </TableRow>
+                    )
+                  })
+                )}
               </tbody>
             </Table>
           </div>
 
           <div className="flex gap-3">
-            <Button className="px-2">
+            <Button className="px-2" onClick={() => refetch()}>
               <RotateCw className="size-5 text-zinc-50" />
             </Button>
 

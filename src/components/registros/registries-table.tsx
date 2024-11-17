@@ -1,38 +1,33 @@
-import { useEffect, useState } from 'react'
-
-import { Table } from '../table/table'
-import { TableRow } from '../table/table-row'
-import { TableHeader } from '../table/table-header'
-import { TableCell } from '../table/table-cell'
-
-import { PaginationButton } from '../pagination-button'
+import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import dayjs from 'dayjs'
 import {
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
 } from 'lucide-react'
-import { useQuery } from '@tanstack/react-query'
+
+import { Table } from '../table/table'
+import { TableRow } from '../table/table-row'
+import { TableHeader } from '../table/table-header'
+import { TableCell } from '../table/table-cell'
+import { PaginationButton } from '../pagination-button'
 import { getRegistries } from '../../http/get_registries'
-import dayjs from 'dayjs'
 
 export function RegistriesTable() {
-  const { data = [] } = useQuery({
+  const { data = [], isPending, isError, error } = useQuery({
     queryKey: ['registries'],
     queryFn: getRegistries,
-    staleTime: 1000 * 10, // 10 segundos
+    staleTime: 1000 * 60, // 1 minuto
   })
-
-  if (!data) {
-    return null
-  }
-
+  
   console.log(data)
-
+  
   const [page, setPage] = useState(1)
-
+  
   const registriesPerPage = 15
-
+  
   const totalPages = Math.ceil(data.length / registriesPerPage)
 
   function goToFirstPage() {
@@ -65,34 +60,40 @@ export function RegistriesTable() {
         </TableRow>
       </thead>
       <tbody>
-        {data
-          .slice((page - 1) * registriesPerPage, page * registriesPerPage)
-          .map((registrie, index) => {
-            const date = dayjs(registrie.hora_acesso).format('D MMM YYYY')
-            const time = dayjs(registrie.hora_acesso).format('HH:mm')
-            return (
-              <TableRow
-                key={registrie.id_registro}
-                className={
-                  index % 2 === 0
-                    ? 'h-10 border-zinc-700'
-                    : 'h-10 border-zinc-700 bg-zinc-200'
-                }
-              >
-                <TableCell className="text-start">
-                  {registrie.id_registro}
-                </TableCell>
-                <TableCell>{registrie.nome}</TableCell>
-                <TableCell>{registrie.cpf}</TableCell>
-                <TableCell>{registrie.matricula}</TableCell>
-                <TableCell>
-                  {date} às {time}
-                </TableCell>
-                <TableCell>{registrie.tipo_acesso ? 'Entrada' : 'Saída'}</TableCell>
-                <TableCell>{registrie.tipo_usuario}</TableCell>
-              </TableRow>
-            )
-          })}
+        {isPending ? (
+          <div>Loading...</div>
+        ) : isError ? (
+          <div>{error.message}</div>
+        ) : (
+          data
+            .slice((page - 1) * registriesPerPage, page * registriesPerPage)
+            .map((registrie, index) => {
+              const date = dayjs(registrie.hora_acesso).format('D MMM YYYY')
+              const time = dayjs(registrie.hora_acesso).format('HH:mm')
+              return (
+                <TableRow
+                  key={registrie.id_registro}
+                  className={
+                    index % 2 === 0
+                      ? 'h-10 border-zinc-700'
+                      : 'h-10 border-zinc-700 bg-zinc-200'
+                  }
+                >
+                  <TableCell className="text-start">
+                    {registrie.id_registro}
+                  </TableCell>
+                  <TableCell>{registrie.nome}</TableCell>
+                  <TableCell>{registrie.cpf}</TableCell>
+                  <TableCell>{registrie.matricula}</TableCell>
+                  <TableCell>
+                    {date} às {time}
+                  </TableCell>
+                  <TableCell>{registrie.tipo_acesso ? 'Entrada' : 'Saída'}</TableCell>
+                  <TableCell>{registrie.tipo_usuario}</TableCell>
+                </TableRow>
+              )
+            })
+        )}
       </tbody>
       <tfoot>
         <TableRow className="border-t border-zinc-700">

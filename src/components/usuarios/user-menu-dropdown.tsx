@@ -126,6 +126,7 @@ export function UserMenuDropdown({ userId }: UserProps) {
       <TornarAdministrador
         dialogIsOpen={dialogTornarAdminIsOpen}
         onClose={closeDialogTornarAdmin}
+        id_usuario={userId}
       />
     </>
   )

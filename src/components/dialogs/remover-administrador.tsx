@@ -7,14 +7,30 @@ import {
 } from '@headlessui/react'
 
 import { Button } from '../button'
+import { useForm } from 'react-hook-form'
+import { updateAdminToCommonUser } from '../../http/update_admin_to_common_user'
 
 interface DialogProps {
   dialogIsOpen: boolean
   onClose: () => void
+  id_usuario: number
 }
 
-export function RemoverAdministrador({ dialogIsOpen, onClose }: DialogProps) {
+export function RemoverAdministrador({ dialogIsOpen, onClose, id_usuario }: DialogProps) {
   if (!dialogIsOpen) return null
+
+  const { handleSubmit } = useForm()
+
+  async function handleUpdateAdminToCommonUser() {
+    console.log('Usuário com ', id_usuario, ' não será mais um administrador')
+    try {
+      await updateAdminToCommonUser({id_usuario})
+      console.log('Alteração feita com sucesso!');
+      onClose()
+    } catch (error) {
+      console.log('Falha ao realizar a alteraçaõ: ', error);
+    }
+  }
 
   return (
     <>
@@ -34,11 +50,7 @@ export function RemoverAdministrador({ dialogIsOpen, onClose }: DialogProps) {
 
             <form
               action=""
-              onSubmit={() => {
-                onClose()
-
-                console.log('Você não é mais um admin :(')
-              }}
+              onSubmit={handleSubmit(handleUpdateAdminToCommonUser)}
             >
               <div className="flex items-center gap-4">
                 <Button type="submit" size="md" className="flex-1">

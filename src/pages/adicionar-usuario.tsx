@@ -13,12 +13,6 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { getUSersType } from '../http/get_tipos_usuarios'
-import { useState } from 'react'
-
-interface usersType {
-  id_tipo_usuario: number
-  tipo_usuario: string
-}
 
 const createUserForm = z.object({
   nome: z.string().min(1),
@@ -35,8 +29,6 @@ export function AdicionarUsuario() {
     queryKey: ['usersType'],
     queryFn: getUSersType,
   })
-
-  const [usersType, setUsersType] = useState<usersType[]>([])
 
   const { register, handleSubmit, reset } = useForm<createUserForm>({
     resolver: zodResolver(createUserForm),

@@ -114,7 +114,7 @@ export function Usuarios() {
                         <TableCell className="min-w-36">
                           {user.matricula}
                         </TableCell>
-                        <TableCell>{user.status_acesso}</TableCell>
+                        <TableCell>{user.status_acesso ? 'Ativo' : 'Inativo'}</TableCell>
                         <TableCell>{user.tipo_usuario}</TableCell>
                       </TableRow>
                     )

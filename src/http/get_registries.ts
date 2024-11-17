@@ -6,12 +6,12 @@ type registriesResponse = {
   hora_acesso: string
   tipo_acesso: boolean
   tipo_usuario: string
-}[]
+}
 
 const apiURL = import.meta.env.VITE_API_URL
 const apiKey = import.meta.env.VITE_API_KEY
 
-export async function getRegistries(): Promise<registriesResponse> {
+export async function getRegistries(): Promise<registriesResponse[]> {
   const response = await fetch(`${apiURL}/registros`, {
     method: 'GET',
     headers: {
