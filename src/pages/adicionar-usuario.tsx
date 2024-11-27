@@ -6,13 +6,13 @@ import { Input } from '../components/form/input'
 import { Label } from '../components/form/label'
 import { Select } from '../components/form/select'
 import { Navbar } from '../components/navbar/navbar'
-import { z } from 'zod'
 import { createUser } from '../http/create-user'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
 import { getUSersType } from '../http/get_tipos_usuarios'
+import { useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useQuery } from '@tanstack/react-query'
 
 const createUserForm = z.object({
   nome: z.string().min(1),
@@ -142,9 +142,12 @@ export function AdicionarUsuario() {
                 required
                 className="h-9"
               >
-                { data.map(tipo_usuario => {
+                {data.map(tipo_usuario => {
                   return (
-                    <option key={tipo_usuario.id_tipo_usuario} value={tipo_usuario.id_tipo_usuario}>
+                    <option
+                      key={tipo_usuario.id_tipo_usuario}
+                      value={tipo_usuario.id_tipo_usuario}
+                    >
                       {tipo_usuario.tipo_usuario}
                     </option>
                   )

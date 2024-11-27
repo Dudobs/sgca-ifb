@@ -116,6 +116,7 @@ export function UserMenuDropdown({ userId }: UserProps) {
       <AdicionarRegistro
         dialogIsOpen={dialogAdicionarRegistroIsOpen}
         onClose={closeDialogAdicionarRegistro}
+        id_usuario={userId}
       />
 
       <AlterarStatusAcesso

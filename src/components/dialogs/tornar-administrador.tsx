@@ -15,7 +15,11 @@ interface DialogProps {
   id_usuario: number
 }
 
-export function TornarAdministrador({ dialogIsOpen, onClose, id_usuario }: DialogProps) {
+export function TornarAdministrador({
+  dialogIsOpen,
+  onClose,
+  id_usuario,
+}: DialogProps) {
   if (!dialogIsOpen) return null
 
   const { handleSubmit } = useForm()
@@ -23,11 +27,11 @@ export function TornarAdministrador({ dialogIsOpen, onClose, id_usuario }: Dialo
   async function handleUpdateUserToAdmin() {
     console.log('Usuário com o id: ', { id_usuario }, ' será um administrador')
     try {
-      await updateUserToAdmin({id_usuario})
-      console.log('Alteração feita com sucesso!')  
+      await updateUserToAdmin({ id_usuario })
+      console.log('Alteração feita com sucesso!')
       onClose()
     } catch (error) {
-      console.log('Falha ao realizar a alteração: ', error);
+      console.log('Falha ao realizar a alteração: ', error)
     }
   }
 
@@ -46,10 +50,7 @@ export function TornarAdministrador({ dialogIsOpen, onClose, id_usuario }: Dialo
             </Description>
           </div>
 
-          <form
-            action=""
-            onSubmit={handleSubmit(handleUpdateUserToAdmin)}
-          >
+          <form action="" onSubmit={handleSubmit(handleUpdateUserToAdmin)}>
             <div className="flex items-center gap-4">
               <Button type="submit" size="md" className="flex-1">
                 Continuar

@@ -6,14 +6,54 @@ import {
   DialogBackdrop,
 } from '@headlessui/react'
 import { Button } from '../button'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { addRegister } from '../../http/add-register'
 
 interface DialogProps {
   dialogIsOpen: boolean
   onClose: () => void
+  userId: number
 }
 
-export function AdicionarRegistro({ dialogIsOpen, onClose }: DialogProps) {
+export function AdicionarRegistro({
+  dialogIsOpen,
+  onClose,
+  userId,
+}: DialogProps) {
   if (!dialogIsOpen) return null
+
+  const addRegisterForm = z.object({
+    id_usuario: z.number(),
+    tipo_acesso: z.boolean(),
+  })
+
+  type addRegisterForm = z.infer<typeof addRegisterForm>
+
+  const { handleSubmit, reset, register } = useForm<addRegisterForm>({
+    resolver: zodResolver(addRegisterForm),
+  })
+
+  async function handleAddRegister({ id_usuario }: addRegisterForm) {
+    console.log(
+      'Adicionando um registro manualmente para o usuário ',
+      id_usuario
+    )
+    try {
+      await addRegister({
+        id_usuario,
+        tipo_acesso,
+      })
+      console.log('Acesso registrado com sucesso!')
+    } catch (error) {
+      console.log('Erro ao registrar acesso: ', error)
+    }
+    console.log('Registrado')
+
+    reset()
+    onClose()
+  }
 
   return (
     <Dialog open={dialogIsOpen} onClose={onClose} className="relative z-50">
@@ -31,21 +71,8 @@ export function AdicionarRegistro({ dialogIsOpen, onClose }: DialogProps) {
           </div>
 
           <form
-            action=""
-            onSubmit={e => {
-              e.preventDefault()
-              const form = e.target as HTMLFormElement
-              const formData = new FormData(form)
-              const tipo = formData.get('registro')
-
-              if (!tipo) {
-                alert('Por favor, selecione uma opção antes de continuar.')
-                return
-              }
-
-              onClose()
-              console.log(tipo)
-            }}
+            action="/usuarios"
+            onSubmit={handleSubmit(handleAddRegister)}
             className="flex flex-col justify-between gap-16"
           >
             <div className="flex items-center gap-4">
@@ -53,9 +80,9 @@ export function AdicionarRegistro({ dialogIsOpen, onClose }: DialogProps) {
                 <input
                   type="radio"
                   id="entrada"
-                  name="registro"
-                  value="entrada"
+                  value={1}
                   className="hidden"
+                  {...register('tipo_acesso')}
                 />
                 <Button
                   type="button"
@@ -69,19 +96,19 @@ export function AdicionarRegistro({ dialogIsOpen, onClose }: DialogProps) {
               </label>
 
               <label htmlFor="saida" className="flex-1">
+                <input
+                  type="radio"
+                  id="saida"
+                  value={0}
+                  className="hidden"
+                  {...register('tipo_acesso')}
+                />
                 <Button
                   type="button"
                   variant="access_type"
                   size="md"
                   onClick={() => document.getElementById('saida')?.click()}
                 >
-                  <input
-                    type="radio"
-                    id="saida"
-                    name="registro"
-                    value="saida"
-                    className="hidden"
-                  />
                   Saída
                 </Button>
               </label>

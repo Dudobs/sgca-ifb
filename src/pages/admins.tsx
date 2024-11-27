@@ -11,9 +11,9 @@ import { getAdmins } from '../http/get_admins'
 
 export function Admins() {
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["admins"],
+    queryKey: ['admins'],
     queryFn: getAdmins,
-    staleTime: 1000 * 60 // 1 minuto
+    staleTime: 1000 * 60, // 1 minuto
   })
   console.log(data)
 
@@ -54,7 +54,7 @@ export function Admins() {
                       }
                     >
                       <TableCell>
-                        <AdminMenuDropdown adminId={admin.id_usuario}/>
+                        <AdminMenuDropdown adminId={admin.id_usuario} />
                       </TableCell>
                       <TableCell className="min-w-96">{admin.nome}</TableCell>
                       <TableCell className="min-w-96">{admin.email}</TableCell>
@@ -67,7 +67,6 @@ export function Admins() {
                     </TableRow>
                   )
                 })
-
               )}
             </tbody>
           </Table>

@@ -16,18 +16,23 @@ import { PaginationButton } from '../pagination-button'
 import { getRegistries } from '../../http/get_registries'
 
 export function RegistriesTable() {
-  const { data = [], isPending, isError, error } = useQuery({
+  const {
+    data = [],
+    isPending,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ['registries'],
     queryFn: getRegistries,
     staleTime: 1000 * 60, // 1 minuto
   })
-  
+
   console.log(data)
-  
+
   const [page, setPage] = useState(1)
-  
+
   const registriesPerPage = 15
-  
+
   const totalPages = Math.ceil(data.length / registriesPerPage)
 
   function goToFirstPage() {
@@ -88,7 +93,9 @@ export function RegistriesTable() {
                   <TableCell>
                     {date} às {time}
                   </TableCell>
-                  <TableCell>{registrie.tipo_acesso ? 'Entrada' : 'Saída'}</TableCell>
+                  <TableCell>
+                    {registrie.tipo_acesso ? 'Entrada' : 'Saída'}
+                  </TableCell>
                   <TableCell>{registrie.tipo_usuario}</TableCell>
                 </TableRow>
               )
