@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import {
   ChevronLeft,
   ChevronRight,
@@ -27,8 +28,6 @@ export function RegistriesTable() {
     staleTime: 1000 * 60, // 1 minuto
   })
 
-  console.log(data)
-
   const [page, setPage] = useState(1)
 
   const registriesPerPage = 15
@@ -50,6 +49,8 @@ export function RegistriesTable() {
   function goToLastPage() {
     setPage(totalPages)
   }
+
+  dayjs.extend(utc)
 
   return (
     <Table>
@@ -73,8 +74,8 @@ export function RegistriesTable() {
           data
             .slice((page - 1) * registriesPerPage, page * registriesPerPage)
             .map((registrie, index) => {
-              const date = dayjs(registrie.hora_acesso).format('D MMM YYYY')
-              const time = dayjs(registrie.hora_acesso).format('HH:mm')
+              const date = dayjs.utc(registrie.hora_acesso).format('D MMM YYYY')
+              const time = dayjs.utc(registrie.hora_acesso).format('HH:mm')
               return (
                 <TableRow
                   key={registrie.id_registro}
