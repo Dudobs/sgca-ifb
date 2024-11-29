@@ -14,32 +14,32 @@ import { addRegister } from '../../http/add-register'
 interface DialogProps {
   dialogIsOpen: boolean
   onClose: () => void
-  userId: number
+  id_usuario: number
 }
 
 export function AdicionarRegistro({
   dialogIsOpen,
   onClose,
-  userId,
+  id_usuario,
 }: DialogProps) {
   if (!dialogIsOpen) return null
 
   const addRegisterForm = z.object({
-    id_usuario: z.number(),
     tipo_acesso: z.boolean(),
   })
 
   type addRegisterForm = z.infer<typeof addRegisterForm>
 
-  const { handleSubmit, reset, register } = useForm<addRegisterForm>({
+  const { handleSubmit, reset, register, setValue } = useForm<addRegisterForm>({
     resolver: zodResolver(addRegisterForm),
   })
 
-  async function handleAddRegister({ id_usuario }: addRegisterForm) {
+  async function handleAddRegister({ tipo_acesso }: addRegisterForm) {
     console.log(
       'Adicionando um registro manualmente para o usuário ',
       id_usuario
     )
+
     try {
       await addRegister({
         id_usuario,
@@ -49,7 +49,6 @@ export function AdicionarRegistro({
     } catch (error) {
       console.log('Erro ao registrar acesso: ', error)
     }
-    console.log('Registrado')
 
     reset()
     onClose()
@@ -89,7 +88,7 @@ export function AdicionarRegistro({
                   className=""
                   variant="access_type"
                   size="md"
-                  onClick={() => document.getElementById('entrada')?.click()}
+                  onClick={() => setValue('tipo_acesso', true)}
                 >
                   Entrada
                 </Button>
@@ -107,7 +106,7 @@ export function AdicionarRegistro({
                   type="button"
                   variant="access_type"
                   size="md"
-                  onClick={() => document.getElementById('saida')?.click()}
+                  onClick={() => setValue('tipo_acesso', false)}
                 >
                   Saída
                 </Button>

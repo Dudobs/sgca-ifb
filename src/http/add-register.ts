@@ -10,7 +10,7 @@ export async function addRegister({
   id_usuario,
   tipo_acesso,
 }: addRegisterRequest) {
-  await fetch(`${apiURL}/register_access`, {
+  await fetch(`${apiURL}/registrar_acesso_manual`, {
     method: 'POST',
     headers: {
       'X-API-Key': apiKey,
