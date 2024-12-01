@@ -9,11 +9,11 @@ import {
   ChevronsRight,
 } from 'lucide-react'
 
-import { Table } from '../table/table'
-import { TableRow } from '../table/table-row'
-import { TableHeader } from '../table/table-header'
-import { TableCell } from '../table/table-cell'
-import { PaginationButton } from '../pagination-button'
+import { Table } from '../../components/table/table'
+import { TableRow } from '../../components/table/table-row'
+import { TableHeader } from '../../components/table/table-header'
+import { TableCell } from '../../components/table/table-cell'
+import { PaginationButton } from '../../components/pagination-button'
 import { getRegistries } from '../../http/get_registries'
 
 export function RegistriesTable() {

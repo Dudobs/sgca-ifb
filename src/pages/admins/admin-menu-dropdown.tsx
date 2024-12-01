@@ -2,7 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisVertical } from 'lucide-react'
 import { useState } from 'react'
 
-import { RemoverAdministrador } from './dialogs/remover-administrador'
+import { RemoverAdministrador } from './remover-administrador'
 
 type adminProps = {
   adminId: number

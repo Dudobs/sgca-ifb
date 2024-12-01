@@ -5,8 +5,8 @@ import {
   DialogTitle,
   DialogBackdrop,
 } from '@headlessui/react'
-import { Button } from '../button'
-import { updateUserToAdmin } from '../../http/update_user_to_admin'
+import { Button } from '../../../components/button'
+import { updateUserToAdmin } from '../../../http/update_user_to_admin'
 import { useForm } from 'react-hook-form'
 
 interface DialogProps {

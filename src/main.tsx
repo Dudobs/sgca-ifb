@@ -3,9 +3,9 @@ import { createRoot } from 'react-dom/client'
 
 import { Login } from './pages/login'
 import { Home } from './pages/home'
-import { Registros } from './pages/registros'
-import { Usuarios } from './pages/usuarios'
-import { Admins } from './pages/admins'
+import { Registros } from './pages/registros/registros'
+import { Usuarios } from './pages/usuarios/usuarios'
+import { Admins } from './pages/admins/admins'
 import { AdicionarUsuario } from './pages/adicionar-usuario'
 import { EditarUsuario } from './pages/editar-usuario'
 import { Observacoes } from './pages/observacoes'
@@ -47,7 +47,7 @@ const routes: BreadcrumbRouteObject[] = [
     breadcrumb: null,
   },
   {
-    path: 'usuarios/:userId/editar',
+    path: 'usuarios/editar',
     element: <EditarUsuario />,
     breadcrumb: null,
   },

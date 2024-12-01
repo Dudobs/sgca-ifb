@@ -4,6 +4,7 @@ type usersResponse = {
   email: string
   matricula: string
   tipo_usuario: string
+  id_tipo_usuario: number
   nome: string
   status_acesso: number
 }[]

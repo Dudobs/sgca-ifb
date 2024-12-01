@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
   ChevronLeft,
   ChevronRight,
@@ -6,20 +5,22 @@ import {
   ChevronsRight,
   UserRoundPlus,
 } from 'lucide-react'
-
-import { Footer } from '../components/footer'
-import { PaginationButton } from '../components/pagination-button'
-import { Navbar } from '../components/navbar/navbar'
-import { Table } from '../components/table/table'
-import { TableCell } from '../components/table/table-cell'
-import { TableRow } from '../components/table/table-row'
-import { TableHeader } from '../components/table/table-header'
-import { UsersFilter } from '../components/usuarios/users-filter'
-import { Button } from '../components/button'
-import { UserMenuDropdown } from '../components/usuarios/user-menu-dropdown'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { getUSers } from '../http/get-users'
+import { Link } from 'react-router-dom'
+
+import { Button } from '../../components/button'
+import { Footer } from '../../components/footer'
+import { Navbar } from '../../components/navbar/navbar'
+import { PaginationButton } from '../../components/pagination-button'
+import { Table } from '../../components/table/table'
+import { TableCell } from '../../components/table/table-cell'
+import { TableHeader } from '../../components/table/table-header'
+import { TableRow } from '../../components/table/table-row'
+import { UserMenuDropdown } from './user-menu-dropdown'
+import { UsersFilter } from './users-filter'
+
+import { getUSers } from '../../http/get-users'
 
 export function Usuarios() {
   const { data = [] } = useQuery({
@@ -96,6 +97,17 @@ export function Usuarios() {
                 {data
                   .slice((page - 1) * usersPerPage, page * usersPerPage)
                   .map((user, index) => {
+                    const userData = {
+                      userId: user.id_usuario,
+                      name: user.nome,
+                      cpf: user.cpf,
+                      email: user.email,
+                      tipo_usuario: user.tipo_usuario,
+                      id_tipo_usuario: user.id_tipo_usuario,
+                      matricula: user.matricula,
+                      status_acesso: user.status_acesso,
+                    }
+
                     return (
                       <TableRow
                         key={user.id_usuario}
@@ -106,7 +118,7 @@ export function Usuarios() {
                         }
                       >
                         <TableCell>
-                          <UserMenuDropdown userId={user.id_usuario} />
+                          <UserMenuDropdown userData={userData} />
                         </TableCell>
                         <TableCell className="min-w-96">{user.nome}</TableCell>
                         <TableCell className="min-w-96">{user.email}</TableCell>
@@ -114,7 +126,9 @@ export function Usuarios() {
                         <TableCell className="min-w-36">
                           {user.matricula}
                         </TableCell>
-                        <TableCell>{user.status_acesso ? 'Ativo' : 'Inativo'}</TableCell>
+                        <TableCell>
+                          {user.status_acesso ? 'Ativo' : 'Inativo'}
+                        </TableCell>
                         <TableCell>{user.tipo_usuario}</TableCell>
                       </TableRow>
                     )

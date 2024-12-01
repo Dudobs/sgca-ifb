@@ -1,9 +1,9 @@
-import { Navbar } from '../components/navbar/navbar'
-import { Footer } from '../components/footer'
-import { RegistriesFilter } from '../components/registros/registries-filter'
-import { RegistriesTable } from '../components/registros/registries-table'
+import { Navbar } from '../../components/navbar/navbar'
+import { Footer } from '../../components/footer'
+import { RegistriesFilter } from './registries-filter'
+import { RegistriesTable } from './registries-table'
 import { useState } from 'react'
-import { Warning } from '../components/warning'
+import { Warning } from '../../components/warning'
 
 export function Registros() {
   const [searchHasData, setSearchHasData] = useState(true)

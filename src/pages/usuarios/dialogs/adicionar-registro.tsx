@@ -5,11 +5,11 @@ import {
   DialogTitle,
   DialogBackdrop,
 } from '@headlessui/react'
-import { Button } from '../button'
+import { Button } from '../../../components/button'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { addRegister } from '../../http/add-register'
+import { addRegister } from '../../../http/add-register'
 
 interface DialogProps {
   dialogIsOpen: boolean

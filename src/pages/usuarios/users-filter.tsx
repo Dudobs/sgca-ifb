@@ -1,6 +1,13 @@
+import { useQuery } from '@tanstack/react-query'
 import { Search } from 'lucide-react'
+import { getUSersType } from '../../http/get_tipos_usuarios'
 
 export function UsersFilter() {
+  const { data = [] } = useQuery({
+    queryKey: ['usersType'],
+    queryFn: getUSersType,
+  })
+
   return (
     <div className="flex items-center gap-3">
       <div className="px-3 h-8 w-72 border border-zinc-700 rounded-lg flex items-center gap-3">
@@ -21,10 +28,16 @@ export function UsersFilter() {
         <option value={''} className="text-zinc-300">
           Tipo de usuário
         </option>
-        <option className="text-zinc-950">02</option>
-        <option className="text-zinc-950">03</option>
-        <option className="text-zinc-950">04</option>
-        <option className="text-zinc-950">05</option>
+        {data.map(tipo_usuario => {
+          return (
+            <option
+              key={tipo_usuario.id_tipo_usuario}
+              value={tipo_usuario.id_tipo_usuario}
+            >
+              {tipo_usuario.tipo_usuario}
+            </option>
+          )
+        })}
       </select>
 
       <select
@@ -35,8 +48,12 @@ export function UsersFilter() {
         <option value={''} className="text-zinc-300">
           Status de acesso
         </option>
-        <option className="text-zinc-950">Ativo</option>
-        <option className="text-zinc-950">Inativo</option>
+        <option value={1} className="text-zinc-950">
+          Ativo
+        </option>
+        <option value={0} className="text-zinc-950">
+          Inativo
+        </option>
       </select>
     </div>
   )

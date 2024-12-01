@@ -1,11 +1,11 @@
 import { FilterX, Search } from 'lucide-react'
 
-import { Form } from '../form/form'
-import { Field } from '../form/field'
-import { Label } from '../form/label'
-import { Input } from '../form/input'
-import { Select } from '../form/select'
-import { Button } from '../button'
+import { Form } from '../../components/form/form'
+import { Field } from '../../components/form/field'
+import { Label } from '../../components/form/label'
+import { Input } from '../../components/form/input'
+import { Select } from '../../components/form/select'
+import { Button } from '../../components/button'
 
 interface RegistriesFilterProps {
   onSearch: (e: React.FormEvent<HTMLFormElement>) => void

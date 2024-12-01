@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { Footer } from '../components/footer'
-import { Navbar } from '../components/navbar/navbar'
-import { Table } from '../components/table/table'
-import { TableCell } from '../components/table/table-cell'
-import { TableHeader } from '../components/table/table-header'
-import { TableRow } from '../components/table/table-row'
-import { AdminMenuDropdown } from '../components/admin-menu-dropdown'
-import { getAdmins } from '../http/get_admins'
+import { AdminMenuDropdown } from './admin-menu-dropdown'
+import { Footer } from '../../components/footer'
+import { Navbar } from '../../components/navbar/navbar'
+import { Table } from '../../components/table/table'
+import { TableCell } from '../../components/table/table-cell'
+import { TableHeader } from '../../components/table/table-header'
+import { TableRow } from '../../components/table/table-row'
+import { getAdmins } from '../../http/get_admins'
 
 export function Admins() {
   const { data, isPending, isError, error } = useQuery({

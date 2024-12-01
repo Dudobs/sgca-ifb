@@ -1,13 +1,13 @@
 import {
   Description,
   Dialog,
+  DialogBackdrop,
   DialogPanel,
   DialogTitle,
-  DialogBackdrop,
 } from '@headlessui/react'
 
-import { Button } from '../button'
 import { useForm } from 'react-hook-form'
+import { Button } from '../../components/button'
 import { updateAdminToCommonUser } from '../../http/update_admin_to_common_user'
 
 interface DialogProps {

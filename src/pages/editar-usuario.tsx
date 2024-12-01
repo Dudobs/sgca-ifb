@@ -1,3 +1,5 @@
+import { useLocation } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 import { Button } from '../components/button'
 import { Footer } from '../components/footer'
 import { Field } from '../components/form/field'
@@ -7,15 +9,25 @@ import { Label } from '../components/form/label'
 import { Select } from '../components/form/select'
 import { Textarea } from '../components/form/textarea'
 import { Navbar } from '../components/navbar/navbar'
+import { getUSersType } from '../http/get_tipos_usuarios'
 
 export function EditarUsuario() {
+  const location = useLocation()
+  const user = location.state?.userData
+  console.log(user)
+
+  const { data = [] } = useQuery({
+    queryKey: ['usersType'],
+    queryFn: getUSersType,
+  })
+
   return (
     <div className="flex gap-10">
       <Navbar />
 
       <div className="pt-8 pr-10 flex flex-col justify-between gap-8">
         <main className="flex flex-col gap-4">
-          <h1 className="p-3 font-bold text-3xl">Eduardo Vieira</h1>
+          <h1 className="p-3 font-bold text-3xl">{user.name}</h1>
 
           <div className="flex gap-8">
             <Form action="/usuarios" className="flex flex-col gap-4 rounded-lg">
@@ -31,7 +43,7 @@ export function EditarUsuario() {
                     id="name"
                     name="name"
                     autoComplete="on"
-                    defaultValue={'Eduardo Vieira Campos'}
+                    defaultValue={user.name}
                     className="w-full h-9"
                   />
                 </Field>
@@ -41,7 +53,7 @@ export function EditarUsuario() {
                   <Input
                     id="cpf"
                     name="cpf"
-                    defaultValue={'085.000.000-00'}
+                    defaultValue={user.cpf}
                     className="w-full h-9"
                   />
                 </Field>
@@ -52,7 +64,7 @@ export function EditarUsuario() {
                     id="email"
                     name="email"
                     autoComplete="on"
-                    defaultValue={'dudobslol@gmail.com'}
+                    defaultValue={user.email}
                     className="w-full h-9"
                   />
                 </Field>
@@ -62,14 +74,19 @@ export function EditarUsuario() {
                   <Select
                     id="user-type"
                     name="user-type"
-                    defaultValue={1}
+                    defaultValue={user.id_tipo_usuario}
                     className="h-9"
                   >
-                    <option>01</option>
-                    <option>02</option>
-                    <option value={1}>Médio subsequente</option>
-                    <option>03</option>
-                    <option>05</option>
+                    {data.map(tipo_usuario => {
+                      return (
+                        <option
+                          key={tipo_usuario.id_tipo_usuario}
+                          value={tipo_usuario.id_tipo_usuario}
+                        >
+                          {tipo_usuario.tipo_usuario}
+                        </option>
+                      )
+                    })}
                   </Select>
                 </Field>
 
@@ -87,7 +104,7 @@ export function EditarUsuario() {
                   <Input
                     id="matricula"
                     name="matricula"
-                    defaultValue={'222000000057'}
+                    defaultValue={user.matricula}
                     disabled
                     className="w-full h-9"
                   />
@@ -144,11 +161,11 @@ export function EditarUsuario() {
                   <Select
                     id="access-status"
                     name="access-status"
-                    defaultValue={1}
+                    defaultValue={user.status_acesso}
                     className="h-9"
                   >
                     <option value={1}>Ativo</option>
-                    <option>Inativo</option>
+                    <option value={0}>Inativo</option>
                   </Select>
                 </Field>
 

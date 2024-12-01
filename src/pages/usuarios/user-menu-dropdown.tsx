@@ -2,16 +2,28 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisVertical } from 'lucide-react'
 import { useState } from 'react'
 
-import { AdicionarRegistro } from '../dialogs/adicionar-registro'
-import { AlterarStatusAcesso } from '../dialogs/alterar-status-acesso'
-import { TornarAdministrador } from '../dialogs/tornar-administrador'
+import { AdicionarRegistro } from './dialogs/adicionar-registro'
+import { AlterarStatusAcesso } from './dialogs/alterar-status-acesso'
+import { TornarAdministrador } from './dialogs/tornar-administrador'
 import { Link } from 'react-router-dom'
 
 type UserProps = {
   userId: number
+  name: string
+  cpf: string
+  email: string
+  tipo_usuario: string
+  id_tipo_usuario: number
+  matricula: string
+  status_acesso: number
 }
 
-export function UserMenuDropdown({ userId }: UserProps) {
+interface UserMenuDropdownProps {
+  userData: UserProps
+}
+
+export function UserMenuDropdown({ userData }: UserMenuDropdownProps) {
+  console.log('Dados recebidos no UserMenuDropdown:', userData)
   // STATE - Adicionar registro
   const [dialogAdicionarRegistroIsOpen, setDialogAdicionarRegistroIsOpen] =
     useState(false)
@@ -66,7 +78,8 @@ export function UserMenuDropdown({ userId }: UserProps) {
           <div className="py-1">
             <MenuItem>
               <Link
-                to={`/usuarios/${userId}/editar`}
+                to={'/usuarios/editar'}
+                state={{ userData }}
                 className="block px-4 py-2 text-sm text-zinc-950 data-[focus]:bg-green-50 data-[focus]:text-green-900"
               >
                 Editar
@@ -89,12 +102,12 @@ export function UserMenuDropdown({ userId }: UserProps) {
                 onClick={showDialogAlterarStatusAcesso}
                 className="w-full text-left block px-4 py-2 text-sm text-zinc-950 hover:bg-green-50 hover:text-green-900"
               >
-                Adicionar status de acesso
+                Alterar status de acesso
               </button>
             </MenuItem>
             <MenuItem>
               <Link
-                to={`/usuarios/${userId}/observacoes`}
+                to={`/usuarios/${userData.userId}/observacoes`}
                 className="block px-4 py-2 text-sm text-zinc-950 data-[focus]:bg-green-50 data-[focus]:text-green-900"
               >
                 Observações
@@ -116,18 +129,19 @@ export function UserMenuDropdown({ userId }: UserProps) {
       <AdicionarRegistro
         dialogIsOpen={dialogAdicionarRegistroIsOpen}
         onClose={closeDialogAdicionarRegistro}
-        id_usuario={userId}
+        id_usuario={userData.userId}
       />
 
       <AlterarStatusAcesso
         dialogIsOpen={dialogAlterarStatusAcessoIsOpen}
         onClose={closeDialogAlterarStatusAcesso}
+        id_usuario={userData.userId}
       />
 
       <TornarAdministrador
         dialogIsOpen={dialogTornarAdminIsOpen}
         onClose={closeDialogTornarAdmin}
-        id_usuario={userId}
+        id_usuario={userData.userId}
       />
     </>
   )
