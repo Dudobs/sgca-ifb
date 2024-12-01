@@ -1,5 +1,9 @@
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import { Button } from '../components/button'
 import { Footer } from '../components/footer'
 import { Field } from '../components/form/field'
@@ -10,16 +14,52 @@ import { Select } from '../components/form/select'
 import { Textarea } from '../components/form/textarea'
 import { Navbar } from '../components/navbar/navbar'
 import { getUSersType } from '../http/get_tipos_usuarios'
+import { updateUser } from '../http/update_user'
+
+const updateUserForm = z.object({
+  id_usuario: z.number(),
+  nome: z.string().min(3, 'O nome deve conter no mínimo 3 letras').max(100),
+  cpf: z.string().min(11),
+  email: z.string().email(),
+  id_tipo_usuario: z.string().min(1),
+})
+
+type updateUserForm = z.infer<typeof updateUserForm>
 
 export function EditarUsuario() {
   const location = useLocation()
   const user = location.state?.userData
-  console.log(user)
+
+  const navigate = useNavigate()
 
   const { data = [] } = useQuery({
     queryKey: ['usersType'],
     queryFn: getUSersType,
   })
+
+  const { handleSubmit, reset, register, setValue } = useForm<updateUserForm>({
+    resolver: zodResolver(updateUserForm),
+  })
+
+  setValue('id_usuario', user.userId)
+
+  async function handleUpdateUser({
+    id_usuario,
+    nome,
+    cpf,
+    email,
+    id_tipo_usuario,
+  }: updateUserForm) {
+    try {
+      await updateUser({ id_usuario, nome, cpf, email, id_tipo_usuario })
+    } catch (error) {
+      console.log('Erro ao realizar alterações')
+    }
+    console.log('Dados do usuário ', id_usuario, ' alterados com sucesso!')
+
+    reset()
+    navigate('/usuarios')
+  }
 
   return (
     <div className="flex gap-10">
@@ -30,7 +70,10 @@ export function EditarUsuario() {
           <h1 className="p-3 font-bold text-3xl">{user.name}</h1>
 
           <div className="flex gap-8">
-            <Form action="/usuarios" className="flex flex-col gap-4 rounded-lg">
+            <Form
+              onSubmit={handleSubmit(handleUpdateUser)}
+              className="flex flex-col gap-4 rounded-lg"
+            >
               <span className="absolute top-[-0.75rem] left-3 text-lg">
                 INFORMAÇÕES PESSOAIS
               </span>
@@ -41,7 +84,7 @@ export function EditarUsuario() {
                   <Input
                     type="text"
                     id="name"
-                    name="name"
+                    {...register('nome')}
                     autoComplete="on"
                     defaultValue={user.name}
                     className="w-full h-9"
@@ -52,7 +95,7 @@ export function EditarUsuario() {
                   <Label htmlFor="cpf" label={'CPF:'} />
                   <Input
                     id="cpf"
-                    name="cpf"
+                    {...register('cpf')}
                     defaultValue={user.cpf}
                     className="w-full h-9"
                   />
@@ -62,7 +105,7 @@ export function EditarUsuario() {
                   <Label htmlFor="email" label={'Email:'} />
                   <Input
                     id="email"
-                    name="email"
+                    {...register('email')}
                     autoComplete="on"
                     defaultValue={user.email}
                     className="w-full h-9"
@@ -73,7 +116,7 @@ export function EditarUsuario() {
                   <Label htmlFor="user-type" label={'Tipo de usuário:'} />
                   <Select
                     id="user-type"
-                    name="user-type"
+                    {...register('id_tipo_usuario')}
                     defaultValue={user.id_tipo_usuario}
                     className="h-9"
                   >
@@ -170,10 +213,7 @@ export function EditarUsuario() {
                 </Field>
 
                 <Field>
-                  <Label
-                    htmlFor="outra-justificativa"
-                    label={'Justificativa:'}
-                  />
+                  <Label htmlFor="outra-justificativa" label={'Outra:'} />
                   <Textarea
                     id="outra-justificativa"
                     name="outra-justificativa"

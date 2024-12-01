@@ -16,7 +16,6 @@ export async function getUSersType(): Promise<usersTypeResponse> {
   })
 
   const usersTypeData = await response.json()
-  console.log(usersTypeData)
 
   return usersTypeData
 }

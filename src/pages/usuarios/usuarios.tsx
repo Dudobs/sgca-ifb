@@ -33,8 +33,6 @@ export function Usuarios() {
     return null
   }
 
-  console.log(data)
-
   const [page, setPage] = useState(1)
 
   const usersPerPage = 10

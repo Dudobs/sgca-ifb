@@ -23,7 +23,6 @@ interface UserMenuDropdownProps {
 }
 
 export function UserMenuDropdown({ userData }: UserMenuDropdownProps) {
-  console.log('Dados recebidos no UserMenuDropdown:', userData)
   // STATE - Adicionar registro
   const [dialogAdicionarRegistroIsOpen, setDialogAdicionarRegistroIsOpen] =
     useState(false)
