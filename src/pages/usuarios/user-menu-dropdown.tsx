@@ -106,7 +106,8 @@ export function UserMenuDropdown({ userData }: UserMenuDropdownProps) {
             </MenuItem>
             <MenuItem>
               <Link
-                to={`/usuarios/${userData.userId}/observacoes`}
+                to={'/usuarios/observacoes'}
+                state={{ userData }}
                 className="block px-4 py-2 text-sm text-zinc-950 data-[focus]:bg-green-50 data-[focus]:text-green-900"
               >
                 Observações

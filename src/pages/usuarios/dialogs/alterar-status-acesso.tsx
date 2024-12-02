@@ -15,6 +15,7 @@ import { updateAccessStatus } from '../../../http/update_access_status'
 
 const updateAccessStatusForm = z.object({
   status_acesso: z.string().transform(value => value === '1'),
+  justificativa: z.string().max(400),
 })
 
 type updateAccessStatusForm = z.infer<typeof updateAccessStatusForm>
@@ -38,16 +39,18 @@ export function AlterarStatusAcesso({
 
   async function handleUpdateAccessStatus({
     status_acesso,
+    justificativa,
   }: updateAccessStatusForm) {
     try {
-      await updateAccessStatus({ id_usuario, status_acesso })
+      await updateAccessStatus({ id_usuario, status_acesso, justificativa })
     } catch (error) {
       console.log('Erro ao alterar status de acesso: ', error)
     }
     console.log(
       'Status de acesso do usuario ',
       id_usuario,
-      ' alterado com sucesso!'
+      ' alterado com sucesso! Justificativa: ',
+      justificativa
     )
 
     reset()
@@ -106,8 +109,9 @@ export function AlterarStatusAcesso({
                 />
                 <Textarea
                   id="justificativa"
-                  name="justificativa"
+                  {...register('justificativa')}
                   placeholder="Obrigatório"
+                  maxLength={400}
                   required
                   className="text-md"
                 />

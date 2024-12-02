@@ -1,4 +1,5 @@
-import { useLocation, useParams } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+
 import { Footer } from '../components/footer'
 import { Navbar } from '../components/navbar/navbar'
 import { Table } from '../components/table/table'
@@ -6,15 +7,21 @@ import { TableCell } from '../components/table/table-cell'
 import { TableHeader } from '../components/table/table-header'
 import { TableRow } from '../components/table/table-row'
 import { Warning } from '../components/warning'
+import { getObservacoes } from '../http/get_observacoes'
+import { useLocation } from 'react-router-dom'
+import dayjs from 'dayjs'
 
 export function Observacoes() {
-  const { userId } = useParams()
-  const userIdNumber = Number(userId || '0')
-
-  const hasObservations = userIdNumber % 2 === 0
-
   const location = useLocation()
-  console.log(location)
+  const user = location.state?.userData
+
+  const { data = [] } = useQuery({
+    queryKey: ['observations', user.userId],
+    queryFn: () => getObservacoes({ id_usuario: user.userId }),
+    staleTime: 1000 * 10, // 10 seconds
+  })
+
+  console.log(data)
 
   return (
     <div className="flex gap-10">
@@ -26,7 +33,7 @@ export function Observacoes() {
             Eduardo Vieira Campos
           </h1>
 
-          {hasObservations ? (
+          {data?.length >= 1 ? (
             <Table variant="secondary">
               <thead>
                 <TableRow variant="secondary">
@@ -39,28 +46,25 @@ export function Observacoes() {
                 </TableRow>
               </thead>
               <tbody>
-                <TableRow variant="secondary">
-                  <TableCell variant="secondary">21/06/2024</TableCell>
-                  <TableCell variant="secondary">
-                    Informações pessoais
-                  </TableCell>
-                  <TableCell variant="secondary" className="w-48">
-                    Administrador 01
-                  </TableCell>
-                  <TableCell variant="secondary" className="max-w-80">
-                    Email de cadastro incorreto
-                  </TableCell>
-                </TableRow>
-                <TableRow variant="secondary">
-                  <TableCell variant="secondary">17/06/2025</TableCell>
-                  <TableCell variant="secondary">Status de acesso</TableCell>
-                  <TableCell variant="secondary" className="w-48">
-                    Administrador 03
-                  </TableCell>
-                  <TableCell variant="secondary" className="max-w-80">
-                    Conclusão de curso
-                  </TableCell>
-                </TableRow>
+                {data.map(obs => {
+                  const observationDate = dayjs(obs.created_at).format(
+                    'DD MMM YYYY'
+                  )
+                  return (
+                    <TableRow key={obs.id_observacao} variant="secondary">
+                      <TableCell variant="secondary">
+                        {observationDate}
+                      </TableCell>
+                      <TableCell variant="secondary">{obs.alteracao}</TableCell>
+                      <TableCell variant="secondary" className="w-48">
+                        {obs.admin}
+                      </TableCell>
+                      <TableCell variant="secondary" className="max-w-80">
+                        {obs.observacao}
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
               </tbody>
             </Table>
           ) : (

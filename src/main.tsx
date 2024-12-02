@@ -52,7 +52,7 @@ const routes: BreadcrumbRouteObject[] = [
     breadcrumb: null,
   },
   {
-    path: 'usuarios/:userId/observacoes',
+    path: 'usuarios/observacoes',
     element: <Observacoes />,
   },
   {

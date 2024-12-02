@@ -139,6 +139,7 @@ export function EditarUsuario() {
                     id="observacao"
                     name="observacao"
                     placeholder="Opcional"
+                    maxLength={400}
                   />
                 </Field>
 
@@ -218,6 +219,7 @@ export function EditarUsuario() {
                     id="outra-justificativa"
                     name="outra-justificativa"
                     placeholder="Obrigatório"
+                    maxLength={400}
                     required
                   />
                 </Field>
