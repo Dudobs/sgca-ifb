@@ -29,9 +29,7 @@ export function Observacoes() {
 
       <div className="pt-8 pr-10 flex flex-col justify-between gap-8">
         <main className="flex flex-col gap-4">
-          <h1 className="px-3 pt-3 font-bold text-3xl">
-            Eduardo Vieira Campos
-          </h1>
+          <h1 className="px-3 pt-3 font-bold text-3xl">{user.name}</h1>
 
           {data?.length >= 1 ? (
             <Table variant="secondary">
