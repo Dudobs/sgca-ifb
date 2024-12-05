@@ -55,7 +55,7 @@ export function EditarUsuario() {
     } catch (error) {
       console.log('Erro ao realizar alterações')
     }
-    console.log('Dados do usuário ', id_usuario, ' alterados com sucesso!')
+    alert(`Dados do usuário ${nome} alterados com sucesso!`)
 
     reset()
     navigate('/usuarios')

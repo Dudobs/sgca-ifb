@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import {
   ChevronLeft,
   ChevronRight,
@@ -6,7 +7,6 @@ import {
   UserRoundPlus,
 } from 'lucide-react'
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 
 import { Button } from '../../components/button'
@@ -23,7 +23,9 @@ import { UsersFilter } from './users-filter'
 import { getUSers } from '../../http/get-users'
 
 export function Usuarios() {
-  const { data = [] } = useQuery({
+  const [page, setPage] = useState(1)
+
+  const { data, refetch } = useQuery({
     queryKey: ['users'],
     queryFn: getUSers,
     staleTime: 1000 * 60, // 60 segundos
@@ -32,8 +34,6 @@ export function Usuarios() {
   if (!data) {
     return null
   }
-
-  const [page, setPage] = useState(1)
 
   const usersPerPage = 10
 
@@ -116,7 +116,10 @@ export function Usuarios() {
                         }
                       >
                         <TableCell>
-                          <UserMenuDropdown userData={userData} />
+                          <UserMenuDropdown
+                            userData={userData}
+                            refetchUsersQuery={refetch}
+                          />
                         </TableCell>
                         <TableCell className="min-w-96">{user.nome}</TableCell>
                         <TableCell className="min-w-96">{user.email}</TableCell>

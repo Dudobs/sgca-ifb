@@ -58,11 +58,10 @@ export function AdicionarUsuario() {
         matricula,
         id_tipo_usuario,
       })
-      console.log('Usuário criado com sucesso!') // Adicione um log de sucesso
+      alert('Usuário criado com sucesso!')
     } catch (error) {
-      console.error('Erro ao criar usuário:', error) // Registre qualquer erro
+      console.error('Erro ao criar usuário:', error)
     }
-    console.log('create')
 
     reset()
     navigate('/usuarios')

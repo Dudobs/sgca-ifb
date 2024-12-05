@@ -10,7 +10,7 @@ import { TableRow } from '../../components/table/table-row'
 import { getAdmins } from '../../http/get_admins'
 
 export function Admins() {
-  const { data, isPending, isError, error } = useQuery({
+  const { data, isPending, isError, error, refetch } = useQuery({
     queryKey: ['admins'],
     queryFn: getAdmins,
     staleTime: 1000 * 60, // 1 minuto
@@ -54,7 +54,10 @@ export function Admins() {
                       }
                     >
                       <TableCell>
-                        <AdminMenuDropdown adminId={admin.id_usuario} />
+                        <AdminMenuDropdown
+                          adminId={admin.id_usuario}
+                          refetchQuery={refetch}
+                        />
                       </TableCell>
                       <TableCell className="min-w-96">{admin.nome}</TableCell>
                       <TableCell className="min-w-96">{admin.email}</TableCell>
@@ -62,7 +65,9 @@ export function Admins() {
                       <TableCell className="min-w-36">
                         {admin.matricula}
                       </TableCell>
-                      <TableCell>{admin.status_acesso}</TableCell>
+                      <TableCell>
+                        {admin.status_acesso ? 'Ativo' : 'Inativo'}
+                      </TableCell>
                       <TableCell>{admin.tipo_usuario}</TableCell>
                     </TableRow>
                   )

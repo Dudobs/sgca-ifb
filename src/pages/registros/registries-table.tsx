@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import {
@@ -9,14 +9,16 @@ import {
   ChevronsRight,
 } from 'lucide-react'
 
-import { Table } from '../../components/table/table'
-import { TableRow } from '../../components/table/table-row'
-import { TableHeader } from '../../components/table/table-header'
-import { TableCell } from '../../components/table/table-cell'
 import { PaginationButton } from '../../components/pagination-button'
+import { Table } from '../../components/table/table'
+import { TableCell } from '../../components/table/table-cell'
+import { TableHeader } from '../../components/table/table-header'
+import { TableRow } from '../../components/table/table-row'
 import { getRegistries } from '../../http/get_registries'
 
 export function RegistriesTable() {
+  const [page, setPage] = useState(1)
+
   const {
     data = [],
     isPending,
@@ -25,10 +27,8 @@ export function RegistriesTable() {
   } = useQuery({
     queryKey: ['registries'],
     queryFn: getRegistries,
-    staleTime: 1000 * 60, // 1 minuto
+    staleTime: 1000 * 5, // 5 Segundos
   })
-
-  const [page, setPage] = useState(1)
 
   const registriesPerPage = 15
 

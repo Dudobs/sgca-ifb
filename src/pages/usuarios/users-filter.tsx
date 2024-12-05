@@ -6,6 +6,7 @@ export function UsersFilter() {
   const { data = [] } = useQuery({
     queryKey: ['usersType'],
     queryFn: getUSersType,
+    staleTime: 1000 * 60, // 60 seconds
   })
 
   return (

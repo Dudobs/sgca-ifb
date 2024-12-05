@@ -2,14 +2,14 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisVertical } from 'lucide-react'
 import { useState } from 'react'
 
-import { RemoverAdministrador } from './remover-administrador'
+import { RemoverAdministrador } from './dialogs/remover-administrador'
 
 type adminProps = {
   adminId: number
+  refetchQuery: () => void
 }
 
-export function AdminMenuDropdown({adminId}: adminProps) {
-  // STATE - Remover administrador
+export function AdminMenuDropdown({ adminId, refetchQuery }: adminProps) {
   const [dialogRemoverAdminIsOpen, setDialogRemoverAdminIsOpen] =
     useState(false)
 
@@ -54,6 +54,7 @@ export function AdminMenuDropdown({adminId}: adminProps) {
       <RemoverAdministrador
         dialogIsOpen={dialogRemoverAdminIsOpen}
         onClose={closeDialogRemoverAdmin}
+        refetch={refetchQuery}
         id_usuario={adminId}
       />
     </>

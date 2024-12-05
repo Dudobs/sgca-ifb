@@ -7,16 +7,22 @@ import {
 } from '@headlessui/react'
 
 import { useForm } from 'react-hook-form'
-import { Button } from '../../components/button'
-import { updateAdminToCommonUser } from '../../http/update_admin_to_common_user'
+import { Button } from '../../../components/button'
+import { updateAdminToCommonUser } from '../../../http/update_admin_to_common_user'
 
 interface DialogProps {
   dialogIsOpen: boolean
   onClose: () => void
+  refetch: () => void
   id_usuario: number
 }
 
-export function RemoverAdministrador({ dialogIsOpen, onClose, id_usuario }: DialogProps) {
+export function RemoverAdministrador({
+  dialogIsOpen,
+  onClose,
+  refetch,
+  id_usuario,
+}: DialogProps) {
   if (!dialogIsOpen) return null
 
   const { handleSubmit } = useForm()
@@ -24,12 +30,14 @@ export function RemoverAdministrador({ dialogIsOpen, onClose, id_usuario }: Dial
   async function handleUpdateAdminToCommonUser() {
     console.log('Usuário com ', id_usuario, ' não será mais um administrador')
     try {
-      await updateAdminToCommonUser({id_usuario})
-      console.log('Alteração feita com sucesso!');
+      await updateAdminToCommonUser({ id_usuario })
+      alert('Alteração feita com sucesso!')
       onClose()
     } catch (error) {
-      console.log('Falha ao realizar a alteraçaõ: ', error);
+      console.log('Falha ao realizar a alteraçaõ: ', error)
     }
+
+    refetch()
   }
 
   return (

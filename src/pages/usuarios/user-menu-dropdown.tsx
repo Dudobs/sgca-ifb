@@ -20,9 +20,13 @@ type UserProps = {
 
 interface UserMenuDropdownProps {
   userData: UserProps
+  refetchUsersQuery: () => void
 }
 
-export function UserMenuDropdown({ userData }: UserMenuDropdownProps) {
+export function UserMenuDropdown({
+  userData,
+  refetchUsersQuery,
+}: UserMenuDropdownProps) {
   // STATE - Adicionar registro
   const [dialogAdicionarRegistroIsOpen, setDialogAdicionarRegistroIsOpen] =
     useState(false)
@@ -129,12 +133,14 @@ export function UserMenuDropdown({ userData }: UserMenuDropdownProps) {
       <AdicionarRegistro
         dialogIsOpen={dialogAdicionarRegistroIsOpen}
         onClose={closeDialogAdicionarRegistro}
+        refetchUsersQuery={refetchUsersQuery}
         id_usuario={userData.userId}
       />
 
       <AlterarStatusAcesso
         dialogIsOpen={dialogAlterarStatusAcessoIsOpen}
         onClose={closeDialogAlterarStatusAcesso}
+        refetchUsersQuery={refetchUsersQuery}
         id_usuario={userData.userId}
       />
 

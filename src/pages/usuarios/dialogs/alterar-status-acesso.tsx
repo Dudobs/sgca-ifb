@@ -23,12 +23,14 @@ type updateAccessStatusForm = z.infer<typeof updateAccessStatusForm>
 interface DialogProps {
   dialogIsOpen: boolean
   onClose: () => void
+  refetchUsersQuery: () => void
   id_usuario: number
 }
 
 export function AlterarStatusAcesso({
   dialogIsOpen,
   onClose,
+  refetchUsersQuery,
   id_usuario,
 }: DialogProps) {
   if (!dialogIsOpen) return null
@@ -46,15 +48,10 @@ export function AlterarStatusAcesso({
     } catch (error) {
       console.log('Erro ao alterar status de acesso: ', error)
     }
-    console.log(
-      'Status de acesso do usuario ',
-      id_usuario,
-      ' alterado com sucesso! Justificativa: ',
-      justificativa
-    )
-
     reset()
     onClose()
+    alert('Status de acesso alterado com sucesso!')
+    refetchUsersQuery()
   }
 
   return (

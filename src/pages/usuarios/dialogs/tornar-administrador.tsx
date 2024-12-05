@@ -28,9 +28,10 @@ export function TornarAdministrador({
     console.log('Usuário com o id: ', { id_usuario }, ' será um administrador')
     try {
       await updateUserToAdmin({ id_usuario })
-      console.log('Alteração feita com sucesso!')
+      alert('Alteração feita com sucesso!')
       onClose()
     } catch (error) {
+      alert('Falha ao realizar a alteraçãoFalha ao realizar a alteração')
       console.log('Falha ao realizar a alteração: ', error)
     }
   }

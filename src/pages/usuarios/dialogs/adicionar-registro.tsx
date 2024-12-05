@@ -14,6 +14,7 @@ import { addRegister } from '../../../http/add-register'
 interface DialogProps {
   dialogIsOpen: boolean
   onClose: () => void
+  refetchUsersQuery: () => void
   id_usuario: number
 }
 
@@ -35,17 +36,12 @@ export function AdicionarRegistro({
   })
 
   async function handleAddRegister({ tipo_acesso }: addRegisterForm) {
-    console.log(
-      'Adicionando um registro manualmente para o usuário ',
-      id_usuario
-    )
-
     try {
       await addRegister({
         id_usuario,
         tipo_acesso,
       })
-      console.log('Acesso registrado com sucesso!')
+      alert('Acesso registrado com sucesso!\nCatraca liberada')
     } catch (error) {
       console.log('Erro ao registrar acesso: ', error)
     }
