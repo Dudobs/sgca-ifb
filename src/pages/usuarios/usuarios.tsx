@@ -6,7 +6,7 @@ import {
   ChevronsRight,
   UserRoundPlus,
 } from 'lucide-react'
-import { useState } from 'react'
+import { type ChangeEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button } from '../../components/button'
@@ -23,17 +23,95 @@ import { UsersFilter } from './users-filter'
 import { getUSers } from '../../http/get-users'
 
 export function Usuarios() {
+  // ESTADO PAGE
   const [page, setPage] = useState(1)
 
-  const { data, refetch } = useQuery({
-    queryKey: ['users'],
-    queryFn: getUSers,
+  // ESTADOS SEARCH
+  // Name
+  const [searchName, setSearchName] = useState(() => {
+    const url = new URL(window.location.toString())
+
+    if (url.searchParams.has('nome')) {
+      return String(url.searchParams.get('nome')) ?? ''
+    }
+
+    return ''
+  })
+
+  function setCurrentSearchName(nome: string) {
+    const url = new URL(window.location.toString())
+
+    url.searchParams.set('nome', nome)
+
+    window.history.pushState({}, '', url)
+
+    setSearchName(nome)
+  }
+
+  function onSearchNameInputChanged(event: ChangeEvent<HTMLInputElement>) {
+    setCurrentSearchName(event.target.value)
+  }
+
+  // User type
+  const [searchUserType, setSearchUserType] = useState(() => {
+    const url = new URL(window.location.toString())
+
+    if (url.searchParams.has('tipo-usuario')) {
+      return String(url.searchParams.get('tipo-usuario')) ?? ''
+    }
+
+    return ''
+  })
+
+  function setCurrentSearchUserType(tipo_usuario: string) {
+    const url = new URL(window.location.toString())
+
+    url.searchParams.set('tipo-usuario', tipo_usuario)
+
+    window.history.pushState({}, '', url)
+
+    setSearchUserType(tipo_usuario)
+  }
+
+  function onSearchUserTypeInputChanged(event: ChangeEvent<HTMLSelectElement>) {
+    setCurrentSearchUserType(event.target.value)
+  }
+
+  // Access status
+  const [searchAccessStatus, setSearchAccessStatus] = useState(() => {
+    const url = new URL(window.location.toString())
+
+    if (url.searchParams.has('status-acesso')) {
+      return String(url.searchParams.get('status-acesso')) ?? ''
+    }
+
+    return ''
+  })
+
+  function setCurrentSearchAccessStatus(tipo_usuario: string) {
+    const url = new URL(window.location.toString())
+
+    url.searchParams.set('status-acesso', tipo_usuario)
+
+    window.history.pushState({}, '', url)
+
+    setSearchAccessStatus(tipo_usuario)
+  }
+
+  function onSearchAccessStatusInputChanged(
+    event: ChangeEvent<HTMLSelectElement>
+  ) {
+    setCurrentSearchAccessStatus(event.target.value)
+  }
+
+  // API REQUEST
+  const { data = [], refetch } = useQuery({
+    queryKey: ['users', searchName, searchUserType, searchAccessStatus],
+    queryFn: () => getUSers(searchName, searchUserType, searchAccessStatus),
     staleTime: 1000 * 60, // 60 segundos
   })
 
-  if (!data) {
-    return null
-  }
+  console.log('Tipo:', searchUserType)
 
   const usersPerPage = 10
 
@@ -76,7 +154,14 @@ export function Usuarios() {
 
           <div className="min-w-[79rem] border border-zinc-700 rounded-lg text-center">
             <div className="px-4 py-2 border-b border-zinc-700 flex gap-3">
-              <UsersFilter />
+              <UsersFilter
+                handleOnChangeName={onSearchNameInputChanged}
+                NameValue={searchName}
+                handleOnChangeUserType={onSearchUserTypeInputChanged}
+                UserTypeValue={searchUserType}
+                handleOnChangeAccessStatus={onSearchAccessStatusInputChanged}
+                AccessStatusValue={searchAccessStatus}
+              />
             </div>
 
             <Table className="min-w-[79rem] rounded-none border-none">

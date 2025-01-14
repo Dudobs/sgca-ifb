@@ -12,8 +12,26 @@ type usersResponse = {
 const apiURL = import.meta.env.VITE_API_URL
 const apiKey = import.meta.env.VITE_API_KEY
 
-export async function getUSers(): Promise<usersResponse> {
-  const response = await fetch(`${apiURL}/usuarios`, {
+export async function getUSers(
+  nome: string,
+  tipo_usuario: string,
+  status_acesso: string
+): Promise<usersResponse> {
+  const url = new URL(`${apiURL}/usuarios`)
+
+  if (nome.length > 0) {
+    url.searchParams.set('nome', nome)
+  }
+
+  if (tipo_usuario) {
+    url.searchParams.set('tipo-usuario', tipo_usuario)
+  }
+
+  if (status_acesso) {
+    url.searchParams.set('status-acesso', status_acesso)
+  }
+
+  const response = await fetch(url, {
     method: 'GET',
     headers: {
       'X-API-Key': apiKey,
