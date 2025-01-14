@@ -11,7 +11,9 @@ type registriesResponse = {
 const apiURL = import.meta.env.VITE_API_URL
 const apiKey = import.meta.env.VITE_API_KEY
 
-export async function getRegistries(): Promise<registriesResponse[]> {
+export async function getRegistries(
+  searchParams: string
+): Promise<registriesResponse[]> {
   const response = await fetch(`${apiURL}/registros`, {
     method: 'GET',
     headers: {

@@ -26,8 +26,6 @@ export function UsersFilter({
     staleTime: 1000 * 60, // 60 seconds
   })
 
-  console.log('userTypeValue: ', UserTypeValue)
-
   return (
     <div className="flex items-center gap-3">
       <div className="px-3 h-8 w-72 border border-zinc-700 rounded-lg flex items-center gap-3">

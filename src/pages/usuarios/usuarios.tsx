@@ -111,8 +111,7 @@ export function Usuarios() {
     staleTime: 1000 * 60, // 60 segundos
   })
 
-  console.log('Tipo:', searchUserType)
-
+  // PAGINATION
   const usersPerPage = 10
 
   const totalPages = Math.ceil(data.length / usersPerPage)

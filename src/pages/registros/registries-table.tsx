@@ -25,8 +25,8 @@ export function RegistriesTable() {
     isError,
     error,
   } = useQuery({
-    queryKey: ['registries'],
-    queryFn: getRegistries,
+    queryKey: ['registries', onFilterSubmit],
+    queryFn: () => getRegistries(nome, cpf, matricula, ...),
     staleTime: 1000 * 5, // 5 Segundos
   })
 
