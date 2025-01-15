@@ -1,6 +1,6 @@
 import { Navbar } from '../../components/navbar/navbar'
 import { Footer } from '../../components/footer'
-import { RegistriesFilter } from './registries-filter'
+import { type filtersForm, RegistriesFilter } from './registries-filter'
 import { RegistriesTable } from './registries-table'
 import { useState } from 'react'
 import { Warning } from '../../components/warning'
@@ -8,10 +8,16 @@ import { Warning } from '../../components/warning'
 export function Registros() {
   const [searchHasData, setSearchHasData] = useState(true)
 
-  function handleSearchRegistries(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault() // Ímpede o comportamento padrão do formulário, não recarregando a página e simulando corretamente a busca por registros sem dados retornados.
+  const [searchParams, setSearchParams] = useState({
+    nome: '',
+    cpf: '',
+    matricula: '',
+    tipo_usuario: '',
+    tipo_acesso: '',
+  })
 
-    setSearchHasData(prev => !prev)
+  function handleSearchRegistries(params: filtersForm) {
+    setSearchParams(params) // Atualiza os parâmetros de busca
   }
 
   return (
@@ -25,7 +31,7 @@ export function Registros() {
           <RegistriesFilter onSearch={handleSearchRegistries} />
 
           {searchHasData ? (
-            <RegistriesTable />
+            <RegistriesTable searchParams={searchParams} />
           ) : (
             <Warning warningText="Nenhum registro de acesso encontrado." />
           )}

@@ -9,51 +9,65 @@ import { Button } from '../../components/button'
 import { getUSersType } from '../../http/get_tipos_usuarios'
 import { useQuery } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 interface RegistriesFilterProps {
-  onSearch: (e: React.FormEvent<HTMLFormElement>) => void
+  onSearch: (filters: filtersForm) => void
 }
 
+const filtersForm = z.object({
+  nome: z.string(),
+  cpf: z.string(),
+  matricula: z.string(),
+  tipo_usuario: z.string().max(1),
+  tipo_acesso: z.string().max(1),
+})
+
+export type filtersForm = z.infer<typeof filtersForm>
+
 export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
-  const [searchParams, setSearchParams] = useState({
-    nome: '',
-    cpf: '',
-    matricula: '',
-    tipo_usuario: '',
-    tipo_acesso: '',
+  const { handleSubmit, register } = useForm<filtersForm>({
+    resolver: zodResolver(filtersForm),
   })
+
+  const handleFormSubmit = (data: filtersForm) => {
+    onSearch(data) // Envia os parâmetros para o componente pai
+  }
 
   const { data = [] } = useQuery({
     queryKey: ['usersType'],
     queryFn: getUSersType,
   })
 
-  const { handleSubmit, register } = useForm()
-
   return (
-    <Form action="" onSubmit={handleSubmit(() => {})}>
+    <Form action="" onSubmit={handleSubmit(handleFormSubmit)}>
       <span className="absolute top-[-0.75rem]">FILTROS:</span>
 
       <div className="w-3/5 flex flex-wrap gap-4">
         <Field>
           <Label htmlFor="name" label={'Nome:'} />
-          <Input type="text" id="name" name="name" autoComplete="off" />
+          <Input
+            type="text"
+            id="name"
+            {...register('nome')}
+            autoComplete="off"
+          />
         </Field>
 
         <Field>
           <Label htmlFor="cpf" label={'CPF:'} />
-          <Input id="cpf" name="cpf" />
+          <Input id="cpf" {...register('cpf')} />
         </Field>
 
         <Field>
           <Label htmlFor="matricula" label={'Matrícula:'} />
-          <Input id="matricula" name="matricula" />
+          <Input id="matricula" {...register('matricula')} />
         </Field>
 
         <Field>
-          <Label htmlFor="user-type" label={'Tipo de usuário'} />
-          <Select id="user-type" name="user-type">
+          <Label htmlFor="tipo-usuario" label={'Tipo de usuário'} />
+          <Select id="tipo-usuario" {...register('tipo_usuario')}>
             <option value={''} className="text-zinc-300">
               Tipo de usuário
             </option>
@@ -71,8 +85,8 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
         </Field>
 
         <Field className="w-36">
-          <Label htmlFor="access-type" label={'Tipo de acesso:'} />
-          <Select id="access-type" name="access-type">
+          <Label htmlFor="tipo-acesso" label={'Tipo de acesso:'} />
+          <Select id="tipo-acesso" {...register('tipo_acesso')}>
             <option value={''} className="text-zinc-300">
               Tipo de acesso
             </option>

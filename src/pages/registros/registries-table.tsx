@@ -16,8 +16,20 @@ import { TableHeader } from '../../components/table/table-header'
 import { TableRow } from '../../components/table/table-row'
 import { getRegistries } from '../../http/get_registries'
 
-export function RegistriesTable() {
+interface RegistriesTableProps {
+  searchParams: {
+    nome?: string
+    cpf?: string
+    matricula?: string
+    tipo_usuario?: string
+    tipo_acesso?: string
+  } // Você pode incluir outros campos conforme necessário
+}
+
+export function RegistriesTable({ searchParams }: RegistriesTableProps) {
   const [page, setPage] = useState(1)
+
+  const [searchHasData, setSearchHasData] = useState(true)
 
   const {
     data = [],
@@ -25,10 +37,14 @@ export function RegistriesTable() {
     isError,
     error,
   } = useQuery({
-    queryKey: ['registries', onFilterSubmit],
-    queryFn: () => getRegistries(nome, cpf, matricula, ...),
+    queryKey: ['registries', searchParams],
+    queryFn: () => getRegistries(searchParams),
     staleTime: 1000 * 5, // 5 Segundos
   })
+
+  if (data.length < 0) {
+    setSearchHasData(false)
+  }
 
   const registriesPerPage = 15
 

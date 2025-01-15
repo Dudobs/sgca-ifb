@@ -12,9 +12,17 @@ const apiURL = import.meta.env.VITE_API_URL
 const apiKey = import.meta.env.VITE_API_KEY
 
 export async function getRegistries(
-  searchParams: string
+  searchParams: Record<string, string>
 ): Promise<registriesResponse[]> {
-  const response = await fetch(`${apiURL}/registros`, {
+  const url = new URL(`${apiURL}/registros`)
+
+  // Adiciona os filtros na URL
+  // biome-ignore lint/complexity/noForEach: <explanation>
+  Object.entries(searchParams).forEach(([key, value]) => {
+    if (value) url.searchParams.set(key, value)
+  })
+
+  const response = await fetch(url, {
     method: 'GET',
     headers: {
       'X-API-Key': apiKey,
