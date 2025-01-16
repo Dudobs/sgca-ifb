@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import { RotateCw } from 'lucide-react'
 
 import { Navbar } from '../components/navbar/navbar'
@@ -19,6 +20,8 @@ export function Home() {
     refetchOnWindowFocus: true,
     staleTime: 1000 * 10, // 10 segundos
   })
+
+  dayjs.extend(utc)
 
   return (
     <div className="flex gap-10">
@@ -47,8 +50,8 @@ export function Home() {
                   <div>{error.message}</div>
                 ) : (
                   data.slice(0, 15).map((registrie, index) => {
-                    const registrieDate = dayjs(registrie.hora_acesso).format('DD MMM YYYY')
-                    const registrieTime = dayjs(registrie.hora_acesso).format('HH:mm')
+                    const registrieDate = dayjs.utc(registrie.hora_acesso).format('DD MMM YYYY')
+                    const registrieTime = dayjs.utc(registrie.hora_acesso).format('HH:mm')
                     return (
                       <TableRow
                         key={registrie.id_registro}

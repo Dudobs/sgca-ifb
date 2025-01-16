@@ -12,9 +12,13 @@ import { Observacoes } from './pages/observacoes'
 import './index.css'
 import type { RouteObject } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 // Cria um cliente
 const queryClient = new QueryClient()
+
+// ClientId do GoogleOAuth
+const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
 // Definindo uma interface que estende RouteObject
 type BreadcrumbRouteObject = RouteObject & {
@@ -66,7 +70,9 @@ const router = createBrowserRouter(routes)
 const element = document.getElementById('root')
 
 createRoot(element!).render(
+  <GoogleOAuthProvider clientId={clientId}>
   <QueryClientProvider client={queryClient}>
     <RouterProvider router={router} />
   </QueryClientProvider>
+  </GoogleOAuthProvider>
 )
