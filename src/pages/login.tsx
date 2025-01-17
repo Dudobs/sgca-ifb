@@ -4,6 +4,7 @@ import LogoIFBAccess from '../assets/Logo-ifb-access.svg'
 import { Label } from '../components/form/label'
 import { Input } from '../components/form/input'
 import { LogoIFB } from '../assets/logo-ifb'
+import { GoogleSignIn } from '../components/google-sign-in'
 
 export function Login() {
   const navigate = useNavigate()
@@ -60,6 +61,7 @@ export function Login() {
             >
               Acessar
             </button>
+            <GoogleSignIn />
           </form>
         </div>
       </div>
