@@ -4,6 +4,7 @@ import { ChevronLeft, CircleUserRound, LogOut } from 'lucide-react'
 import { NavbarLinks } from './navbar-links'
 import { Link, useLocation } from 'react-router-dom'
 import { Header } from '../header'
+import { useAuth } from '../../hooks/AuthContext'
 
 export function Navbar() {
   const [toggleNavbar, setToggleNavbar] = useState(() => {
@@ -20,6 +21,8 @@ export function Navbar() {
   }
 
   const location = useLocation()
+
+  const { profile, logOut } = useAuth()
 
   return toggleNavbar ? (
     <div className="h-screen min-w-80 max-w-80 sticky top-0 left-0 z-10 py-8 px-5 rounded-r-3xl bg-green-600 text-zinc-50 uppercase">
@@ -50,10 +53,12 @@ export function Navbar() {
                 : 'w-52 h-10 border-y border-r border-zinc-50 rounded-full flex items-center hover:border-emerald-200'
             }
           >
-            <p className="ml-12 font-semibold">Admin</p>
+            <p className="ml-12 font-semibold truncate">
+              {profile ? profile.name : 'Admin'}
+            </p>
           </div>
         </Link>
-        <Link to={'/login'}>
+        <Link to={'/login'} onClick={logOut}>
           <LogOut className="text-red-700 size-8 hover:text-red-600" />
         </Link>
       </div>

@@ -5,6 +5,7 @@ import { Label } from '../components/form/label'
 import { Input } from '../components/form/input'
 import { LogoIFB } from '../assets/logo-ifb'
 import { GoogleSignIn } from '../components/google-sign-in'
+import { useAuth } from '../hooks/AuthContext'
 
 export function Login() {
   const navigate = useNavigate()
@@ -12,6 +13,8 @@ export function Login() {
   function handleSignIn() {
     navigate('/')
   }
+
+  const { login } = useAuth()
 
   return (
     <div className="min-h-screen px-32 py-20 bg-gradient-to-br from-teal-950 to-emerald-700 flex flex-col justify-around">
@@ -29,7 +32,7 @@ export function Login() {
             onSubmit={handleSignIn}
             className="flex flex-col gap-4"
           >
-            <div className="flex flex-col">
+            {/* <div className="flex flex-col">
               <Label
                 htmlFor="username"
                 label="Usuário:"
@@ -60,8 +63,13 @@ export function Login() {
               className="px-4 w-80 h-14 bg-emerald-400 rounded-full text-zinc-950 text-lg hover:bg-emerald-300"
             >
               Acessar
-            </button>
-            <GoogleSignIn />
+            </button> */}
+
+            <div className="flex justify-center">
+              <button type="button" onClick={login}>
+                <GoogleSignIn />
+              </button>
+            </div>
           </form>
         </div>
       </div>

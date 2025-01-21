@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form'
 interface DialogProps {
   dialogIsOpen: boolean
   onClose: () => void
-  id_usuario: number
+  id_usuario: string
 }
 
 export function TornarAdministrador({

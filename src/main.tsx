@@ -1,5 +1,9 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import { createRoot } from 'react-dom/client'
+import type { RouteObject } from 'react-router-dom'
+import { GoogleOAuthProvider } from '@react-oauth/google'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { AuthProvider, useAuth } from './hooks/AuthContext'
 
 import { Login } from './pages/login'
 import { Home } from './pages/home'
@@ -9,10 +13,7 @@ import { Admins } from './pages/admins/admins'
 import { AdicionarUsuario } from './pages/adicionar-usuario'
 import { EditarUsuario } from './pages/editar-usuario'
 import { Observacoes } from './pages/observacoes'
-import './index.css'
-import type { RouteObject } from 'react-router-dom'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { GoogleOAuthProvider } from '@react-oauth/google'
+import './index.css' // Import the AuthProvider and useAuth
 
 // Cria um cliente
 const queryClient = new QueryClient()
@@ -20,48 +21,95 @@ const queryClient = new QueryClient()
 // ClientId do GoogleOAuth
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
-// Definindo uma interface que estende RouteObject
-type BreadcrumbRouteObject = RouteObject & {
-  breadcrumb?: string | null // Adiciona a propriedade breadcrumb
+function ProtectedRoute({
+  children,
+}: { children: JSX.Element; redirectTo?: string }) {
+  const { user } = useAuth()
+  const storedUser = localStorage.getItem('user') // Verificando o localStorage
+
+  // Verifica se o usuário está presente no estado ou no localStorage
+  const isAuthenticated = !!(user || storedUser)
+
+  console.log('user: ', user)
+  console.log('storedUser: ', storedUser)
+
+  return isAuthenticated ? children : <Navigate to="/login" replace />
 }
 
-const routes: BreadcrumbRouteObject[] = [
+function RedirectToHome({ children }: { children: JSX.Element }) {
+  const { user } = useAuth()
+  const storedUser = localStorage.getItem('user')
+
+  // Se o usuário estiver autenticado, redireciona para a página principal
+  const isAuthenticated = !!(user || storedUser)
+
+  return isAuthenticated ? <Navigate to="/" replace /> : children
+}
+
+const routes: RouteObject[] = [
   {
     path: 'login',
-    element: <Login />,
+    element: (
+      <RedirectToHome>
+        <Login />
+      </RedirectToHome>
+    ),
   },
   {
     path: '/',
-    element: <Home />,
-    breadcrumb: 'Home',
+    element: (
+      <ProtectedRoute>
+        <Home />
+      </ProtectedRoute>
+    ),
   },
   {
     path: 'registros',
-    element: <Registros />,
-    breadcrumb: 'Registros',
+    element: (
+      <ProtectedRoute>
+        <Registros />
+      </ProtectedRoute>
+    ),
   },
   {
     path: 'usuarios',
-    element: <Usuarios />,
-    breadcrumb: 'Usuários',
+    element: (
+      <ProtectedRoute>
+        <Usuarios />
+      </ProtectedRoute>
+    ),
   },
   {
     path: 'usuarios/adicionar',
-    element: <AdicionarUsuario />,
-    breadcrumb: null,
+    element: (
+      <ProtectedRoute>
+        <AdicionarUsuario />
+      </ProtectedRoute>
+    ),
   },
   {
     path: 'usuarios/editar',
-    element: <EditarUsuario />,
-    breadcrumb: null,
+    element: (
+      <ProtectedRoute>
+        <EditarUsuario />
+      </ProtectedRoute>
+    ),
   },
   {
     path: 'usuarios/observacoes',
-    element: <Observacoes />,
+    element: (
+      <ProtectedRoute>
+        <Observacoes />
+      </ProtectedRoute>
+    ),
   },
   {
     path: 'admin',
-    element: <Admins />,
+    element: (
+      <ProtectedRoute>
+        <Admins />
+      </ProtectedRoute>
+    ),
   },
 ]
 
@@ -71,8 +119,10 @@ const element = document.getElementById('root')
 
 createRoot(element!).render(
   <GoogleOAuthProvider clientId={clientId}>
-  <QueryClientProvider client={queryClient}>
-    <RouterProvider router={router} />
-  </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryClientProvider>
   </GoogleOAuthProvider>
 )
