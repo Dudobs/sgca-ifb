@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useAuth } from '../hooks/AuthContext'
 import { jwtDecode } from 'jwt-decode'
+import { checkUserIsAdmin } from '../http/check_admin_user'
 
 type DecodedToken = {
   email: string
@@ -13,37 +14,43 @@ type DecodedToken = {
 
 export function GoogleSignIn() {
   const navigate = useNavigate()
-  const { setUser, setProfile } = useAuth() // Modifique o contexto para expor esses setters
+  const { setUser, setProfile } = useAuth()
 
-  const responseMessage = (response: CredentialResponse) => {
+  const responseMessage = async (response: CredentialResponse) => {
     if (response.credential) {
       // Decodificar o token JWT
       const decoded: DecodedToken = jwtDecode(response.credential)
 
-      // Atualizar o estado global com o token decodificado
-      setUser({
-        access_token: response.credential,
-        expires_in: 3600, // Estime ou substitua com valor correto
-        scope:
-          'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
-        token_type: 'Bearer',
-        prompt: 'select_account',
-      })
-
-      // Atualizar o profile com os dados decodificados
+      // Atualizar o estado profile com os dados do usuário decodificados
       setProfile({
         id: decoded.sub,
         email: decoded.email,
-        verified_email: true, // Aqui você pode alterar para algo mais dinâmico, se necessário
+        verified_email: true,
         name: decoded.name,
-        given_name: decoded.name.split(' ')[0], // Pegue o primeiro nome, se necessário
+        given_name: decoded.name.split(' ')[0],
         family_name: decoded.name.split(' ')[1] || '',
         picture: decoded.picture,
       })
 
-      console.log('decoded: ', decoded)
+      // Verifica se o usuário é um administrador
 
-      navigate('/')
+      const isAdmin = await checkUserIsAdmin(decoded.email)
+
+      if (isAdmin) {
+        // Atualizar o estado global com o token decodificado
+        setUser({
+          access_token: response.credential,
+          expires_in: 3600, // 1 hora para expirar o token
+          scope:
+            'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+          token_type: 'Bearer',
+          prompt: 'select_account',
+        })
+
+        navigate('/')
+      } else {
+        alert('Você não tem permissão para acessar esta aplicação.')
+      }
     }
   }
 

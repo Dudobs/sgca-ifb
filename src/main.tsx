@@ -30,9 +30,6 @@ function ProtectedRoute({
   // Verifica se o usuário está presente no estado ou no localStorage
   const isAuthenticated = !!(user || storedUser)
 
-  console.log('user: ', user)
-  console.log('storedUser: ', storedUser)
-
   return isAuthenticated ? children : <Navigate to="/login" replace />
 }
 

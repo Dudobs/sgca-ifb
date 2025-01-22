@@ -45,6 +45,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const [profile, setProfile] = useState<GoogleUserProfile | null>(null)
 
+  const [adminProfile, setAdminProfile] = useState([])
+
   // Recupera o usuário do localStorage no carregamento
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
@@ -79,11 +81,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logOut = () => {
     googleLogout()
     setUser(null) // Use navigate to redirect to login
+    setProfile(null) // Use navigate to redirect to login
     localStorage.removeItem('user') // Remove o usuário do localStorage
     localStorage.removeItem('profile') // Remove os dados do perfil do usuário do localStorage
   }
-
-  console.log('Profile: ', profile)
 
   return (
     <AuthContext.Provider
