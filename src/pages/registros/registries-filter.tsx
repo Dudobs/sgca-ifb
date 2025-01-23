@@ -69,7 +69,7 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
           <Label htmlFor="tipo-usuario" label={'Tipo de usuário'} />
           <Select id="tipo-usuario" {...register('tipo_usuario')}>
             <option value={''} className="text-zinc-300">
-              Tipo de usuário
+              Todos
             </option>
             {data.map(tipo_usuario => {
               return (
@@ -88,7 +88,7 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
           <Label htmlFor="tipo-acesso" label={'Tipo de acesso:'} />
           <Select id="tipo-acesso" {...register('tipo_acesso')}>
             <option value={''} className="text-zinc-300">
-              Tipo de acesso
+              Todos
             </option>
             <option value={1}>Entrada</option>
             <option value={0}>Saída</option>

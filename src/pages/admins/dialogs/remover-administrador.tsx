@@ -14,7 +14,8 @@ interface DialogProps {
   dialogIsOpen: boolean
   onClose: () => void
   refetch: () => void
-  id_usuario: number
+  id_usuario: string
+  id_admin?: string
 }
 
 export function RemoverAdministrador({
@@ -22,6 +23,7 @@ export function RemoverAdministrador({
   onClose,
   refetch,
   id_usuario,
+  id_admin,
 }: DialogProps) {
   if (!dialogIsOpen) return null
 
@@ -30,7 +32,7 @@ export function RemoverAdministrador({
   async function handleUpdateAdminToCommonUser() {
     console.log('Usuário com ', id_usuario, ' não será mais um administrador')
     try {
-      await updateAdminToCommonUser({ id_usuario })
+      await updateAdminToCommonUser({ id_usuario, id_admin })
       alert('Alteração feita com sucesso!')
       onClose()
     } catch (error) {

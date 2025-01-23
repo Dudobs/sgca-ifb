@@ -15,13 +15,15 @@ interface DialogProps {
   dialogIsOpen: boolean
   onClose: () => void
   refetchUsersQuery: () => void
-  id_usuario: number
+  id_usuario: string
+  id_admin?: string
 }
 
 export function AdicionarRegistro({
   dialogIsOpen,
   onClose,
   id_usuario,
+  id_admin,
 }: DialogProps) {
   if (!dialogIsOpen) return null
 
@@ -40,6 +42,7 @@ export function AdicionarRegistro({
       await addRegister({
         id_usuario,
         tipo_acesso,
+        id_admin,
       })
       alert('Acesso registrado com sucesso!\nCatraca liberada')
     } catch (error) {

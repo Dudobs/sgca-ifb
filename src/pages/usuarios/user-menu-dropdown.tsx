@@ -138,6 +138,7 @@ export function UserMenuDropdown({
         onClose={closeDialogAdicionarRegistro}
         refetchUsersQuery={refetchUsersQuery}
         id_usuario={userData.userId}
+        id_admin={adminProfile?.admin_id}
       />
 
       <AlterarStatusAcesso
@@ -152,6 +153,7 @@ export function UserMenuDropdown({
         dialogIsOpen={dialogTornarAdminIsOpen}
         onClose={closeDialogTornarAdmin}
         id_usuario={userData.userId}
+        id_admin={adminProfile?.admin_id}
       />
     </>
   )

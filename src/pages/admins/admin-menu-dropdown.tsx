@@ -3,13 +3,14 @@ import { EllipsisVertical } from 'lucide-react'
 import { useState } from 'react'
 
 import { RemoverAdministrador } from './dialogs/remover-administrador'
+import { useAuth } from '../../hooks/AuthContext'
 
 type adminProps = {
-  adminId: number
+  id_usuario: string
   refetchQuery: () => void
 }
 
-export function AdminMenuDropdown({ adminId, refetchQuery }: adminProps) {
+export function AdminMenuDropdown({ id_usuario, refetchQuery }: adminProps) {
   const [dialogRemoverAdminIsOpen, setDialogRemoverAdminIsOpen] =
     useState(false)
 
@@ -20,6 +21,8 @@ export function AdminMenuDropdown({ adminId, refetchQuery }: adminProps) {
   const closeDialogRemoverAdmin = () => {
     setDialogRemoverAdminIsOpen(false)
   }
+
+  const { adminProfile } = useAuth()
 
   return (
     <>
@@ -55,7 +58,8 @@ export function AdminMenuDropdown({ adminId, refetchQuery }: adminProps) {
         dialogIsOpen={dialogRemoverAdminIsOpen}
         onClose={closeDialogRemoverAdmin}
         refetch={refetchQuery}
-        id_usuario={adminId}
+        id_usuario={id_usuario}
+        id_admin={adminProfile?.admin_id}
       />
     </>
   )

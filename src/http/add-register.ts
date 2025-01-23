@@ -1,6 +1,7 @@
 interface addRegisterRequest {
-  id_usuario: number
+  id_usuario: string
   tipo_acesso: boolean
+  id_admin?: string
 }
 
 const apiURL = import.meta.env.VITE_API_URL
@@ -9,6 +10,7 @@ const apiKey = import.meta.env.VITE_API_KEY
 export async function addRegister({
   id_usuario,
   tipo_acesso,
+  id_admin,
 }: addRegisterRequest) {
   await fetch(`${apiURL}/registrar_acesso_manual`, {
     method: 'POST',
@@ -21,6 +23,7 @@ export async function addRegister({
     body: JSON.stringify({
       id_usuario,
       tipo_acesso,
+      id_admin,
     }),
   })
 }

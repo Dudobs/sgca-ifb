@@ -55,7 +55,7 @@ export function Admins() {
                     >
                       <TableCell>
                         <AdminMenuDropdown
-                          adminId={admin.id_usuario}
+                          id_usuario={admin.id_usuario}
                           refetchQuery={refetch}
                         />
                       </TableCell>

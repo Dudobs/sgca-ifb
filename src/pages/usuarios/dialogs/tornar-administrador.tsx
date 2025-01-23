@@ -13,12 +13,14 @@ interface DialogProps {
   dialogIsOpen: boolean
   onClose: () => void
   id_usuario: string
+  id_admin?: string
 }
 
 export function TornarAdministrador({
   dialogIsOpen,
   onClose,
   id_usuario,
+  id_admin,
 }: DialogProps) {
   if (!dialogIsOpen) return null
 
@@ -27,7 +29,7 @@ export function TornarAdministrador({
   async function handleUpdateUserToAdmin() {
     console.log('Usuário com o id: ', { id_usuario }, ' será um administrador')
     try {
-      await updateUserToAdmin({ id_usuario })
+      await updateUserToAdmin({ id_usuario, id_admin })
       alert('Alteração feita com sucesso!')
       onClose()
     } catch (error) {

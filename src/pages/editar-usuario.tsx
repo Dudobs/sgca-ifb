@@ -15,13 +15,15 @@ import { Textarea } from '../components/form/textarea'
 import { Navbar } from '../components/navbar/navbar'
 import { getUSersType } from '../http/get_tipos_usuarios'
 import { updateUser } from '../http/update_user'
+import { useAuth } from '../hooks/AuthContext'
 
 const updateUserForm = z.object({
-  id_usuario: z.number(),
+  id_usuario: z.string(),
   nome: z.string().min(3, 'O nome deve conter no mínimo 3 letras').max(100),
   cpf: z.string().min(11),
   email: z.string().email(),
   id_tipo_usuario: z.string().min(1),
+  justificativa: z.string().max(400),
 })
 
 type updateUserForm = z.infer<typeof updateUserForm>
@@ -43,15 +45,28 @@ export function EditarUsuario() {
 
   setValue('id_usuario', user.userId)
 
+  const { adminProfile } = useAuth()
+  const id_admin = adminProfile?.admin_id
+  console.log(adminProfile)
+
   async function handleUpdateUser({
     id_usuario,
     nome,
     cpf,
     email,
     id_tipo_usuario,
+    justificativa,
   }: updateUserForm) {
     try {
-      await updateUser({ id_usuario, nome, cpf, email, id_tipo_usuario })
+      await updateUser({
+        id_usuario,
+        nome,
+        cpf,
+        email,
+        id_tipo_usuario,
+        justificativa,
+        id_admin,
+      })
     } catch (error) {
       console.log('Erro ao realizar alterações')
     }
@@ -137,7 +152,7 @@ export function EditarUsuario() {
                   <Label htmlFor="observacao" label={'Observação:'} />
                   <Textarea
                     id="observacao"
-                    name="observacao"
+                    {...register('justificativa')}
                     placeholder="Opcional"
                     maxLength={400}
                   />
