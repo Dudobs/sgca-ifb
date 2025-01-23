@@ -24,7 +24,8 @@ interface DialogProps {
   dialogIsOpen: boolean
   onClose: () => void
   refetchUsersQuery: () => void
-  id_usuario: number
+  id_usuario: string
+  id_admin: string
 }
 
 export function AlterarStatusAcesso({
@@ -32,6 +33,7 @@ export function AlterarStatusAcesso({
   onClose,
   refetchUsersQuery,
   id_usuario,
+  id_admin,
 }: DialogProps) {
   if (!dialogIsOpen) return null
 
@@ -44,7 +46,12 @@ export function AlterarStatusAcesso({
     justificativa,
   }: updateAccessStatusForm) {
     try {
-      await updateAccessStatus({ id_usuario, status_acesso, justificativa })
+      await updateAccessStatus({
+        id_usuario,
+        id_admin,
+        status_acesso,
+        justificativa,
+      })
     } catch (error) {
       console.log('Erro ao alterar status de acesso: ', error)
     }

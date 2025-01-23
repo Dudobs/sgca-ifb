@@ -6,9 +6,10 @@ import { AdicionarRegistro } from './dialogs/adicionar-registro'
 import { AlterarStatusAcesso } from './dialogs/alterar-status-acesso'
 import { TornarAdministrador } from './dialogs/tornar-administrador'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../hooks/AuthContext'
 
 type UserProps = {
-  userId: number
+  userId: string
   name: string
   cpf: string
   email: string
@@ -61,6 +62,8 @@ export function UserMenuDropdown({
   const closeDialogTornarAdmin = () => {
     setDialogTornarAdminIsOpen(false)
   }
+
+  const { adminProfile } = useAuth()
 
   return (
     <>
@@ -142,6 +145,7 @@ export function UserMenuDropdown({
         onClose={closeDialogAlterarStatusAcesso}
         refetchUsersQuery={refetchUsersQuery}
         id_usuario={userData.userId}
+        id_admin={adminProfile?.admin_id ?? ''}
       />
 
       <TornarAdministrador

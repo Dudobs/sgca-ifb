@@ -21,8 +21,8 @@ type AuthContextType = {
   >
   profile?: GoogleUserProfile | null
   setProfile: React.Dispatch<React.SetStateAction<GoogleUserProfile | null>>
-  adminProfile?: AdminProfile | null
-  setAdminProfile: React.Dispatch<React.SetStateAction<AdminProfile | null>>
+  adminProfile: AdminProfile | undefined
+  setAdminProfile: React.Dispatch<React.SetStateAction<AdminProfile>>
   login: () => void
   logOut: () => void
 }
@@ -56,7 +56,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [profile, setProfile] = useState<GoogleUserProfile | null>(null)
 
   // Dados do administrador que serão usados para realizar operações dentro do sistema, como adicionar uma observação - Id, nome, email...
-  const [adminProfile, setAdminProfile] = useState<AdminProfile | null>(null)
+  const defaultAdminProfile: AdminProfile = {
+    admin_id: '',
+    name: '',
+    email: '',
+  }
+
+  const [adminProfile, setAdminProfile] =
+    useState<AdminProfile>(defaultAdminProfile)
   console.log(adminProfile)
 
   // Recupera o usuário do localStorage no carregamento
@@ -102,10 +109,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logOut = () => {
     googleLogout()
-    setUser(null) // Use navigate to redirect to login
-    setProfile(null) // Use navigate to redirect to login
+    setUser(null)
+    setProfile(null)
+    setAdminProfile(defaultAdminProfile)
     localStorage.removeItem('user') // Remove o usuário do localStorage
     localStorage.removeItem('profile') // Remove os dados do perfil do usuário do localStorage
+    localStorage.removeItem('adminProfile')
   }
 
   return (
