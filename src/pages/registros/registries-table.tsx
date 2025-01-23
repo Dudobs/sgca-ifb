@@ -23,13 +23,15 @@ interface RegistriesTableProps {
     matricula?: string
     tipo_usuario?: string
     tipo_acesso?: string
-  } // Você pode incluir outros campos conforme necessário
+  }
+  setSearchState: React.Dispatch<React.SetStateAction<boolean>> // Você pode incluir outros campos conforme necessário
 }
 
-export function RegistriesTable({ searchParams }: RegistriesTableProps) {
+export function RegistriesTable({
+  searchParams,
+  setSearchState,
+}: RegistriesTableProps) {
   const [page, setPage] = useState(1)
-
-  const [searchHasData, setSearchHasData] = useState(true)
 
   const {
     data = [],
@@ -42,9 +44,13 @@ export function RegistriesTable({ searchParams }: RegistriesTableProps) {
     staleTime: 1000 * 5, // 5 Segundos
   })
 
-  if (data.length < 0) {
-    setSearchHasData(false)
-  }
+  console.log(data.length)
+
+  // if (data.length > 0) {
+  //   setSearchState(true)
+  // } else {
+  //   setSearchState(false)
+  // }
 
   const registriesPerPage = 15
 

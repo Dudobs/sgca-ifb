@@ -50,14 +50,16 @@ export function Home() {
                   <div>{error.message}</div>
                 ) : (
                   data.slice(0, 15).map((registrie, index) => {
-                    const registrieDate = dayjs.utc(registrie.hora_acesso).format('DD MMM YYYY')
-                    const registrieTime = dayjs.utc(registrie.hora_acesso).format('HH:mm')
+                    const registrieDate = dayjs
+                      .utc(registrie.hora_acesso)
+                      .format('DD MMM YYYY')
+                    const registrieTime = dayjs
+                      .utc(registrie.hora_acesso)
+                      .format('HH:mm')
                     return (
                       <TableRow
                         key={registrie.id_registro}
-                        className={
-                          index % 2 !== 0 ? '' : ' bg-zinc-200'
-                        }
+                        className={index % 2 !== 0 ? '' : ' bg-zinc-200'}
                       >
                         <TableCell className="text-start">
                           {registrie.id_registro}
@@ -68,7 +70,9 @@ export function Home() {
                         <TableCell>
                           {registrieDate} ás {registrieTime}
                         </TableCell>
-                        <TableCell>{registrie.tipo_acesso ? 'Entrada' : 'Saída'}</TableCell>
+                        <TableCell>
+                          {registrie.tipo_acesso ? 'Entrada' : 'Saída'}
+                        </TableCell>
                         <TableCell>{registrie.tipo_usuario}</TableCell>
                       </TableRow>
                     )

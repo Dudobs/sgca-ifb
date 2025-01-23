@@ -7,6 +7,7 @@ import { Warning } from '../../components/warning'
 
 export function Registros() {
   const [searchHasData, setSearchHasData] = useState(true)
+  console.log(searchHasData)
 
   const [searchParams, setSearchParams] = useState({
     nome: '',
@@ -31,7 +32,10 @@ export function Registros() {
           <RegistriesFilter onSearch={handleSearchRegistries} />
 
           {searchHasData ? (
-            <RegistriesTable searchParams={searchParams} />
+            <RegistriesTable
+              searchParams={searchParams}
+              setSearchState={setSearchHasData}
+            />
           ) : (
             <Warning warningText="Nenhum registro de acesso encontrado." />
           )}
