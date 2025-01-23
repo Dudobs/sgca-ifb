@@ -1,7 +1,7 @@
 interface createUserRequst {
   cpf: string
   email: string
-  matricula: string
+  matricula?: string
   id_tipo_usuario: string
   nome: string
 }

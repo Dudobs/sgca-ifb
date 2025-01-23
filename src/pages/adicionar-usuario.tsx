@@ -14,11 +14,23 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
 
+const validarCPF = (cpf: string): boolean => {
+  // Fazer validação de CPF
+  return true
+}
+
 const createUserForm = z.object({
-  nome: z.string().min(1),
-  email: z.string().min(1), // Utiliza o método `coerce.number()` para converter o valor recebido dos inputs do tipo rádio (que são strings) para um número.
-  cpf: z.string().min(1, 'Informe a atividade que deseja realizar'),
-  matricula: z.string().min(1),
+  nome: z.string().min(3, 'O nome deve conter pelo menos 3 caractéres'),
+  email: z.string().email('Endereço de email no formato inválido').min(5),
+  cpf: z
+    .string()
+    .min(11, { message: 'CPF deve ter 11 caracteres' })
+    .max(11, { message: 'CPF deve ter 11 caracteres' })
+    .refine(val => validarCPF(val), { message: 'CPF inválido' }),
+  matricula: z.coerce
+    .string()
+    .max(12, 'A matrícula deve ter no máximo 12 caractéres')
+    .optional(),
   id_tipo_usuario: z.string().min(1),
 })
 
@@ -30,7 +42,7 @@ export function AdicionarUsuario() {
     queryFn: getUSersType,
   })
 
-  const { register, handleSubmit, reset } = useForm<createUserForm>({
+  const { register, handleSubmit, formState, reset } = useForm<createUserForm>({
     resolver: zodResolver(createUserForm),
   })
 
@@ -94,6 +106,11 @@ export function AdicionarUsuario() {
                 className="w-full h-9"
                 {...register('nome')}
               />
+              {formState.errors.nome && (
+                <p className="text-red-400 text-xs mt-1">
+                  {formState.errors.nome.message}
+                </p>
+              )}
             </Field>
 
             <Field className="w-full">
@@ -106,6 +123,11 @@ export function AdicionarUsuario() {
                 className="w-full h-9"
                 {...register('email')}
               />
+              {formState.errors.email && (
+                <p className="text-red-400 text-xs mt-1">
+                  {formState.errors.email.message}
+                </p>
+              )}
             </Field>
 
             <Field className="w-full">
@@ -117,16 +139,28 @@ export function AdicionarUsuario() {
                 required
                 className="w-full h-9"
               />
+              {formState.errors.cpf && (
+                <p className="text-red-400 text-xs mt-1">
+                  {formState.errors.cpf.message}
+                </p>
+              )}
             </Field>
 
             <Field className="w-full">
               <Label htmlFor="matricula" label={'Matrícula:'} />
               <Input
+                type="number"
                 id="matricula"
                 {...register('matricula')}
                 autoComplete="off"
+                defaultValue={''}
                 className="w-full h-9"
               />
+              {formState.errors.matricula && (
+                <p className="text-red-400 text-xs mt-1">
+                  {formState.errors.matricula.message}
+                </p>
+              )}
             </Field>
 
             <Field className="w-full">
