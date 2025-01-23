@@ -1,7 +1,13 @@
+type adminResponse = {
+  admin_id: string
+  name: string
+  email: string
+}
+
 const apiURL = import.meta.env.VITE_API_URL
 const apiKey = import.meta.env.VITE_API_KEY
 
-export async function checkUserIsAdmin(email: string): Promise<boolean> {
+export async function checkUserIsAdmin(email: string): Promise<adminResponse> {
   const url = new URL(`${apiURL}/login`)
 
   if (email) {
@@ -16,7 +22,7 @@ export async function checkUserIsAdmin(email: string): Promise<boolean> {
     },
   }).then(response => {
     if (!response.ok) {
-      alert('Acesso restrito apenas a administradores')
+      alert('Usuário não encontrado ou sem as devidas permissões')
       throw Error(response.statusText)
     }
     return response
@@ -24,5 +30,11 @@ export async function checkUserIsAdmin(email: string): Promise<boolean> {
 
   const data = await response.json()
 
-  return data && true
+  const adminData: adminResponse = {
+    admin_id: data[0],
+    name: data[1],
+    email: data[2],
+  }
+
+  return adminData
 }

@@ -21,6 +21,8 @@ type AuthContextType = {
   >
   profile?: GoogleUserProfile | null
   setProfile: React.Dispatch<React.SetStateAction<GoogleUserProfile | null>>
+  adminProfile?: AdminProfile | null
+  setAdminProfile: React.Dispatch<React.SetStateAction<AdminProfile | null>>
   login: () => void
   logOut: () => void
 }
@@ -35,17 +37,27 @@ type GoogleUserProfile = {
   picture: string
 }
 
+type AdminProfile = {
+  admin_id: string
+  name: string
+  email: string
+}
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  // Dados de token e credencial do usuário de seua conta Google
   const [user, setUser] = useState<Omit<
     TokenResponse,
     'error' | 'error_description' | 'error_uri'
   > | null>(null)
 
+  // Dados do usuário da API do Google - Nome, email, foto...
   const [profile, setProfile] = useState<GoogleUserProfile | null>(null)
 
-  const [adminProfile, setAdminProfile] = useState([])
+  // Dados do administrador que serão usados para realizar operações dentro do sistema, como adicionar uma observação - Id, nome, email...
+  const [adminProfile, setAdminProfile] = useState<AdminProfile | null>(null)
+  console.log(adminProfile)
 
   // Recupera o usuário do localStorage no carregamento
   useEffect(() => {
@@ -56,11 +68,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const storedProfile = localStorage.getItem('profile')
     if (storedProfile) {
-      setProfile(JSON.parse(storedProfile)) // Converte o usuário do localStorage para o formato correto
+      setProfile(JSON.parse(storedProfile))
+    }
+
+    const storedAdminProfile = localStorage.getItem('adminProfile')
+    if (storedAdminProfile) {
+      setAdminProfile(JSON.parse(storedAdminProfile))
     }
   }, [])
 
-  // Salva o usuário no localStorage sempre que o estado `user` mudar
+  // Salva o usuário no localStorage sempre que o estado `user`, `profile` ou `adminProfile` mudar
   useEffect(() => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user))
@@ -69,8 +86,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (profile) {
       localStorage.setItem('profile', JSON.stringify(profile))
     }
-  }, [user, profile])
 
+    if (adminProfile) {
+      localStorage.setItem('adminProfile', JSON.stringify(adminProfile))
+    }
+  }, [user, profile, adminProfile])
+
+  // Funções para login e logout
   const login = useGoogleLogin({
     onSuccess: codeResponse => {
       setUser(codeResponse)
@@ -88,7 +110,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, profile, setProfile, login, logOut }}
+      value={{
+        user,
+        setUser,
+        profile,
+        setProfile,
+        adminProfile,
+        setAdminProfile,
+        login,
+        logOut,
+      }}
     >
       {children}
     </AuthContext.Provider>

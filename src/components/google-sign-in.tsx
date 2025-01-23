@@ -14,7 +14,7 @@ type DecodedToken = {
 
 export function GoogleSignIn() {
   const navigate = useNavigate()
-  const { setUser, setProfile } = useAuth()
+  const { setUser, setProfile, setAdminProfile } = useAuth()
 
   const responseMessage = async (response: CredentialResponse) => {
     if (response.credential) {
@@ -34,9 +34,9 @@ export function GoogleSignIn() {
 
       // Verifica se o usuário é um administrador
 
-      const isAdmin = await checkUserIsAdmin(decoded.email)
+      const { admin_id, name, email } = await checkUserIsAdmin(decoded.email)
 
-      if (isAdmin) {
+      if (admin_id) {
         // Atualizar o estado global com o token decodificado
         setUser({
           access_token: response.credential,
@@ -45,6 +45,12 @@ export function GoogleSignIn() {
             'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
           token_type: 'Bearer',
           prompt: 'select_account',
+        })
+
+        setAdminProfile({
+          admin_id: admin_id,
+          name: name,
+          email: email,
         })
 
         navigate('/')
