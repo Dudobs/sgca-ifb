@@ -64,7 +64,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const [adminProfile, setAdminProfile] =
     useState<AdminProfile>(defaultAdminProfile)
-  console.log(adminProfile)
 
   // Recupera o usuário do localStorage no carregamento
   useEffect(() => {

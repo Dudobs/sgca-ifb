@@ -47,7 +47,6 @@ export function EditarUsuario() {
 
   const { adminProfile } = useAuth()
   const id_admin = adminProfile?.admin_id
-  console.log(adminProfile)
 
   async function handleUpdateUser({
     id_usuario,

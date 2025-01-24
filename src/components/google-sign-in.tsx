@@ -17,6 +17,8 @@ export function GoogleSignIn() {
   const { setUser, setProfile, setAdminProfile } = useAuth()
 
   const responseMessage = async (response: CredentialResponse) => {
+    console.log(response)
+
     if (response.credential) {
       // Decodificar o token JWT
       const decoded: DecodedToken = jwtDecode(response.credential)
@@ -40,7 +42,7 @@ export function GoogleSignIn() {
         // Atualizar o estado global com o token decodificado
         setUser({
           access_token: response.credential,
-          expires_in: 3600, // 1 hora para expirar o token
+          expires_in: 3600, // 3600 - 1 hora para expirar o token
           scope:
             'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
           token_type: 'Bearer',

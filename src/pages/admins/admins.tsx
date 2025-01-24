@@ -15,7 +15,6 @@ export function Admins() {
     queryFn: getAdmins,
     staleTime: 1000 * 60, // 1 minuto
   })
-  console.log(data)
 
   return (
     <div className="flex gap-10">

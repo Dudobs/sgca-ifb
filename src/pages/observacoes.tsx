@@ -21,8 +21,6 @@ export function Observacoes() {
     staleTime: 1000 * 10, // 10 seconds
   })
 
-  console.log(data)
-
   return (
     <div className="flex gap-10">
       <Navbar />

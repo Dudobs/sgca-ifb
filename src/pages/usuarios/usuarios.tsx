@@ -21,6 +21,7 @@ import { UserMenuDropdown } from './user-menu-dropdown'
 import { UsersFilter } from './users-filter'
 
 import { getUSers } from '../../http/get-users'
+import { useAuth } from '../../hooks/AuthContext'
 
 export function Usuarios() {
   // ESTADO PAGE
@@ -105,9 +106,19 @@ export function Usuarios() {
   }
 
   // API REQUEST
+  const { user, logOut } = useAuth()
+  console.log(user)
+
   const { data = [], refetch } = useQuery({
     queryKey: ['users', searchName, searchUserType, searchAccessStatus],
-    queryFn: () => getUSers(searchName, searchUserType, searchAccessStatus),
+    queryFn: () =>
+      getUSers(
+        searchName,
+        searchUserType,
+        searchAccessStatus,
+        user?.access_token,
+        logOut
+      ),
     staleTime: 1000 * 60, // 60 segundos
   })
 
