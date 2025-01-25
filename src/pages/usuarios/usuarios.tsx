@@ -6,7 +6,7 @@ import {
   ChevronsRight,
   UserRoundPlus,
 } from 'lucide-react'
-import { type ChangeEvent, useState } from 'react'
+import { type ChangeEvent, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button } from '../../components/button'
@@ -144,6 +144,10 @@ export function Usuarios() {
   function goToLastPage() {
     setPage(totalPages)
   }
+
+  useEffect(() => {
+    if (data.length > 0) setPage(1)
+  }, [data])
 
   return (
     <div className="flex gap-10">

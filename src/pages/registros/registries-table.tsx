@@ -61,11 +61,8 @@ export function RegistriesTable({ searchParams }: RegistriesTableProps) {
     setPage(totalPages)
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (data.length > 0) {
-      goToFirstPage()
-    }
+    if (data.length > 0) setPage(1)
   }, [data])
 
   dayjs.extend(utc)
