@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import {
@@ -60,6 +60,13 @@ export function RegistriesTable({ searchParams }: RegistriesTableProps) {
   function goToLastPage() {
     setPage(totalPages)
   }
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (data.length > 0) {
+      goToFirstPage()
+    }
+  }, [data])
 
   dayjs.extend(utc)
 

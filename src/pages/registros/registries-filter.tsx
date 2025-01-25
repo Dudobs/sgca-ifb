@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState, type ChangeEvent } from 'react'
 
 interface RegistriesFilterProps {
   onSearch: (filters: filtersForm) => void
@@ -22,12 +23,19 @@ const filtersForm = z.object({
   matricula: z.string(),
   tipo_usuario: z.string().max(1),
   tipo_acesso: z.string().max(1),
+  data_inicio: z.string(),
+  data_fim: z.string()
 })
 
 export type filtersForm = z.infer<typeof filtersForm>
 
 export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
-  const { handleSubmit, register } = useForm<filtersForm>({
+  const [startDate, setStartDate] = useState('')
+  const [startTime, setStartTime] = useState('')
+  const [endDate, setendDate] = useState('')
+  const [endTime, setEndTime] = useState('')
+
+  const { handleSubmit, register, setValue, reset } = useForm<filtersForm>({
     resolver: zodResolver(filtersForm),
   })
 
@@ -35,10 +43,41 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
     onSearch(data) // Envia os parâmetros para o componente pai
   }
 
+  const handleReset: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault(); // Evita o comportamento padrão do botão
+    reset(); // Reseta os campos do formulário
+  };
+
   const { data = [] } = useQuery({
     queryKey: ['usersType'],
     queryFn: getUSersType,
   })
+
+  // Definindo dataInicio - startDate + startTime
+  function onStartDateInputChange(event: ChangeEvent<HTMLInputElement>) {
+    setStartDate(event.target.value)
+  }
+
+  function onStartTimeInputChange(event: ChangeEvent<HTMLInputElement>) {
+    setStartTime(event.target.value)
+  }
+  
+  const dataInicio = startDate.concat(` ${startTime}`)
+  
+  setValue('data_inicio', dataInicio.length > 1 ? dataInicio : '')
+  
+  // Definindo dataFim - endDate + endTime
+  function onEndDateInputChange(event: ChangeEvent<HTMLInputElement>) {
+    setendDate(event.target.value)
+  }
+
+  function onEndTimeInputChange(event: ChangeEvent<HTMLInputElement>) {
+    setEndTime(event.target.value)
+  }
+  
+  const dataFim = endDate.concat(` ${endTime}`)
+  
+  setValue('data_fim', dataFim.length > 1 ? dataFim : '')
 
   return (
     <Form action="" onSubmit={handleSubmit(handleFormSubmit)} className="gap-2">
@@ -102,11 +141,12 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
             </span>
             <div id="date" className="flex items-end gap-1">
               <Label htmlFor="startDate" label={'De:'} />
-              <Input type="date" id="startDate" name="startDate" />
+              <Input type="date" onChange={onStartDateInputChange} id="startDate" name="startDate" />
 
               <Label htmlFor="endDate" label={'Até:'} />
               <Input
                 type="date"
+                onChange={onEndDateInputChange}
                 id="endDate"
                 name="endDate"
                 placeholder="até"
@@ -122,11 +162,12 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
             </span>
             <div id="time" className="flex items-end gap-1">
               <Label htmlFor="startTime" label={'De:'} />
-              <Input type="time" id="startTime" name="startTime" />
+              <Input type="time" onChange={onStartTimeInputChange} id="startTime" name="startTime" />
 
               <Label htmlFor="endTime" label={'Até:'} />
               <Input
                 type="time"
+                onChange={onEndTimeInputChange}
                 id="endTime"
                 name="endTime"
                 placeholder="até"
@@ -137,7 +178,7 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
       </div>
 
       <div className="flex gap-2">
-        <Button type="reset" variant="reset" className="normal-case">
+        <Button type="reset" onClick={handleReset} variant="reset" className="normal-case">
           <FilterX className="size-5" />
           <span>Limpar filtros</span>
         </Button>

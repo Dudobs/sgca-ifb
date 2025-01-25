@@ -21,8 +21,17 @@ export function Navbar() {
   }
 
   const location = useLocation()
-
+  
   const { profile, logOut } = useAuth()
+  
+  function handleLogout() {
+    const result = confirm('Deseja sair da sua conta?')
+    if (result) {
+      logOut()
+    } else {
+      return
+    }
+  }
 
   return toggleNavbar ? (
     <div className="h-screen min-w-80 max-w-80 sticky top-0 left-0 z-10 py-8 px-5 rounded-r-3xl bg-green-600 text-zinc-50 uppercase">
@@ -58,7 +67,7 @@ export function Navbar() {
             </p>
           </div>
         </Link>
-        <Link to={'/login'} onClick={logOut}>
+        <Link to={'/login'} onClick={handleLogout}>
           <LogOut className="text-red-700 size-8 hover:text-red-600" />
         </Link>
       </div>
@@ -90,7 +99,7 @@ export function Navbar() {
         >
           <CircleUserRound className="size-11" strokeWidth={1} />
         </Link>
-        <Link to={'/login'} onClick={logOut}>
+        <Link to={'/login'} onClick={handleLogout}>
           <LogOut className="text-red-700 size-8 hover:text-red-600" />
         </Link>
       </div>
