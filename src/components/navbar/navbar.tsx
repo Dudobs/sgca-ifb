@@ -90,7 +90,7 @@ export function Navbar() {
         >
           <CircleUserRound className="size-11" strokeWidth={1} />
         </Link>
-        <Link to={'/login'}>
+        <Link to={'/login'} onClick={logOut}>
           <LogOut className="text-red-700 size-8 hover:text-red-600" />
         </Link>
       </div>

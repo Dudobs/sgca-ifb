@@ -15,6 +15,7 @@ import { TableCell } from '../../components/table/table-cell'
 import { TableHeader } from '../../components/table/table-header'
 import { TableRow } from '../../components/table/table-row'
 import { getRegistries } from '../../http/get_registries'
+import { Warning } from '../../components/warning'
 
 interface RegistriesTableProps {
   searchParams: {
@@ -24,13 +25,9 @@ interface RegistriesTableProps {
     tipo_usuario?: string
     tipo_acesso?: string
   }
-  setSearchState: React.Dispatch<React.SetStateAction<boolean>> // Você pode incluir outros campos conforme necessário
 }
 
-export function RegistriesTable({
-  searchParams,
-  setSearchState,
-}: RegistriesTableProps) {
+export function RegistriesTable({ searchParams }: RegistriesTableProps) {
   const [page, setPage] = useState(1)
 
   const {
@@ -43,14 +40,6 @@ export function RegistriesTable({
     queryFn: () => getRegistries(searchParams),
     staleTime: 1000 * 5, // 5 Segundos
   })
-
-  console.log(data.length)
-
-  // if (data.length > 0) {
-  //   setSearchState(true)
-  // } else {
-  //   setSearchState(false)
-  // }
 
   const registriesPerPage = 15
 
@@ -74,7 +63,7 @@ export function RegistriesTable({
 
   dayjs.extend(utc)
 
-  return (
+  return data.length > 0 ? (
     <Table>
       <thead>
         <TableRow className="border-b border-zinc-700">
@@ -165,5 +154,7 @@ export function RegistriesTable({
         </TableRow>
       </tfoot>
     </Table>
+  ) : (
+    <Warning warningText="Nenhum registro de acesso encontrado." />
   )
 }

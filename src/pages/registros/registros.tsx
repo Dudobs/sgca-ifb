@@ -3,12 +3,8 @@ import { Footer } from '../../components/footer'
 import { type filtersForm, RegistriesFilter } from './registries-filter'
 import { RegistriesTable } from './registries-table'
 import { useState } from 'react'
-import { Warning } from '../../components/warning'
 
 export function Registros() {
-  const [searchHasData, setSearchHasData] = useState(true)
-  console.log(searchHasData)
-
   const [searchParams, setSearchParams] = useState({
     nome: '',
     cpf: '',
@@ -31,14 +27,7 @@ export function Registros() {
 
           <RegistriesFilter onSearch={handleSearchRegistries} />
 
-          {searchHasData ? (
-            <RegistriesTable
-              searchParams={searchParams}
-              setSearchState={setSearchHasData}
-            />
-          ) : (
-            <Warning warningText="Nenhum registro de acesso encontrado." />
-          )}
+          <RegistriesTable searchParams={searchParams} />
         </main>
 
         <Footer />

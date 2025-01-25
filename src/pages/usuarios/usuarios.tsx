@@ -106,8 +106,10 @@ export function Usuarios() {
   }
 
   // API REQUEST
-  const { user, logOut } = useAuth()
-  console.log(user)
+  const { logOut } = useAuth()
+  const accessToken = localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user') || '').access_token
+    : null
 
   const { data = [], refetch } = useQuery({
     queryKey: ['users', searchName, searchUserType, searchAccessStatus],
@@ -116,10 +118,10 @@ export function Usuarios() {
         searchName,
         searchUserType,
         searchAccessStatus,
-        user?.access_token,
+        accessToken,
         logOut
       ),
-    staleTime: 1000 * 60, // 60 segundos
+    staleTime: 1000 * 10, // 60 segundos
   })
 
   // PAGINATION

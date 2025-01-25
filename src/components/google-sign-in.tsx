@@ -17,8 +17,6 @@ export function GoogleSignIn() {
   const { setUser, setProfile, setAdminProfile } = useAuth()
 
   const responseMessage = async (response: CredentialResponse) => {
-    console.log(response)
-
     if (response.credential) {
       // Decodificar o token JWT
       const decoded: DecodedToken = jwtDecode(response.credential)

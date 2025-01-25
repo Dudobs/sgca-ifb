@@ -41,7 +41,7 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
   })
 
   return (
-    <Form action="" onSubmit={handleSubmit(handleFormSubmit)}>
+    <Form action="" onSubmit={handleSubmit(handleFormSubmit)} className="gap-2">
       <span className="absolute top-[-0.75rem]">FILTROS:</span>
 
       <div className="w-3/5 flex flex-wrap gap-4">

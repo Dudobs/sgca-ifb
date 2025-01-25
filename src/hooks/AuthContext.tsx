@@ -107,13 +107,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   })
 
   const logOut = () => {
-    googleLogout()
-    setUser(null)
-    setProfile(null)
-    setAdminProfile(defaultAdminProfile)
-    localStorage.removeItem('user') // Remove o usuário do localStorage
-    localStorage.removeItem('profile') // Remove os dados do perfil do usuário do localStorage
-    localStorage.removeItem('adminProfile')
+    const result = confirm('Deseja sair da sua conta?')
+    if (result) {
+      googleLogout()
+      setUser(null)
+      setProfile(null)
+      setAdminProfile(defaultAdminProfile)
+      localStorage.removeItem('user') // Remove o usuário do localStorage
+      localStorage.removeItem('profile') // Remove os dados do perfil do usuário do localStorage
+      localStorage.removeItem('adminProfile')
+    } else {
+      return
+    }
   }
 
   return (

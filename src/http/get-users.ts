@@ -1,6 +1,3 @@
-import type { TokenResponse } from '@react-oauth/google'
-import { useAuth } from '../hooks/AuthContext'
-
 type usersResponse = {
   id_usuario: string
   cpf: string
@@ -48,6 +45,7 @@ export async function getUSers(
 
     if (response.status === 401) {
       handleLogout()
+      alert('Sessão expirada. Por favor, faça login novamente.')
       throw new Error('Sessão expirada. Por favor, faça login novamente.')
     }
 
