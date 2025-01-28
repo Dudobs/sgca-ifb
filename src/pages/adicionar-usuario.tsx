@@ -14,8 +14,9 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
 
-const validarCPF = (cpf: string): boolean => {
+const validarCPF = (): boolean => {
   // Fazer validação de CPF
+
   return true
 }
 
@@ -26,7 +27,7 @@ const createUserForm = z.object({
     .string()
     .min(11, { message: 'CPF deve ter 11 caracteres' })
     .max(11, { message: 'CPF deve ter 11 caracteres' })
-    .refine(val => validarCPF(val), { message: 'CPF inválido' }),
+    .refine(() => validarCPF(), { message: 'CPF inválido' }),
   matricula: z.coerce
     .string()
     .max(12, 'A matrícula deve ter no máximo 12 caractéres')

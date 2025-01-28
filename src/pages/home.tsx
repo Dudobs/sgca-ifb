@@ -16,7 +16,7 @@ import { getRegistries } from '../http/get_registries'
 export function Home() {
   const { data, isPending, isError, error, refetch } = useQuery({
     queryKey: ['registries'],
-    queryFn: getRegistries,
+    queryFn: () => getRegistries(undefined),
     refetchOnWindowFocus: true,
     staleTime: 1000 * 10, // 10 segundos
   })
