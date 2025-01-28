@@ -178,7 +178,7 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
       </div>
 
       <div className="flex gap-2">
-        <Button type="reset" onClick={handleReset} variant="reset" className="normal-case">
+        <Button type="button" onClick={handleReset} variant="reset" className="normal-case">
           <FilterX className="size-5" />
           <span>Limpar filtros</span>
         </Button>

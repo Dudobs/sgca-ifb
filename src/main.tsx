@@ -13,7 +13,7 @@ import { Admins } from './pages/admins/admins'
 import { AdicionarUsuario } from './pages/adicionar-usuario'
 import { EditarUsuario } from './pages/editar-usuario'
 import { Observacoes } from './pages/observacoes'
-import './index.css' // Import the AuthProvider and useAuth
+import './index.css'
 
 // Cria um cliente
 const queryClient = new QueryClient()
