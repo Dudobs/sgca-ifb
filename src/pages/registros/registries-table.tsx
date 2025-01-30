@@ -16,6 +16,7 @@ import { TableHeader } from '../../components/table/table-header'
 import { TableRow } from '../../components/table/table-row'
 import { getRegistries } from '../../http/get_registries'
 import { Warning } from '../../components/warning'
+import clsx from 'clsx'
 
 interface RegistriesTableProps {
   searchParams: {
@@ -25,9 +26,13 @@ interface RegistriesTableProps {
     tipo_usuario?: string
     tipo_acesso?: string
   }
+  infoIsHided: boolean
 }
 
-export function RegistriesTable({ searchParams }: RegistriesTableProps) {
+export function RegistriesTable({
+  searchParams,
+  infoIsHided,
+}: RegistriesTableProps) {
   const [page, setPage] = useState(1)
 
   const {
@@ -104,8 +109,12 @@ export function RegistriesTable({ searchParams }: RegistriesTableProps) {
                     {registrie.id_registro}
                   </TableCell>
                   <TableCell>{registrie.nome}</TableCell>
-                  <TableCell>{registrie.cpf}</TableCell>
-                  <TableCell>{registrie.matricula}</TableCell>
+                  <TableCell className={clsx({ 'blur-sm': infoIsHided })}>
+                    {registrie.cpf}
+                  </TableCell>
+                  <TableCell className={clsx({ 'blur-sm': infoIsHided })}>
+                    {registrie.matricula}
+                  </TableCell>
                   <TableCell>
                     {date} às {time}
                   </TableCell>

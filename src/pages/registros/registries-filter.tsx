@@ -1,4 +1,4 @@
-import { FilterX, Search } from 'lucide-react'
+import { Eye, FilterX, Search } from 'lucide-react'
 
 import { Form } from '../../components/form/form'
 import { Field } from '../../components/form/field'
@@ -12,9 +12,12 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState, type ChangeEvent } from 'react'
+import { EyeClosed } from '../../assets/eye-closed'
 
 interface RegistriesFilterProps {
   onSearch: (filters: filtersForm) => void
+  handleHideInfo: React.Dispatch<React.SetStateAction<boolean>>
+  infoIsHided: boolean
 }
 
 const filtersForm = z.object({
@@ -24,12 +27,16 @@ const filtersForm = z.object({
   tipo_usuario: z.string().max(1),
   tipo_acesso: z.string().max(1),
   data_inicio: z.string(),
-  data_fim: z.string()
+  data_fim: z.string(),
 })
 
 export type filtersForm = z.infer<typeof filtersForm>
 
-export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
+export function RegistriesFilter({
+  onSearch,
+  handleHideInfo,
+  infoIsHided,
+}: RegistriesFilterProps) {
   const [startDate, setStartDate] = useState('')
   const [startTime, setStartTime] = useState('')
   const [endDate, setendDate] = useState('')
@@ -43,10 +50,10 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
     onSearch(data) // Envia os parâmetros para o componente pai
   }
 
-  const handleReset: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.preventDefault(); // Evita o comportamento padrão do botão
-    reset(); // Reseta os campos do formulário
-  };
+  const handleReset: React.MouseEventHandler<HTMLButtonElement> = event => {
+    event.preventDefault() // Evita o comportamento padrão do botão
+    reset() // Reseta os campos do formulário
+  }
 
   const { data = [] } = useQuery({
     queryKey: ['usersType'],
@@ -61,11 +68,11 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
   function onStartTimeInputChange(event: ChangeEvent<HTMLInputElement>) {
     setStartTime(event.target.value)
   }
-  
+
   const dataInicio = startDate.concat(` ${startTime}`)
-  
+
   setValue('data_inicio', dataInicio.length > 1 ? dataInicio : '')
-  
+
   // Definindo dataFim - endDate + endTime
   function onEndDateInputChange(event: ChangeEvent<HTMLInputElement>) {
     setendDate(event.target.value)
@@ -74,9 +81,9 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
   function onEndTimeInputChange(event: ChangeEvent<HTMLInputElement>) {
     setEndTime(event.target.value)
   }
-  
+
   const dataFim = endDate.concat(` ${endTime}`)
-  
+
   setValue('data_fim', dataFim.length > 1 ? dataFim : '')
 
   return (
@@ -141,7 +148,12 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
             </span>
             <div id="date" className="flex items-end gap-1">
               <Label htmlFor="startDate" label={'De:'} />
-              <Input type="date" onChange={onStartDateInputChange} id="startDate" name="startDate" />
+              <Input
+                type="date"
+                onChange={onStartDateInputChange}
+                id="startDate"
+                name="startDate"
+              />
 
               <Label htmlFor="endDate" label={'Até:'} />
               <Input
@@ -162,7 +174,12 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
             </span>
             <div id="time" className="flex items-end gap-1">
               <Label htmlFor="startTime" label={'De:'} />
-              <Input type="time" onChange={onStartTimeInputChange} id="startTime" name="startTime" />
+              <Input
+                type="time"
+                onChange={onStartTimeInputChange}
+                id="startTime"
+                name="startTime"
+              />
 
               <Label htmlFor="endTime" label={'Até:'} />
               <Input
@@ -177,16 +194,43 @@ export function RegistriesFilter({ onSearch }: RegistriesFilterProps) {
         </Field>
       </div>
 
-      <div className="flex gap-2">
-        <Button type="button" onClick={handleReset} variant="reset" className="normal-case">
-          <FilterX className="size-5" />
-          <span>Limpar filtros</span>
-        </Button>
+      <div className="h-full flex flex-col items-end justify-between">
+        <div>
+          {infoIsHided ? (
+            <button
+              onClick={() => handleHideInfo(false)}
+              type="button"
+              title="Exibir informações sensíveis"
+            >
+              <EyeClosed color="#3f3f46" />
+            </button>
+          ) : (
+            <button
+              onClick={() => handleHideInfo(true)}
+              type="button"
+              title="Esconder informações sensíveis"
+            >
+              <Eye color="#3f3f46" />
+            </button>
+          )}
+        </div>
 
-        <Button type="submit" className="normal-case">
-          <Search className="size-5 rotate-90" />
-          <span>Pesquisar</span>
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            type="button"
+            onClick={handleReset}
+            variant="reset"
+            className="normal-case"
+          >
+            <FilterX className="size-5" />
+            <span>Limpar filtros</span>
+          </Button>
+
+          <Button type="submit" className="normal-case">
+            <Search className="size-5 rotate-90" />
+            <span>Pesquisar</span>
+          </Button>
+        </div>
       </div>
     </Form>
   )

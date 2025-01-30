@@ -13,6 +13,8 @@ export function Registros() {
     tipo_acesso: '',
   })
 
+  const [hideInfo, setHideInfo] = useState(false)
+
   function handleSearchRegistries(params: filtersForm) {
     setSearchParams(params) // Atualiza os parâmetros de busca
   }
@@ -25,9 +27,13 @@ export function Registros() {
         <main className="flex flex-col gap-4">
           <h1 className="p-3 font-bold text-3xl">Registros</h1>
 
-          <RegistriesFilter onSearch={handleSearchRegistries} />
+          <RegistriesFilter
+            onSearch={handleSearchRegistries}
+            handleHideInfo={setHideInfo}
+            infoIsHided={hideInfo}
+          />
 
-          <RegistriesTable searchParams={searchParams} />
+          <RegistriesTable searchParams={searchParams} infoIsHided={hideInfo} />
         </main>
 
         <Footer />

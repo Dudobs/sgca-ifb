@@ -23,8 +23,12 @@ import { UsersFilter } from './users-filter'
 import { getUSers } from '../../http/get-users'
 import { useAuth } from '../../hooks/AuthContext'
 import { Warning } from '../../components/warning'
+import clsx from 'clsx'
 
 export function Usuarios() {
+  // ESTADO HIDE INFO
+  const [hideInfo, setHideInfo] = useState(false)
+
   // ESTADO PAGE
   const [page, setPage] = useState(1)
 
@@ -178,6 +182,8 @@ export function Usuarios() {
                 UserTypeValue={searchUserType}
                 handleOnChangeAccessStatus={onSearchAccessStatusInputChanged}
                 AccessStatusValue={searchAccessStatus}
+                handleHideInfo={setHideInfo}
+                infoIsHided={hideInfo}
               />
             </div>
 
@@ -227,17 +233,33 @@ export function Usuarios() {
                           <TableCell className="min-w-96">
                             {user.nome}
                           </TableCell>
-                          <TableCell className="min-w-96">
+                          <TableCell
+                            className={clsx('min-w-96', {
+                              'blur-sm': hideInfo,
+                            })}
+                          >
                             {user.email}
                           </TableCell>
-                          <TableCell className="min-w-36">{user.cpf}</TableCell>
-                          <TableCell className="min-w-36">
+                          <TableCell
+                            className={clsx('min-w-36', {
+                              'blur-sm': hideInfo,
+                            })}
+                          >
+                            {user.cpf}
+                          </TableCell>
+                          <TableCell
+                            className={clsx('min-w-36', {
+                              'blur-sm': hideInfo,
+                            })}
+                          >
                             {user.matricula}
                           </TableCell>
                           <TableCell>
                             {user.status_acesso ? 'Ativo' : 'Inativo'}
                           </TableCell>
-                          <TableCell>{user.tipo_usuario}</TableCell>
+                          <TableCell className="min-w-56">
+                            {user.tipo_usuario}
+                          </TableCell>
                         </TableRow>
                       )
                     })}
