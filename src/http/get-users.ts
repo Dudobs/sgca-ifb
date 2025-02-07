@@ -7,6 +7,7 @@ type usersResponse = {
   id_tipo_usuario: number
   nome: string
   status_acesso: number
+  usuario_admin: number
 }[]
 
 const apiURL = import.meta.env.VITE_API_URL

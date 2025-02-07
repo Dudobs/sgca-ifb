@@ -4,6 +4,7 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  UserRoundCog,
   UserRoundPlus,
 } from 'lucide-react'
 import { type ChangeEvent, useEffect, useState } from 'react'
@@ -116,7 +117,13 @@ export function Usuarios() {
     ? JSON.parse(localStorage.getItem('user') || '').access_token
     : null
 
-  const { data = [], refetch } = useQuery({
+  const {
+    data = [],
+    refetch,
+    isPending,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ['users', searchName, searchUserType, searchAccessStatus],
     queryFn: () =>
       getUSers(
@@ -187,136 +194,154 @@ export function Usuarios() {
               />
             </div>
 
-            {data.length > 0 ? (
-              <Table className="min-w-[79rem] rounded-none border-none">
-                <thead>
-                  <TableRow className="border-b border-zinc-700">
-                    <TableHeader> </TableHeader>
-                    <TableHeader>Nome</TableHeader>
-                    <TableHeader>Email</TableHeader>
-                    <TableHeader>CPF</TableHeader>
-                    <TableHeader>Matrícula</TableHeader>
-                    <TableHeader>Status</TableHeader>
-                    <TableHeader>Tipo de usuário</TableHeader>
-                  </TableRow>
-                </thead>
-                <tbody>
-                  {data
-                    .slice((page - 1) * usersPerPage, page * usersPerPage)
-                    .map((user, index) => {
-                      const userData = {
-                        userId: user.id_usuario,
-                        name: user.nome,
-                        cpf: user.cpf,
-                        email: user.email,
-                        tipo_usuario: user.tipo_usuario,
-                        id_tipo_usuario: user.id_tipo_usuario,
-                        matricula: user.matricula,
-                        status_acesso: user.status_acesso,
-                      }
+            <Table className="min-w-[79rem] rounded-none border-none">
+              <thead>
+                <TableRow className="border-b border-zinc-700">
+                  <TableHeader> </TableHeader>
+                  <TableHeader>Nome</TableHeader>
+                  <TableHeader>Email</TableHeader>
+                  <TableHeader>CPF</TableHeader>
+                  <TableHeader>Matrícula</TableHeader>
+                  <TableHeader>Status</TableHeader>
+                  <TableHeader>Tipo de usuário</TableHeader>
+                </TableRow>
+              </thead>
+              {isPending ? (
+                <div>Loading...</div>
+              ) : isError ? (
+                <div>{error.message}</div>
+              ) : data.length > 0 ? (
+                <>
+                  <tbody>
+                    {data
+                      .slice((page - 1) * usersPerPage, page * usersPerPage)
+                      .map((user, index) => {
+                        const userData = {
+                          userId: user.id_usuario,
+                          name: user.nome,
+                          cpf: user.cpf,
+                          email: user.email,
+                          tipo_usuario: user.tipo_usuario,
+                          id_tipo_usuario: user.id_tipo_usuario,
+                          matricula: user.matricula,
+                          status_acesso: user.status_acesso,
+                          usuario_admin: user.usuario_admin,
+                        }
 
-                      return (
-                        <TableRow
-                          key={user.id_usuario}
-                          className={
-                            index % 2 === 0
-                              ? 'h-10 border-zinc-700'
-                              : 'h-10 border-zinc-700 bg-zinc-200'
-                          }
-                        >
-                          <TableCell>
-                            <UserMenuDropdown
-                              userData={userData}
-                              refetchUsersQuery={refetch}
-                            />
-                          </TableCell>
-                          <TableCell className="min-w-96">
-                            {user.nome}
-                          </TableCell>
-                          <TableCell
-                            className={clsx('min-w-96', {
-                              'blur-sm': hideInfo,
-                            })}
+                        return (
+                          <TableRow
+                            key={user.id_usuario}
+                            className={
+                              index % 2 === 0
+                                ? 'h-10 border-zinc-700'
+                                : 'h-10 border-zinc-700 bg-zinc-200'
+                            }
                           >
-                            {user.email}
-                          </TableCell>
-                          <TableCell
-                            className={clsx('min-w-36', {
-                              'blur-sm': hideInfo,
-                            })}
-                          >
-                            {user.cpf}
-                          </TableCell>
-                          <TableCell
-                            className={clsx('min-w-36', {
-                              'blur-sm': hideInfo,
-                            })}
-                          >
-                            {user.matricula}
-                          </TableCell>
-                          <TableCell>
-                            {user.status_acesso ? 'Ativo' : 'Inativo'}
-                          </TableCell>
-                          <TableCell className="min-w-56">
-                            {user.tipo_usuario}
-                          </TableCell>
-                        </TableRow>
-                      )
-                    })}
-                </tbody>
-                <tfoot>
-                  <TableRow className="border-t border-zinc-700">
-                    <TableCell colSpan={4} className="text-left">
-                      Mostrando{' '}
-                      {data.length > usersPerPage ? usersPerPage : data.length}{' '}
-                      de {data?.length} resultados
-                    </TableCell>
-                    <TableCell className="text-right" colSpan={3}>
-                      <div className="inline-flex items-center gap-8">
-                        <span>
-                          Página {page} de {totalPages}
-                        </span>
-                        {/*Math.ceil arredonda o número para cima*/}
-                        <div className="flex gap-1.5">
-                          <PaginationButton
-                            onClick={goToFirstPage}
-                            disabled={page === 1}
-                          >
-                            <ChevronsLeft className="size-4 text-zinc-50" />
-                          </PaginationButton>
-                          <PaginationButton
-                            onClick={goToPreviousPage}
-                            disabled={page === 1}
-                          >
-                            <ChevronLeft className="size-4 text-zinc-50" />
-                          </PaginationButton>
-                          <PaginationButton
-                            onClick={goToNextPage}
-                            disabled={page === totalPages}
-                          >
-                            <ChevronRight className="size-4 text-zinc-50" />
-                          </PaginationButton>
-                          <PaginationButton
-                            onClick={goToLastPage}
-                            disabled={page === totalPages}
-                          >
-                            <ChevronsRight className="size-4 text-zinc-50" />
-                          </PaginationButton>
+                            <TableCell>
+                              <UserMenuDropdown
+                                userData={userData}
+                                refetchUsersQuery={refetch}
+                              />
+                            </TableCell>
+                            <TableCell className="min-w-96 flex gap-3 items-center justify-center">
+                              {user.nome}
+                              {user.usuario_admin ? (
+                                <button
+                                  type="button"
+                                  disabled
+                                  title="Administrador"
+                                >
+                                  <UserRoundCog width={18} />
+                                </button>
+                              ) : null}
+                            </TableCell>
+                            <TableCell
+                              className={clsx('min-w-96', {
+                                'blur-sm': hideInfo,
+                              })}
+                            >
+                              {user.email}
+                            </TableCell>
+                            <TableCell
+                              className={clsx('min-w-36', {
+                                'blur-sm': hideInfo,
+                              })}
+                            >
+                              {user.cpf}
+                            </TableCell>
+                            <TableCell
+                              className={clsx('min-w-36', {
+                                'blur-sm': hideInfo,
+                              })}
+                            >
+                              {user.matricula}
+                            </TableCell>
+                            <TableCell>
+                              {user.status_acesso ? 'Ativo' : 'Inativo'}
+                            </TableCell>
+                            <TableCell className="min-w-56">
+                              {user.tipo_usuario}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })}
+                  </tbody>
+                  <tfoot>
+                    <TableRow className="border-t border-zinc-700">
+                      <TableCell colSpan={4} className="text-left">
+                        Mostrando{' '}
+                        {data.length > usersPerPage
+                          ? usersPerPage
+                          : data.length}{' '}
+                        de {data?.length} resultados
+                      </TableCell>
+                      <TableCell className="text-right" colSpan={3}>
+                        <div className="inline-flex items-center gap-8">
+                          <span>
+                            Página {data.length > 0 ? page : '0'} de{' '}
+                            {totalPages}
+                          </span>
+                          {/*Math.ceil arredonda o número para cima*/}
+                          <div className="flex gap-1.5">
+                            <PaginationButton
+                              onClick={goToFirstPage}
+                              disabled={page === 1}
+                            >
+                              <ChevronsLeft className="size-4 text-zinc-50" />
+                            </PaginationButton>
+                            <PaginationButton
+                              onClick={goToPreviousPage}
+                              disabled={page === 1}
+                            >
+                              <ChevronLeft className="size-4 text-zinc-50" />
+                            </PaginationButton>
+                            <PaginationButton
+                              onClick={goToNextPage}
+                              disabled={page === totalPages}
+                            >
+                              <ChevronRight className="size-4 text-zinc-50" />
+                            </PaginationButton>
+                            <PaginationButton
+                              onClick={goToLastPage}
+                              disabled={page === totalPages}
+                            >
+                              <ChevronsRight className="size-4 text-zinc-50" />
+                            </PaginationButton>
+                          </div>
                         </div>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                </tfoot>
-              </Table>
-            ) : (
-              <Warning
-                warningText="Nenhum usuário encontrado"
-                className="rounded-lg"
-              />
-            )}
+                      </TableCell>
+                    </TableRow>
+                  </tfoot>
+                </>
+              ) : (
+                <Warning
+                  warningText="Nenhum usuário encontrado"
+                  className="bg-transparent"
+                />
+              )}
+            </Table>
           </div>
         </main>
-
         <Footer />
       </div>
     </div>

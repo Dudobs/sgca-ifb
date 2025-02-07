@@ -17,6 +17,7 @@ type UserProps = {
   id_tipo_usuario: number
   matricula: string
   status_acesso: number
+  usuario_admin: number
 }
 
 interface UserMenuDropdownProps {
@@ -120,15 +121,20 @@ export function UserMenuDropdown({
                 Observações
               </Link>
             </MenuItem>
-            <MenuItem>
-              <button
-                type="button"
-                onClick={showDialogTornarAdmin}
-                className="w-full text-left block px-4 py-2 text-sm text-zinc-950 hover:bg-green-50 hover:text-green-900"
-              >
-                Tornar administrador
-              </button>
-            </MenuItem>
+            {/* Só exibe a opção caso o usuário não seja administrador */}
+            {userData.usuario_admin ? (
+              ''
+            ) : (
+              <MenuItem>
+                <button
+                  type="button"
+                  onClick={showDialogTornarAdmin}
+                  className="w-full text-left block px-4 py-2 text-sm text-zinc-950 hover:bg-green-50 hover:text-green-900"
+                >
+                  Tornar administrador
+                </button>
+              </MenuItem>
+            )}
           </div>
         </MenuItems>
       </Menu>
