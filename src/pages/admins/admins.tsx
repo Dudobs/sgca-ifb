@@ -67,7 +67,9 @@ export function Admins() {
                       <TableCell>
                         {admin.status_acesso ? 'Ativo' : 'Inativo'}
                       </TableCell>
-                      <TableCell>{admin.tipo_usuario}</TableCell>
+                      <TableCell className="min-w-48">
+                        {admin.tipo_usuario}
+                      </TableCell>
                     </TableRow>
                   )
                 })

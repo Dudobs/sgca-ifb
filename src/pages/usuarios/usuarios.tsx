@@ -276,7 +276,11 @@ export function Usuarios() {
                             >
                               {user.matricula}
                             </TableCell>
-                            <TableCell>
+                            <TableCell
+                              className={clsx('text-red-900', {
+                                'text-green-800': user.status_acesso,
+                              })}
+                            >
                               {user.status_acesso ? 'Ativo' : 'Inativo'}
                             </TableCell>
                             <TableCell className="min-w-56">

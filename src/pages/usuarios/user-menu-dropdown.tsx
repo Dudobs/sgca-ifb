@@ -151,7 +151,7 @@ export function UserMenuDropdown({
         dialogIsOpen={dialogAlterarStatusAcessoIsOpen}
         onClose={closeDialogAlterarStatusAcesso}
         refetchUsersQuery={refetchUsersQuery}
-        id_usuario={userData.userId}
+        userData={userData}
         id_admin={adminProfile?.admin_id ?? ''}
       />
 

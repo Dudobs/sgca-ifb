@@ -14,17 +14,30 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { updateAccessStatus } from '../../../http/update_access_status'
 
 const updateAccessStatusForm = z.object({
-  status_acesso: z.string().transform(value => value === '1'),
+  // status_acesso: z.string().transform(value => value === '1'),
+  status_acesso: z.boolean(),
   justificativa: z.string().max(400),
 })
 
 type updateAccessStatusForm = z.infer<typeof updateAccessStatusForm>
 
+type UserProps = {
+  userId: string
+  name: string
+  cpf: string
+  email: string
+  tipo_usuario: string
+  id_tipo_usuario: number
+  matricula: string
+  status_acesso: number
+  usuario_admin: number
+}
+
 interface DialogProps {
   dialogIsOpen: boolean
   onClose: () => void
   refetchUsersQuery: () => void
-  id_usuario: string
+  userData: UserProps
   id_admin: string
 }
 
@@ -32,14 +45,19 @@ export function AlterarStatusAcesso({
   dialogIsOpen,
   onClose,
   refetchUsersQuery,
-  id_usuario,
+  userData,
   id_admin,
 }: DialogProps) {
   if (!dialogIsOpen) return null
 
-  const { handleSubmit, register, reset } = useForm<updateAccessStatusForm>({
-    resolver: zodResolver(updateAccessStatusForm),
-  })
+  const { handleSubmit, register, setValue, reset } =
+    useForm<updateAccessStatusForm>({
+      resolver: zodResolver(updateAccessStatusForm),
+    })
+
+  const { userId: id_usuario, name, status_acesso } = userData
+
+  setValue('status_acesso', !status_acesso)
 
   async function handleUpdateAccessStatus({
     status_acesso,
@@ -68,11 +86,20 @@ export function AlterarStatusAcesso({
         <DialogPanel className="w-[480px] px-5 py-8 shadow-md rounded-lg border border-zinc-700 bg-zinc-100 flex flex-col gap-4">
           <div className="flex flex-col">
             <DialogTitle className="font-medium text-2xl">
-              Adicionar status de acesso
+              Alterar status de acesso
             </DialogTitle>
-            <Description className="text-sm">
-              Gerencia o status de acesso de um usuário, permitindo bloquear ou
-              desbloquear o acesso às catracas da portaria.
+            <Description className="text-lg">
+              {status_acesso ? (
+                <p>
+                  <span className="text-red-800">Bloqueando</span> acesso de{' '}
+                  {name}
+                </p>
+              ) : (
+                <p>
+                  <span className="text-green-800">Liberando</span> acesso de{' '}
+                  {name}
+                </p>
+              )}
             </Description>
           </div>
           <form
@@ -80,46 +107,21 @@ export function AlterarStatusAcesso({
             onSubmit={handleSubmit(handleUpdateAccessStatus)}
             className="flex flex-col justify-between gap-16"
           >
-            <div className="flex flex-col gap-4">
-              <div>
-                <Label
-                  htmlFor="justificativa"
-                  label="Status de acesso"
-                  className="text-sm"
-                  isRequired
-                />
-                <select
-                  id="status_acesso"
-                  required
-                  {...register('status_acesso')}
-                  className="h-10 w-full py-0 text-md shadow-sm rounded-md border-zinc-700 focus:border-green-300  text-zinc-500 focus:ring-1 focus:ring-green-200 focus:ring-opacity-50"
-                >
-                  <option value={''} />
-                  <option value={1} className="text-zinc-950">
-                    Ativo
-                  </option>
-                  <option value={0} className="text-zinc-950">
-                    Inativo
-                  </option>
-                </select>
-              </div>
-
-              <div>
-                <Label
-                  htmlFor="justificativa"
-                  label="Motivo/Justificativa"
-                  className="text-sm"
-                  isRequired
-                />
-                <Textarea
-                  id="justificativa"
-                  {...register('justificativa')}
-                  placeholder="Obrigatório"
-                  maxLength={400}
-                  required
-                  className="text-md"
-                />
-              </div>
+            <div>
+              <Label
+                htmlFor="justificativa"
+                label="Motivo/Justificativa"
+                className="text-sm"
+                isRequired
+              />
+              <Textarea
+                id="justificativa"
+                {...register('justificativa')}
+                placeholder="Obrigatório"
+                maxLength={400}
+                required
+                className="text-md"
+              />
             </div>
 
             <div className="flex items-center gap-4">
