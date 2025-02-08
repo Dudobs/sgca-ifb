@@ -13,7 +13,7 @@ export function Registros() {
     tipo_acesso: '',
   })
 
-  const [hideInfo, setHideInfo] = useState(false)
+  const [hideInfo, setHideInfo] = useState(true)
 
   function handleSearchRegistries(params: filtersForm) {
     setSearchParams(params) // Atualiza os parâmetros de busca

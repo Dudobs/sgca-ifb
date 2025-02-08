@@ -28,7 +28,7 @@ import clsx from 'clsx'
 
 export function Usuarios() {
   // ESTADO HIDE INFO
-  const [hideInfo, setHideInfo] = useState(false)
+  const [hideInfo, setHideInfo] = useState(true)
 
   // ESTADO PAGE
   const [page, setPage] = useState(1)

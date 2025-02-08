@@ -113,7 +113,11 @@ export function RegistriesFilter({
 
         <Field>
           <Label htmlFor="tipo-usuario" label={'Tipo de usuário'} />
-          <Select id="tipo-usuario" {...register('tipo_usuario')}>
+          <Select
+            id="tipo-usuario"
+            {...register('tipo_usuario')}
+            className="pr-7"
+          >
             <option value={''} className="text-zinc-300">
               Todos
             </option>

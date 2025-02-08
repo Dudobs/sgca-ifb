@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import { RotateCw } from 'lucide-react'
+import { Eye, RotateCw } from 'lucide-react'
 
 import { Navbar } from '../components/navbar/navbar'
 import { Footer } from '../components/footer'
@@ -12,8 +12,13 @@ import { TableRow } from '../components/table/table-row'
 import { TableCell } from '../components/table/table-cell'
 import { TableHeader } from '../components/table/table-header'
 import { getRegistries } from '../http/get_registries'
+import { useState } from 'react'
+import { EyeClosed } from '../assets/eye-closed'
+import clsx from 'clsx'
 
 export function Home() {
+  const [hideInfo, setHideInfo] = useState(true)
+
   const { data, isPending, isError, error, refetch } = useQuery({
     queryKey: ['registries'],
     queryFn: () => getRegistries(undefined),
@@ -30,7 +35,28 @@ export function Home() {
       <div className="pt-8 pr-10 flex flex-col justify-between gap-8">
         <main className="flex flex-col gap-3">
           <div>
-            <h1 className="p-3 font-bold text-3xl">Últimos Acessos</h1>
+            <div className="p-3 flex items-center justify-between">
+              <h1 className="font-bold text-3xl">Últimos Acessos</h1>
+              <div className="flex items-center">
+                {hideInfo ? (
+                  <button
+                    onClick={() => setHideInfo(false)}
+                    type="button"
+                    title="Exibir informações sensíveis"
+                  >
+                    <EyeClosed color="#3f3f46" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setHideInfo(true)}
+                    type="button"
+                    title="Esconder informações sensíveis"
+                  >
+                    <Eye color="#3f3f46" />
+                  </button>
+                )}
+              </div>
+            </div>
             <Table>
               <thead>
                 <TableRow className="border-b border-zinc-700">
@@ -65,8 +91,20 @@ export function Home() {
                           {registrie.id_registro}
                         </TableCell>
                         <TableCell>{registrie.nome}</TableCell>
-                        <TableCell>{registrie.cpf}</TableCell>
-                        <TableCell>{registrie.matricula}</TableCell>
+                        <TableCell
+                          className={clsx({
+                            'blur-sm': hideInfo,
+                          })}
+                        >
+                          {registrie.cpf}
+                        </TableCell>
+                        <TableCell
+                          className={clsx({
+                            'blur-sm': hideInfo,
+                          })}
+                        >
+                          {registrie.matricula}
+                        </TableCell>
                         <TableCell>
                           {registrieDate} ás {registrieTime}
                         </TableCell>
