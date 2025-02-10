@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
+import 'dayjs/locale/pt-br'
 import utc from 'dayjs/plugin/utc'
 import {
   ChevronLeft,
@@ -71,6 +72,7 @@ export function RegistriesTable({
   }, [data])
 
   dayjs.extend(utc)
+  dayjs.locale('pt-br')
 
   return (
     <Table>

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
+import 'dayjs/locale/pt-br'
 import utc from 'dayjs/plugin/utc'
 import { Eye, RotateCw } from 'lucide-react'
 
@@ -27,6 +28,7 @@ export function Home() {
   })
 
   dayjs.extend(utc)
+  dayjs.locale('pt-br')
 
   return (
     <div className="flex gap-10">

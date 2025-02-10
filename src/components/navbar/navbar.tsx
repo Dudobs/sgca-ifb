@@ -21,9 +21,9 @@ export function Navbar() {
   }
 
   const location = useLocation()
-  
+
   const { profile, logOut } = useAuth()
-  
+
   function handleLogout() {
     const result = confirm('Deseja sair da sua conta?')
     if (result) {
@@ -50,11 +50,24 @@ export function Navbar() {
           to={'/admin'}
           className={
             location.pathname === '/admin'
-              ? 'flex items-center text-emerald-800 '
+              ? 'flex items-center text-emerald-800'
               : 'flex items-center  hover:text-emerald-200'
           }
         >
-          <CircleUserRound className="size-11 mr-[-40px]" strokeWidth={1} />
+          {profile?.picture ? (
+            <img
+              src={profile.picture}
+              className={
+                location.pathname === '/admin'
+                  ? 'mr-[-40px] size-10 rounded-full border border-emerald-800'
+                  : 'mr-[-40px] size-10 rounded-full border border-white'
+              }
+              alt="Foto de perfil do administrador"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <CircleUserRound className="size-11 mr-[-40px]" strokeWidth={1} />
+          )}
           <div
             className={
               location.pathname === '/admin'
@@ -62,8 +75,10 @@ export function Navbar() {
                 : 'w-52 h-10 border-y border-r border-zinc-50 rounded-full flex items-center hover:border-emerald-200'
             }
           >
-            <p className="ml-12 font-semibold truncate">
-              {profile ? profile.name : 'Admin'}
+            <p className="ml-11 font-semibold truncate">
+              {profile
+                ? `${profile.given_name} ${profile.family_name}`
+                : 'Admin'}
             </p>
           </div>
         </Link>
@@ -97,7 +112,20 @@ export function Navbar() {
               : 'flex items-center  hover:text-emerald-100'
           }
         >
-          <CircleUserRound className="size-11" strokeWidth={1} />
+          {profile?.picture ? (
+            <img
+              src={profile.picture}
+              className={
+                location.pathname === '/admin'
+                  ? 'w-10 rounded-full border border-emerald-800'
+                  : 'w-10 rounded-full border border-white'
+              }
+              alt="Foto de perfil do administrador"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <CircleUserRound className="size-11" strokeWidth={1} />
+          )}
         </Link>
         <Link to={'/login'} onClick={handleLogout}>
           <LogOut className="text-red-700 size-8 hover:text-red-600" />
