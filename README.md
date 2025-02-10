@@ -1,6 +1,6 @@
 #SGCA-IFB | Sistema de Gerenciamento do Controle de Acesso ao IFB Campus Brasília
 
-VScode workspace settings JSON:
+VScode workspace settings.json:
 ```
 {
     "editor.defaultFormatter": "biomejs.biome",
