@@ -17,7 +17,7 @@ export function Login() {
       <div className="flex justify-center items-center">
         <div className="px-32 py-8 bg-teal-800 rounded-3xl flex flex-col justify-center items-center gap-8">
           <img src={LogoIFBAccess} alt="Logo do IFB Access" />
-          
+
           <div className="flex justify-center">
             <button type="button" onClick={login}>
               <GoogleSignIn />
