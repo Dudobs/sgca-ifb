@@ -23,7 +23,7 @@ export function Registros() {
     <div className="flex gap-10">
       <Navbar />
 
-      <div className="pt-8 pr-10 flex flex-col justify-between gap-8">
+      <div className="pt-8 pr-10 flex flex-1 flex-col justify-between gap-8">
         <main className="flex flex-col gap-4">
           <h1 className="p-3 font-bold text-3xl">Registros</h1>
 

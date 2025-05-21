@@ -34,7 +34,7 @@ export function Home() {
     <div className="flex gap-10">
       <Navbar />
 
-      <div className="pt-8 pr-10 flex flex-col justify-between gap-8">
+      <div className="pt-8 pr-10 flex flex-1 flex-col justify-between gap-8">
         <main className="flex flex-col gap-3">
           <div>
             <div className="p-3 flex items-center justify-between">

@@ -8,8 +8,15 @@ import { TableCell } from '../../components/table/table-cell'
 import { TableHeader } from '../../components/table/table-header'
 import { TableRow } from '../../components/table/table-row'
 import { getAdmins } from '../../http/get_admins'
+import clsx from 'clsx'
+import { useState } from 'react'
+import { EyeClosed } from '../../assets/eye-closed'
+import { Eye } from 'lucide-react'
 
 export function Admins() {
+  // ESTADO HIDE INFO
+  const [hideInfo, setHideInfo] = useState(true)
+
   const { data, isPending, isError, error, refetch } = useQuery({
     queryKey: ['admins'],
     queryFn: getAdmins,
@@ -20,9 +27,30 @@ export function Admins() {
     <div className="flex gap-10">
       <Navbar />
 
-      <div className="pt-8 pr-10 flex flex-col justify-between gap-8">
+      <div className="pt-8 pr-10 flex flex-1 flex-col justify-between gap-8">
         <main className="flex flex-col gap-4">
-          <h1 className="px-3 pt-3 font-bold text-3xl">Administradores</h1>
+          <div className="flex items-center justify-between">
+            <h1 className="px-3 pt-3 font-bold text-3xl">Administradores</h1>
+            <div className="flex items-center">
+              {hideInfo ? (
+                <button
+                  onClick={() => setHideInfo(false)}
+                  type="button"
+                  title="Exibir informações sensíveis"
+                >
+                  <EyeClosed color="#3f3f46" />
+                </button>
+              ) : (
+                <button
+                  onClick={() => setHideInfo(true)}
+                  type="button"
+                  title="Esconder informações sensíveis"
+                >
+                  <Eye color="#3f3f46" />
+                </button>
+              )}
+            </div>
+          </div>
 
           <Table>
             <thead>
@@ -59,12 +87,32 @@ export function Admins() {
                         />
                       </TableCell>
                       <TableCell className="min-w-96">{admin.nome}</TableCell>
-                      <TableCell className="min-w-96">{admin.email}</TableCell>
-                      <TableCell className="min-w-36">{admin.cpf}</TableCell>
-                      <TableCell className="min-w-36">
+                      <TableCell
+                        className={clsx('min-w-96', {
+                          'blur-sm': hideInfo,
+                        })}
+                      >
+                        {admin.email}
+                      </TableCell>
+                      <TableCell
+                        className={clsx('min-w-36', {
+                          'blur-sm': hideInfo,
+                        })}
+                      >
+                        {admin.cpf}
+                      </TableCell>
+                      <TableCell
+                        className={clsx('min-w-36', {
+                          'blur-sm': hideInfo,
+                        })}
+                      >
                         {admin.matricula}
                       </TableCell>
-                      <TableCell>
+                      <TableCell
+                        className={clsx('text-red-900', {
+                          'text-green-800': admin.status_acesso,
+                        })}
+                      >
                         {admin.status_acesso ? 'Ativo' : 'Inativo'}
                       </TableCell>
                       <TableCell className="min-w-48">
