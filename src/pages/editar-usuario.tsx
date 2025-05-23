@@ -16,8 +16,6 @@ import { Navbar } from '../components/navbar/navbar'
 import { getUSersType } from '../http/get_tipos_usuarios'
 import { updateUser } from '../http/update_user'
 import { useAuth } from '../hooks/AuthContext'
-import { useEffect, useRef } from 'react'
-import IMask from 'imask'
 
 const updateUserForm = z.object({
   id_usuario: z.string(),
@@ -62,29 +60,6 @@ export function EditarUsuario() {
 
   const { adminProfile } = useAuth()
   const id_admin = adminProfile?.admin_id
-
-  const nfcInputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    if (nfcInputRef.current) {
-      const mask = IMask(nfcInputRef.current, {
-        mask: 'HH:HH:HH:HH:HH:HH:HH:HH',
-        blocks: {
-          HH: {
-            mask: /^[0-9A-Fa-f]{0,2}$/,
-            prepareChar: str => str.toUpperCase(),
-          },
-        },
-      })
-
-      // Sincronizar o valor mascarado com o React Hook Form
-      mask.on('accept', () => {
-        setValue('credencial_nfc', mask.value || '', { shouldValidate: true })
-      })
-
-      return () => mask.destroy()
-    }
-  }, [setValue])
 
   async function handleUpdateUser({
     id_usuario,
@@ -195,28 +170,43 @@ export function EditarUsuario() {
                   </Select>
                 </Field>
 
-                {user.credential_nfc && (
-                  <Field className="w-full">
-                    <Label
-                      htmlFor="credencial_nfc"
-                      label={'Credencial NFC:'}
-                      isRequired={false}
-                    />
-                    <Input
-                      id="credencial_nfc"
-                      {...register('credencial_nfc')}
-                      autoComplete="off"
-                      defaultValue={user.credencial_nfc}
-                      ref={nfcInputRef}
-                      className="w-full h-9"
-                    />
-                    {formState.errors.credencial_nfc && (
-                      <p className="text-red-400 text-xs mt-1 truncate">
-                        {formState.errors.credencial_nfc.message}
-                      </p>
-                    )}
-                  </Field>
-                )}
+                {/* {user.credential_nfc && ( */}
+                <Field className="w-full">
+                  <Label
+                    htmlFor="credencial_nfc"
+                    label={'Credencial NFC:'}
+                    isRequired={false}
+                  />
+                  <Input
+                    id="credencial_nfc"
+                    {...register('credencial_nfc')}
+                    autoComplete="off"
+                    placeholder="Apenas letras e números"
+                    onChange={e => {
+                      const rawValue = e.target.value
+                        .replace(/[^0-9A-Fa-f]/g, '')
+                        .toUpperCase()
+                      const formattedValue =
+                        rawValue.length > 0
+                          ? rawValue
+                              .match(/.{1,2}/g)
+                              ?.join(':')
+                              .slice(0, 23)
+                          : ''
+                      setValue('credencial_nfc', formattedValue, {
+                        shouldValidate: true,
+                      })
+                    }}
+                    defaultValue={user?.credencial_nfc}
+                    className="w-full h-9"
+                  />
+                  {formState.errors.credencial_nfc && (
+                    <p className="text-red-400 text-xs mt-1 truncate">
+                      {formState.errors.credencial_nfc.message}
+                    </p>
+                  )}
+                </Field>
+                {/* )} */}
 
                 <Field className="w-full opacity-25">
                   <Label htmlFor="matricula" label={'Matrícula:'} />

@@ -13,8 +13,6 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useRef } from 'react'
-import IMask from 'imask'
 
 const validarCPF = (): boolean => {
   // Fazer validação de CPF
@@ -63,28 +61,6 @@ export function AdicionarUsuario() {
     })
 
   const navigate = useNavigate()
-  const nfcInputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    if (nfcInputRef.current) {
-      const mask = IMask(nfcInputRef.current, {
-        mask: 'HH:HH:HH:HH:HH:HH:HH:HH',
-        blocks: {
-          HH: {
-            mask: /^[0-9A-Fa-f]{0,2}$/,
-            prepareChar: str => str.toUpperCase(),
-          },
-        },
-      })
-
-      // Sincronizar o valor mascarado com o React Hook Form
-      mask.on('accept', () => {
-        setValue('credencial_nfc', mask.value || '', { shouldValidate: true })
-      })
-
-      return () => mask.destroy()
-    }
-  }, [setValue])
 
   async function handleCreateUser({
     nome,
@@ -216,7 +192,21 @@ export function AdicionarUsuario() {
                 autoComplete="off"
                 className="w-full h-9"
                 placeholder="Apenas letras e números"
-                ref={nfcInputRef}
+                onChange={e => {
+                  const rawValue = e.target.value
+                    .replace(/[^0-9A-Fa-f]/g, '')
+                    .toUpperCase()
+                  const formattedValue =
+                    rawValue.length > 0
+                      ? rawValue
+                          .match(/.{1,2}/g)
+                          ?.join(':')
+                          .slice(0, 23)
+                      : ''
+                  setValue('credencial_nfc', formattedValue, {
+                    shouldValidate: true,
+                  })
+                }}
               />
               {formState.errors.credencial_nfc && (
                 <p className="text-red-400 text-xs mt-1 truncate">
