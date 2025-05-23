@@ -47,7 +47,6 @@ const createUserForm = z.object({
         message: 'Formato esperado: XX:XX:XX:XX:XX:XX:XX:XX',
       }
     ),
-  // .transform((value) => (value ? value.replace(/:/g, '') : null)),
 })
 
 type createUserForm = z.infer<typeof createUserForm> // O tipo `createUserForm` é inferido a partir do esquema definido com o Zod. Utilizando `z.infer`, o TypeScript gera um tipo correspondente à estrutura dos dados descrita no esquema `createUserForm` do Zod, garantindo que o tipo esteja sempre sincronizado com a definição de validação.

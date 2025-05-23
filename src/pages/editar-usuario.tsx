@@ -16,6 +16,8 @@ import { Navbar } from '../components/navbar/navbar'
 import { getUSersType } from '../http/get_tipos_usuarios'
 import { updateUser } from '../http/update_user'
 import { useAuth } from '../hooks/AuthContext'
+import { useEffect, useRef } from 'react'
+import IMask from 'imask'
 
 const updateUserForm = z.object({
   id_usuario: z.string(),
@@ -24,6 +26,18 @@ const updateUserForm = z.object({
   email: z.string().email(),
   id_tipo_usuario: z.string().min(1),
   justificativa: z.string().max(400),
+  credencial_nfc: z
+    .string()
+    .optional()
+    .refine(
+      value => {
+        if (!value) return true
+        return /^[0-9A-Fa-f]{2}(:[0-9A-Fa-f]{2}){7}$/.test(value)
+      },
+      {
+        message: 'Formato esperado: XX:XX:XX:XX:XX:XX:XX:XX',
+      }
+    ),
 })
 
 type updateUserForm = z.infer<typeof updateUserForm>
@@ -39,14 +53,38 @@ export function EditarUsuario() {
     queryFn: getUSersType,
   })
 
-  const { handleSubmit, reset, register, setValue } = useForm<updateUserForm>({
-    resolver: zodResolver(updateUserForm),
-  })
+  const { handleSubmit, reset, register, formState, setValue } =
+    useForm<updateUserForm>({
+      resolver: zodResolver(updateUserForm),
+    })
 
   setValue('id_usuario', user.userId)
 
   const { adminProfile } = useAuth()
   const id_admin = adminProfile?.admin_id
+
+  const nfcInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (nfcInputRef.current) {
+      const mask = IMask(nfcInputRef.current, {
+        mask: 'HH:HH:HH:HH:HH:HH:HH:HH',
+        blocks: {
+          HH: {
+            mask: /^[0-9A-Fa-f]{0,2}$/,
+            prepareChar: str => str.toUpperCase(),
+          },
+        },
+      })
+
+      // Sincronizar o valor mascarado com o React Hook Form
+      mask.on('accept', () => {
+        setValue('credencial_nfc', mask.value || '', { shouldValidate: true })
+      })
+
+      return () => mask.destroy()
+    }
+  }, [setValue])
 
   async function handleUpdateUser({
     id_usuario,
@@ -54,8 +92,17 @@ export function EditarUsuario() {
     cpf,
     email,
     id_tipo_usuario,
+    credencial_nfc,
     justificativa,
   }: updateUserForm) {
+    console.log('Formulário enviado', {
+      nome,
+      email,
+      cpf,
+      id_tipo_usuario,
+      credencial_nfc,
+      id_admin,
+    })
     try {
       await updateUser({
         id_usuario,
@@ -63,6 +110,7 @@ export function EditarUsuario() {
         cpf,
         email,
         id_tipo_usuario,
+        credencial_nfc,
         justificativa,
         id_admin,
       })
@@ -147,15 +195,28 @@ export function EditarUsuario() {
                   </Select>
                 </Field>
 
-                <Field>
-                  <Label htmlFor="observacao" label={'Observação:'} />
-                  <Textarea
-                    id="observacao"
-                    {...register('justificativa')}
-                    placeholder="Opcional"
-                    maxLength={400}
-                  />
-                </Field>
+                {user.credential_nfc && (
+                  <Field className="w-full">
+                    <Label
+                      htmlFor="credencial_nfc"
+                      label={'Credencial NFC:'}
+                      isRequired={false}
+                    />
+                    <Input
+                      id="credencial_nfc"
+                      {...register('credencial_nfc')}
+                      autoComplete="off"
+                      defaultValue={user.credencial_nfc}
+                      ref={nfcInputRef}
+                      className="w-full h-9"
+                    />
+                    {formState.errors.credencial_nfc && (
+                      <p className="text-red-400 text-xs mt-1 truncate">
+                        {formState.errors.credencial_nfc.message}
+                      </p>
+                    )}
+                  </Field>
+                )}
 
                 <Field className="w-full opacity-25">
                   <Label htmlFor="matricula" label={'Matrícula:'} />
@@ -165,6 +226,16 @@ export function EditarUsuario() {
                     defaultValue={user.matricula}
                     disabled
                     className="w-full h-9"
+                  />
+                </Field>
+
+                <Field>
+                  <Label htmlFor="observacao" label={'Observação:'} />
+                  <Textarea
+                    id="observacao"
+                    {...register('justificativa')}
+                    placeholder="Opcional"
+                    maxLength={400}
                   />
                 </Field>
               </div>

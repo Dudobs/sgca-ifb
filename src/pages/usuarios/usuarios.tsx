@@ -9,6 +9,9 @@ import {
 } from 'lucide-react'
 import { type ChangeEvent, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import utc from 'dayjs/plugin/utc'
+import dayjs from 'dayjs'
+import clsx from 'clsx'
 
 import { Button } from '../../components/button'
 import { Footer } from '../../components/footer'
@@ -24,7 +27,6 @@ import { UsersFilter } from './users-filter'
 import { getUSers } from '../../http/get-users'
 import { useAuth } from '../../hooks/AuthContext'
 import { Warning } from '../../components/warning'
-import clsx from 'clsx'
 
 export function Usuarios() {
   // ESTADO HIDE INFO
@@ -157,6 +159,9 @@ export function Usuarios() {
     setPage(totalPages)
   }
 
+  dayjs.extend(utc)
+  dayjs.locale('pt-br')
+
   useEffect(() => {
     if (data.length > 0) setPage(1)
   }, [data])
@@ -204,6 +209,7 @@ export function Usuarios() {
                   <TableHeader>Matrícula</TableHeader>
                   <TableHeader>Status</TableHeader>
                   <TableHeader>Tipo de usuário</TableHeader>
+                  <TableHeader>Criado em</TableHeader>
                 </TableRow>
               </thead>
               {isPending ? (
@@ -216,6 +222,11 @@ export function Usuarios() {
                     {data
                       .slice((page - 1) * usersPerPage, page * usersPerPage)
                       .map((user, index) => {
+                        const date = dayjs
+                          .utc(user.created_at)
+                          .format('D MMM YYYY')
+                        const time = dayjs.utc(user.created_at).format('HH:mm')
+
                         const userData = {
                           userId: user.id_usuario,
                           name: user.nome,
@@ -223,6 +234,7 @@ export function Usuarios() {
                           email: user.email,
                           tipo_usuario: user.tipo_usuario,
                           id_tipo_usuario: user.id_tipo_usuario,
+                          credencial_nfc: user.credencial_nfc,
                           matricula: user.matricula,
                           status_acesso: user.status_acesso,
                           usuario_admin: user.usuario_admin,
@@ -284,8 +296,11 @@ export function Usuarios() {
                             >
                               {user.status_acesso ? 'Ativo' : 'Inativo'}
                             </TableCell>
-                            <TableCell className="min-w-56">
+                            <TableCell className="min-w-60">
                               {user.tipo_usuario}
+                            </TableCell>
+                            <TableCell className="min-w-48">
+                              {date} às {time}
                             </TableCell>
                           </TableRow>
                         )
@@ -300,7 +315,7 @@ export function Usuarios() {
                           : data.length}{' '}
                         de {data?.length} resultados
                       </TableCell>
-                      <TableCell className="text-right" colSpan={3}>
+                      <TableCell className="text-right" colSpan={4}>
                         <div className="inline-flex items-center gap-8">
                           <span>
                             Página {data.length > 0 ? page : '0'} de{' '}

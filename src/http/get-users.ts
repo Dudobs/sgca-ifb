@@ -1,11 +1,12 @@
 type usersResponse = {
   id_usuario: string
+  nome: string
   cpf: string
   email: string
   matricula: string
   tipo_usuario: string
   id_tipo_usuario: number
-  nome: string
+  credencial_nfc: string
   status_acesso: number
   usuario_admin: number
   created_at: string

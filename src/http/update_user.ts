@@ -7,6 +7,7 @@ interface updateUserRequest {
   cpf: string
   email: string
   id_tipo_usuario: string
+  credencial_nfc?: string
   justificativa: string
   id_admin?: string
 }
@@ -17,6 +18,7 @@ export async function updateUser({
   cpf,
   email,
   id_tipo_usuario,
+  credencial_nfc,
   justificativa,
   id_admin,
 }: updateUserRequest) {
@@ -32,6 +34,7 @@ export async function updateUser({
       cpf,
       email,
       id_tipo_usuario,
+      credencial_nfc,
       justificativa,
       id_admin,
     }),
