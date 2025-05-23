@@ -13,6 +13,8 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
+import { useEffect, useRef } from 'react'
+import IMask from 'imask'
 
 const validarCPF = (): boolean => {
   // Fazer validação de CPF
@@ -33,6 +35,19 @@ const createUserForm = z.object({
     .max(12, 'A matrícula deve ter no máximo 12 caractéres')
     .optional(),
   id_tipo_usuario: z.string().min(1),
+  credencial_nfc: z
+    .string()
+    .optional()
+    .refine(
+      value => {
+        if (!value) return true
+        return /^[0-9A-Fa-f]{2}(:[0-9A-Fa-f]{2}){7}$/.test(value)
+      },
+      {
+        message: 'Formato esperado: XX:XX:XX:XX:XX:XX:XX:XX',
+      }
+    ),
+  // .transform((value) => (value ? value.replace(/:/g, '') : null)),
 })
 
 type createUserForm = z.infer<typeof createUserForm> // O tipo `createUserForm` é inferido a partir do esquema definido com o Zod. Utilizando `z.infer`, o TypeScript gera um tipo correspondente à estrutura dos dados descrita no esquema `createUserForm` do Zod, garantindo que o tipo esteja sempre sincronizado com a definição de validação.
@@ -43,11 +58,34 @@ export function AdicionarUsuario() {
     queryFn: getUSersType,
   })
 
-  const { register, handleSubmit, formState, reset } = useForm<createUserForm>({
-    resolver: zodResolver(createUserForm),
-  })
+  const { register, handleSubmit, formState, reset, setValue } =
+    useForm<createUserForm>({
+      resolver: zodResolver(createUserForm),
+    })
 
   const navigate = useNavigate()
+  const nfcInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (nfcInputRef.current) {
+      const mask = IMask(nfcInputRef.current, {
+        mask: 'HH:HH:HH:HH:HH:HH:HH:HH',
+        blocks: {
+          HH: {
+            mask: /^[0-9A-Fa-f]{0,2}$/,
+            prepareChar: str => str.toUpperCase(),
+          },
+        },
+      })
+
+      // Sincronizar o valor mascarado com o React Hook Form
+      mask.on('accept', () => {
+        setValue('credencial_nfc', mask.value || '', { shouldValidate: true })
+      })
+
+      return () => mask.destroy()
+    }
+  }, [setValue])
 
   async function handleCreateUser({
     nome,
@@ -55,6 +93,7 @@ export function AdicionarUsuario() {
     cpf,
     matricula,
     id_tipo_usuario,
+    credencial_nfc,
   }: createUserForm) {
     console.log('Formulário enviado', {
       nome,
@@ -62,6 +101,7 @@ export function AdicionarUsuario() {
       cpf,
       matricula,
       id_tipo_usuario,
+      credencial_nfc,
     })
     try {
       await createUser({
@@ -70,6 +110,7 @@ export function AdicionarUsuario() {
         cpf,
         matricula,
         id_tipo_usuario,
+        credencial_nfc,
       })
       alert('Usuário criado com sucesso!')
     } catch (error) {
@@ -160,6 +201,27 @@ export function AdicionarUsuario() {
               {formState.errors.matricula && (
                 <p className="text-red-400 text-xs mt-1">
                   {formState.errors.matricula.message}
+                </p>
+              )}
+            </Field>
+
+            <Field className="w-full">
+              <Label
+                htmlFor="credencial_nfc"
+                label={'Credencial NFC:'}
+                isRequired={false}
+              />
+              <Input
+                id="credencial_nfc"
+                {...register('credencial_nfc')}
+                autoComplete="off"
+                className="w-full h-9"
+                placeholder="Apenas letras e números"
+                ref={nfcInputRef}
+              />
+              {formState.errors.credencial_nfc && (
+                <p className="text-red-400 text-xs mt-1 truncate">
+                  {formState.errors.credencial_nfc.message}
                 </p>
               )}
             </Field>

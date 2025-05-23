@@ -171,7 +171,7 @@ export function Usuarios() {
             <h1 className="px-3 pt-3 font-bold text-3xl">Usuários</h1>
 
             <Link to={'/usuarios/adicionar'}>
-              <Button disabled variant="disabled">
+              <Button variant="primary">
                 <UserRoundPlus className="size-5" />
                 <span className="text-sm medium normal-case">
                   Adicionar usuário
@@ -226,6 +226,7 @@ export function Usuarios() {
                           matricula: user.matricula,
                           status_acesso: user.status_acesso,
                           usuario_admin: user.usuario_admin,
+                          created_at: user.created_at,
                         }
 
                         return (

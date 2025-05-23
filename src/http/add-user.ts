@@ -4,6 +4,7 @@ interface createUserRequst {
   matricula?: string
   id_tipo_usuario: string
   nome: string
+  credencial_nfc?: string
 }
 
 const apiURL = import.meta.env.VITE_API_URL
@@ -15,6 +16,7 @@ export async function createUser({
   matricula,
   id_tipo_usuario,
   nome,
+  credencial_nfc,
 }: createUserRequst) {
   await fetch(`${apiURL}/usuarios`, {
     method: 'POST',
@@ -31,6 +33,7 @@ export async function createUser({
       matricula,
       id_tipo_usuario,
       nome,
+      credencial_nfc,
     }),
   })
 }
