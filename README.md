@@ -1,3 +1,5 @@
+[Read this in English](README.en.md)
+
 # 💻 IFB Access - Sistema de Gerenciamento de Acesso
 
 <div align="center">
