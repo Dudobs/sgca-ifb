@@ -10,7 +10,7 @@
 
 </div>
 
-![Tela_Inicio](.github/tela_inicio.png)
+![Tela_Inicio](.github/Cover.jpg)
 
 ## 🎯 Sobre o Projeto
 

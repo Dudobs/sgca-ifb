@@ -10,7 +10,7 @@
 
 </div>
 
-![Main_Screen](.github/tela_inicio.png)
+![Main_Screen](.github/Cover.jpg)
 
 ## 🎯 About The Project
 
