@@ -6,7 +6,6 @@
 
   ![Status do Projeto](https://img.shields.io/badge/Status-Em%20Produção%20(Piloto)-brightgreen)
   &nbsp;&nbsp;
-  ![Licença](https://img.shields.io/badge/License-MIT-blue)
 
 </div>
 
