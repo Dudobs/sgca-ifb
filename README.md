@@ -81,9 +81,3 @@ Como desenvolvedor principal do front-end desta aplicação, minhas responsabili
 - Desenvolver toda a interface administrativa com React e TypeScript, desde a arquitetura de componentes até a integração com a API.
 - Projetar e prototipar todas as telas no Figma, garantindo uma UI/UX intuitiva e acessível.
 - Participar ativamente do desenvolvimento da API em Python/Flask, sendo responsável pela criação dos endpoints CRUD para usuários, registros e observações.
-
----
-
-## 📝 Licença
-
-Este projeto está sob a licença MIT.
